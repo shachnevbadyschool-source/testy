@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Почему я боюсь быть большой</title>
+<style>
+  :root{
+    --bg:#f6f4fb; --card:#ffffff; --ink:#241f2e; --muted:#6b6478;
+    --line:#e7e1f2; --accent:#7c3aed; --accent2:#5b21b6; --soft:#f3eefc;
+    --good:#0e9f6e; --warn:#d97706; --hot:#b4288f;
+    --shadow:0 10px 34px rgba(60,30,110,.10);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#161320; --card:#201b2e; --ink:#efeaf7; --muted:#a79fb8;
+      --line:#332a47; --soft:#2a2340; --shadow:0 12px 40px rgba(0,0,0,.4); }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--ink);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;padding:0 16px 90px}
+  .wrap{max-width:760px;margin:0 auto}
+  header{padding:38px 26px 30px;margin:22px 0 18px;border-radius:22px;color:#fff;
+    background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 68%,#3b1a7a 100%);
+    box-shadow:var(--shadow);position:relative;overflow:hidden}
+  header:after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;
+    background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);border-radius:50%}
+  .eyebrow{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.85;font-weight:700}
+  header h1{margin:.35em 0 .35em;font-size:29px;line-height:1.18;font-weight:800;letter-spacing:-.01em}
+  header p{margin:0;opacity:.94;font-size:15.5px;max-width:56ch}
+  .intro{background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:20px 22px;margin:0 0 18px;box-shadow:var(--shadow)}
+  .intro p{margin:.5em 0}
+  .intro .lead{font-size:16.5px}
+  .intro b{color:var(--accent)}
+  .note{font-size:14px;color:var(--muted)}
+  .scale-legend{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 0;font-size:12.5px;color:var(--muted)}
+  .scale-legend span{background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:4px 10px}
+  .sec-head{margin:26px 4px 8px;font-size:13px;font-weight:800;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--accent)}
+  .sec-sub{margin:0 4px 12px;font-size:13.5px;color:var(--muted)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:16px 16px 12px;margin:0 0 12px;box-shadow:0 4px 14px rgba(60,30,110,.05);
+    transition:border-color .18s,box-shadow .18s}
+  .q.done{border-color:var(--accent)}
+  .q .qn{font-weight:700;color:var(--muted);font-size:13px;margin-bottom:4px}
+  .q .qt{font-size:16px;margin-bottom:12px}
+  .opts{display:flex;gap:7px}
+  .opts label{flex:1;cursor:pointer;position:relative}
+  .opts input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0}
+  .pill{display:flex;align-items:center;justify-content:center;height:44px;border-radius:11px;
+    border:1.5px solid var(--line);background:var(--bg);font-weight:800;font-size:16px;color:var(--muted);
+    transition:.14s}
+  .opts label:hover .pill{border-color:var(--accent)}
+  .opts input:checked + .pill{background:var(--accent);border-color:var(--accent);color:#fff;
+    box-shadow:0 6px 16px rgba(124,58,237,.32)}
+  .opts .ends{display:none}
+  .q .ends{display:flex;justify-content:space-between;margin-top:7px;font-size:11.5px;color:var(--muted)}
+  .q .ends span:last-child{text-align:right}
+  .bar{position:sticky;bottom:0;left:0;right:0;margin-top:20px;
+    background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 16px;
+    display:flex;align-items:center;gap:14px;box-shadow:0 -6px 24px rgba(60,30,110,.10)}
+  .progress{flex:1;height:8px;background:var(--soft);border-radius:999px;overflow:hidden}
+  .progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--hot));
+    border-radius:999px;transition:width .25s}
+  .bar .cnt{font-size:13px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+  button.go{appearance:none;border:0;cursor:pointer;background:var(--accent);color:#fff;
+    font-weight:800;font-size:15px;padding:12px 20px;border-radius:12px;white-space:nowrap;
+    transition:.15s;box-shadow:0 8px 20px rgba(124,58,237,.32)}
+  button.go:hover{background:var(--accent2)}
+  button.go:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+  #result{display:none;margin-top:8px}
+  #result.show{display:block;animation:rise .5s ease}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .verdict{background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 75%);color:#fff;
+    border-radius:20px;padding:26px 24px;box-shadow:var(--shadow);margin-bottom:16px}
+  .verdict h2{margin:0 0 .4em;font-size:22px;font-weight:800}
+  .verdict .big{font-size:17px;line-height:1.55;margin:.5em 0}
+  .scales{background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:8px 20px 18px;box-shadow:var(--shadow);margin-bottom:16px}
+  .scales h3{font-size:14px;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);
+    margin:18px 0 14px}
+  .sc{margin:0 0 18px;padding-bottom:16px;border-bottom:1px dashed var(--line)}
+  .sc:last-child{border-bottom:0;padding-bottom:0}
+  .sc .row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:7px}
+  .sc .nm{font-weight:800;font-size:15.5px}
+  .sc .pct{font-weight:800;font-variant-numeric:tabular-nums;font-size:14px}
+  .track{height:12px;background:var(--soft);border-radius:999px;overflow:hidden}
+  .track i{display:block;height:100%;border-radius:999px;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+  .sc .txt{margin:11px 0 0;font-size:14.5px}
+  .lvl{display:inline-block;font-size:11.5px;font-weight:800;padding:2px 9px;border-radius:999px;
+    margin-left:8px;vertical-align:middle;letter-spacing:.02em}
+  .lvl.lo{background:rgba(14,159,110,.14);color:var(--good)}
+  .lvl.mi{background:rgba(217,119,6,.16);color:var(--warn)}
+  .lvl.hi{background:rgba(180,40,143,.15);color:var(--hot)}
+  .closing{background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:22px 24px;box-shadow:var(--shadow);margin-bottom:16px}
+  .closing h3{margin:0 0 .5em;font-size:19px;color:var(--accent)}
+  .closing p{margin:.6em 0}
+  .closing .quote{border-left:3px solid var(--accent);padding:4px 0 4px 15px;margin:16px 0;
+    font-size:16.5px;font-style:italic}
+  .qs{list-style:none;padding:0;margin:12px 0 0}
+  .qs li{padding:11px 14px;background:var(--soft);border-radius:12px;margin-bottom:9px;font-size:14.5px}
+  .qs li b{color:var(--accent2)}
+  .redo{display:inline-block;margin-top:6px;color:var(--accent);cursor:pointer;font-weight:700;
+    text-decoration:underline;background:none;border:0;font-size:14px}
+  .warnmsg{color:var(--hot);font-size:13px;margin:6px 4px 0;min-height:18px;font-weight:600}
+  .foot{text-align:center;color:var(--muted);font-size:12.5px;margin:26px 0 0;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Между сессиями · только для тебя</div>
+    <h1>Почему я боюсь быть большой</h1>
+    <p>Тест про ценность, нужность и страх стать успешной, заметной, богатой. Не чтобы поставить диагноз, а чтобы вместе яснее увидеть, что внутри держит тебя в тени.</p>
+  </header>
+
+  <div class="intro">
+    <p class="lead">Аня, это не экзамен, и его нельзя сделать «на пятёрку». Правильных ответов нет. Есть только то, как на самом деле, — и чем честнее, тем полезнее будет то, что откроется в конце.</p>
+    <p>36 фраз. По каждой отметь, <b>насколько это про тебя</b> — от «совсем нет» (1) до «прямо в точку» (5). Отвечай первым движением. В конце получишь разбор по семи темам и общее заключение.</p>
+    <p class="note">Отвечай на все — тогда картинка сложится целиком. Займёт минут семь.</p>
+    <div class="scale-legend">
+      <span>1 — совсем не про меня</span><span>2 — скорее нет</span><span>3 — когда как</span>
+      <span>4 — скорее да</span><span>5 — прямо про меня</span>
+    </div>
+  </div>
+
+  <form id="quiz">
+
+      <div class="sec-head">Часть 1. Ценность</div>
+      <div class="sec-sub">Про то, за что тебя, как тебе кажется, любят и выбирают.</div>
+      <div class="q" id="q0" data-sc="value">
+        <div class="qn">Вопрос 1</div>
+        <div class="qt">Если за день я ничего полезного не сделала, к вечеру чувствую себя хуже как человек.</div>
+        <div class="opts"><label><input type="radio" name="q0" value="1"><span class="pill">1</span></label><label><input type="radio" name="q0" value="2"><span class="pill">2</span></label><label><input type="radio" name="q0" value="3"><span class="pill">3</span></label><label><input type="radio" name="q0" value="4"><span class="pill">4</span></label><label><input type="radio" name="q0" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q1" data-sc="value">
+        <div class="qn">Вопрос 2</div>
+        <div class="qt">Мне трудно поверить, что меня можно любить просто так, без стараний и заслуг.</div>
+        <div class="opts"><label><input type="radio" name="q1" value="1"><span class="pill">1</span></label><label><input type="radio" name="q1" value="2"><span class="pill">2</span></label><label><input type="radio" name="q1" value="3"><span class="pill">3</span></label><label><input type="radio" name="q1" value="4"><span class="pill">4</span></label><label><input type="radio" name="q1" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q2" data-sc="value">
+        <div class="qn">Вопрос 3</div>
+        <div class="qt">Когда я перестаю быть кому-то полезной, я начинаю бояться, что стану не нужна.</div>
+        <div class="opts"><label><input type="radio" name="q2" value="1"><span class="pill">1</span></label><label><input type="radio" name="q2" value="2"><span class="pill">2</span></label><label><input type="radio" name="q2" value="3"><span class="pill">3</span></label><label><input type="radio" name="q2" value="4"><span class="pill">4</span></label><label><input type="radio" name="q2" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q3" data-sc="value">
+        <div class="qn">Вопрос 4</div>
+        <div class="qt">Отдых без причины я как будто сначала должна заслужить.</div>
+        <div class="opts"><label><input type="radio" name="q3" value="1"><span class="pill">1</span></label><label><input type="radio" name="q3" value="2"><span class="pill">2</span></label><label><input type="radio" name="q3" value="3"><span class="pill">3</span></label><label><input type="radio" name="q3" value="4"><span class="pill">4</span></label><label><input type="radio" name="q3" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q4" data-sc="value">
+        <div class="qn">Вопрос 5</div>
+        <div class="qt">Тёплое слово просто так я принимаю тяжелее, чем похвалу за результат.</div>
+        <div class="opts"><label><input type="radio" name="q4" value="1"><span class="pill">1</span></label><label><input type="radio" name="q4" value="2"><span class="pill">2</span></label><label><input type="radio" name="q4" value="3"><span class="pill">3</span></label><label><input type="radio" name="q4" value="4"><span class="pill">4</span></label><label><input type="radio" name="q4" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q5" data-sc="value">
+        <div class="qn">Вопрос 6</div>
+        <div class="qt">Внутри живёт ощущение: меня выбирают за то, что я делаю, а не за то, какая я есть.</div>
+        <div class="opts"><label><input type="radio" name="q5" value="1"><span class="pill">1</span></label><label><input type="radio" name="q5" value="2"><span class="pill">2</span></label><label><input type="radio" name="q5" value="3"><span class="pill">3</span></label><label><input type="radio" name="q5" value="4"><span class="pill">4</span></label><label><input type="radio" name="q5" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+
+      <div class="sec-head">Часть 2. Нужность</div>
+      <div class="sec-sub">Про «выберут ли меня» и место рядом с людьми.</div>
+      <div class="q" id="q6" data-sc="chosen">
+        <div class="qn">Вопрос 7</div>
+        <div class="qt">Мне важно быть первой, кого вспомнили и позвали, иначе я чувствую себя лишней.</div>
+        <div class="opts"><label><input type="radio" name="q6" value="1"><span class="pill">1</span></label><label><input type="radio" name="q6" value="2"><span class="pill">2</span></label><label><input type="radio" name="q6" value="3"><span class="pill">3</span></label><label><input type="radio" name="q6" value="4"><span class="pill">4</span></label><label><input type="radio" name="q6" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q7" data-sc="chosen">
+        <div class="qn">Вопрос 8</div>
+        <div class="qt">Если меня выбрали не сразу, а во вторую очередь, для меня это почти как не выбрали.</div>
+        <div class="opts"><label><input type="radio" name="q7" value="1"><span class="pill">1</span></label><label><input type="radio" name="q7" value="2"><span class="pill">2</span></label><label><input type="radio" name="q7" value="3"><span class="pill">3</span></label><label><input type="radio" name="q7" value="4"><span class="pill">4</span></label><label><input type="radio" name="q7" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q8" data-sc="chosen">
+        <div class="qn">Вопрос 9</div>
+        <div class="qt">Я часто ловлю мысль «а нужна ли я им на самом деле».</div>
+        <div class="opts"><label><input type="radio" name="q8" value="1"><span class="pill">1</span></label><label><input type="radio" name="q8" value="2"><span class="pill">2</span></label><label><input type="radio" name="q8" value="3"><span class="pill">3</span></label><label><input type="radio" name="q8" value="4"><span class="pill">4</span></label><label><input type="radio" name="q8" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q9" data-sc="chosen">
+        <div class="qn">Вопрос 10</div>
+        <div class="qt">Когда близкие заняты своим, я быстро начинаю чувствовать себя брошенной.</div>
+        <div class="opts"><label><input type="radio" name="q9" value="1"><span class="pill">1</span></label><label><input type="radio" name="q9" value="2"><span class="pill">2</span></label><label><input type="radio" name="q9" value="3"><span class="pill">3</span></label><label><input type="radio" name="q9" value="4"><span class="pill">4</span></label><label><input type="radio" name="q9" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q10" data-sc="chosen">
+        <div class="qn">Вопрос 11</div>
+        <div class="qt">Мне трудно поверить, что человек останется рядом, если я перестану быть удобной.</div>
+        <div class="opts"><label><input type="radio" name="q10" value="1"><span class="pill">1</span></label><label><input type="radio" name="q10" value="2"><span class="pill">2</span></label><label><input type="radio" name="q10" value="3"><span class="pill">3</span></label><label><input type="radio" name="q10" value="4"><span class="pill">4</span></label><label><input type="radio" name="q10" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+
+      <div class="sec-head">Часть 3. Своё и чужое</div>
+      <div class="sec-sub">Про твоё «хочу» и чужое «надо».</div>
+      <div class="q" id="q11" data-sc="serve">
+        <div class="qn">Вопрос 12</div>
+        <div class="qt">Мне легче отказаться от своего желания, чем настоять на нём перед близким.</div>
+        <div class="opts"><label><input type="radio" name="q11" value="1"><span class="pill">1</span></label><label><input type="radio" name="q11" value="2"><span class="pill">2</span></label><label><input type="radio" name="q11" value="3"><span class="pill">3</span></label><label><input type="radio" name="q11" value="4"><span class="pill">4</span></label><label><input type="radio" name="q11" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q12" data-sc="serve">
+        <div class="qn">Вопрос 13</div>
+        <div class="qt">Чужие потребности я замечаю раньше и яснее, чем свои.</div>
+        <div class="opts"><label><input type="radio" name="q12" value="1"><span class="pill">1</span></label><label><input type="radio" name="q12" value="2"><span class="pill">2</span></label><label><input type="radio" name="q12" value="3"><span class="pill">3</span></label><label><input type="radio" name="q12" value="4"><span class="pill">4</span></label><label><input type="radio" name="q12" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q13" data-sc="serve">
+        <div class="qn">Вопрос 14</div>
+        <div class="qt">Сказать «нет» без чувства вины у меня почти не получается.</div>
+        <div class="opts"><label><input type="radio" name="q13" value="1"><span class="pill">1</span></label><label><input type="radio" name="q13" value="2"><span class="pill">2</span></label><label><input type="radio" name="q13" value="3"><span class="pill">3</span></label><label><input type="radio" name="q13" value="4"><span class="pill">4</span></label><label><input type="radio" name="q13" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q14" data-sc="serve">
+        <div class="qn">Вопрос 15</div>
+        <div class="qt">Я часто делаю для других больше, чем они для меня, и молчу об этом.</div>
+        <div class="opts"><label><input type="radio" name="q14" value="1"><span class="pill">1</span></label><label><input type="radio" name="q14" value="2"><span class="pill">2</span></label><label><input type="radio" name="q14" value="3"><span class="pill">3</span></label><label><input type="radio" name="q14" value="4"><span class="pill">4</span></label><label><input type="radio" name="q14" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q15" data-sc="serve">
+        <div class="qn">Вопрос 16</div>
+        <div class="qt">Своё «хочу» кажется мне менее весомым, чем «надо» для других.</div>
+        <div class="opts"><label><input type="radio" name="q15" value="1"><span class="pill">1</span></label><label><input type="radio" name="q15" value="2"><span class="pill">2</span></label><label><input type="radio" name="q15" value="3"><span class="pill">3</span></label><label><input type="radio" name="q15" value="4"><span class="pill">4</span></label><label><input type="radio" name="q15" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+
+      <div class="sec-head">Часть 4. Слабость</div>
+      <div class="sec-sub">Про право быть уязвимой и стыд за просьбу.</div>
+      <div class="q" id="q16" data-sc="weak">
+        <div class="qn">Вопрос 17</div>
+        <div class="qt">Мне страшно показаться слабой, даже перед самыми близкими.</div>
+        <div class="opts"><label><input type="radio" name="q16" value="1"><span class="pill">1</span></label><label><input type="radio" name="q16" value="2"><span class="pill">2</span></label><label><input type="radio" name="q16" value="3"><span class="pill">3</span></label><label><input type="radio" name="q16" value="4"><span class="pill">4</span></label><label><input type="radio" name="q16" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q17" data-sc="weak">
+        <div class="qn">Вопрос 18</div>
+        <div class="qt">Просить о помощи для меня почти невыносимо.</div>
+        <div class="opts"><label><input type="radio" name="q17" value="1"><span class="pill">1</span></label><label><input type="radio" name="q17" value="2"><span class="pill">2</span></label><label><input type="radio" name="q17" value="3"><span class="pill">3</span></label><label><input type="radio" name="q17" value="4"><span class="pill">4</span></label><label><input type="radio" name="q17" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q18" data-sc="weak">
+        <div class="qn">Вопрос 19</div>
+        <div class="qt">Когда кто-то при мне что-то выпрашивает, мне становится за него стыдно.</div>
+        <div class="opts"><label><input type="radio" name="q18" value="1"><span class="pill">1</span></label><label><input type="radio" name="q18" value="2"><span class="pill">2</span></label><label><input type="radio" name="q18" value="3"><span class="pill">3</span></label><label><input type="radio" name="q18" value="4"><span class="pill">4</span></label><label><input type="radio" name="q18" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q19" data-sc="weak">
+        <div class="qn">Вопрос 20</div>
+        <div class="qt">Свою уязвимость я прячу: боюсь, что ею воспользуются или меня осудят.</div>
+        <div class="opts"><label><input type="radio" name="q19" value="1"><span class="pill">1</span></label><label><input type="radio" name="q19" value="2"><span class="pill">2</span></label><label><input type="radio" name="q19" value="3"><span class="pill">3</span></label><label><input type="radio" name="q19" value="4"><span class="pill">4</span></label><label><input type="radio" name="q19" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q20" data-sc="weak">
+        <div class="qn">Вопрос 21</div>
+        <div class="qt">Сказать вслух «мне тяжело, мне страшно» для меня почти как проиграть.</div>
+        <div class="opts"><label><input type="radio" name="q20" value="1"><span class="pill">1</span></label><label><input type="radio" name="q20" value="2"><span class="pill">2</span></label><label><input type="radio" name="q20" value="3"><span class="pill">3</span></label><label><input type="radio" name="q20" value="4"><span class="pill">4</span></label><label><input type="radio" name="q20" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+
+      <div class="sec-head">Часть 5. Деньги</div>
+      <div class="sec-sub">Про то, что для тебя стоит за деньгами.</div>
+      <div class="q" id="q21" data-sc="money">
+        <div class="qn">Вопрос 22</div>
+        <div class="qt">Когда у меня просят денег, я слышу в этом не просьбу, а проверку — достойна ли я.</div>
+        <div class="opts"><label><input type="radio" name="q21" value="1"><span class="pill">1</span></label><label><input type="radio" name="q21" value="2"><span class="pill">2</span></label><label><input type="radio" name="q21" value="3"><span class="pill">3</span></label><label><input type="radio" name="q21" value="4"><span class="pill">4</span></label><label><input type="radio" name="q21" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q22" data-sc="money">
+        <div class="qn">Вопрос 23</div>
+        <div class="qt">Тема денег быстро поднимает во мне обиду или тревогу, даже если сумма небольшая.</div>
+        <div class="opts"><label><input type="radio" name="q22" value="1"><span class="pill">1</span></label><label><input type="radio" name="q22" value="2"><span class="pill">2</span></label><label><input type="radio" name="q22" value="3"><span class="pill">3</span></label><label><input type="radio" name="q22" value="4"><span class="pill">4</span></label><label><input type="radio" name="q22" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q23" data-sc="money">
+        <div class="qn">Вопрос 24</div>
+        <div class="qt">Мне кажется, мою заботу и вложения принимают как должное, а мои трудности не замечают.</div>
+        <div class="opts"><label><input type="radio" name="q23" value="1"><span class="pill">1</span></label><label><input type="radio" name="q23" value="2"><span class="pill">2</span></label><label><input type="radio" name="q23" value="3"><span class="pill">3</span></label><label><input type="radio" name="q23" value="4"><span class="pill">4</span></label><label><input type="radio" name="q23" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q24" data-sc="money">
+        <div class="qn">Вопрос 25</div>
+        <div class="qt">За фразой «давай вложимся вместе» я часто слышу упрёк или давление.</div>
+        <div class="opts"><label><input type="radio" name="q24" value="1"><span class="pill">1</span></label><label><input type="radio" name="q24" value="2"><span class="pill">2</span></label><label><input type="radio" name="q24" value="3"><span class="pill">3</span></label><label><input type="radio" name="q24" value="4"><span class="pill">4</span></label><label><input type="radio" name="q24" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q25" data-sc="money">
+        <div class="qn">Вопрос 26</div>
+        <div class="qt">Деньги для меня связаны с любовью и правом быть своей больше, чем просто с бытом.</div>
+        <div class="opts"><label><input type="radio" name="q25" value="1"><span class="pill">1</span></label><label><input type="radio" name="q25" value="2"><span class="pill">2</span></label><label><input type="radio" name="q25" value="3"><span class="pill">3</span></label><label><input type="radio" name="q25" value="4"><span class="pill">4</span></label><label><input type="radio" name="q25" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+
+      <div class="sec-head">Часть 6. Ранг</div>
+      <div class="sec-sub">Про то, где ты сверху, а где вдруг снизу.</div>
+      <div class="q" id="q26" data-sc="rank">
+        <div class="qn">Вопрос 27</div>
+        <div class="qt">Рядом с людьми, которым я мысленно отдала высокий статус, я теряюсь и становлюсь неуверенной.</div>
+        <div class="opts"><label><input type="radio" name="q26" value="1"><span class="pill">1</span></label><label><input type="radio" name="q26" value="2"><span class="pill">2</span></label><label><input type="radio" name="q26" value="3"><span class="pill">3</span></label><label><input type="radio" name="q26" value="4"><span class="pill">4</span></label><label><input type="radio" name="q26" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q27" data-sc="rank">
+        <div class="qn">Вопрос 28</div>
+        <div class="qt">С одними людьми я на равных, а рядом с другими чувствую себя как будто меньше их.</div>
+        <div class="opts"><label><input type="radio" name="q27" value="1"><span class="pill">1</span></label><label><input type="radio" name="q27" value="2"><span class="pill">2</span></label><label><input type="radio" name="q27" value="3"><span class="pill">3</span></label><label><input type="radio" name="q27" value="4"><span class="pill">4</span></label><label><input type="radio" name="q27" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q28" data-sc="rank">
+        <div class="qn">Вопрос 29</div>
+        <div class="qt">Мне важно не оказаться внизу, «под кем-то», иначе становится тревожно.</div>
+        <div class="opts"><label><input type="radio" name="q28" value="1"><span class="pill">1</span></label><label><input type="radio" name="q28" value="2"><span class="pill">2</span></label><label><input type="radio" name="q28" value="3"><span class="pill">3</span></label><label><input type="radio" name="q28" value="4"><span class="pill">4</span></label><label><input type="radio" name="q28" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q29" data-sc="rank">
+        <div class="qn">Вопрос 30</div>
+        <div class="qt">Чужой авторитет легко заставляет меня усомниться в себе.</div>
+        <div class="opts"><label><input type="radio" name="q29" value="1"><span class="pill">1</span></label><label><input type="radio" name="q29" value="2"><span class="pill">2</span></label><label><input type="radio" name="q29" value="3"><span class="pill">3</span></label><label><input type="radio" name="q29" value="4"><span class="pill">4</span></label><label><input type="radio" name="q29" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+
+      <div class="sec-head">Часть 7. Проявленность</div>
+      <div class="sec-sub">Про страх стать большой, заметной, знаменитой.</div>
+      <div class="q" id="q30" data-sc="shine">
+        <div class="qn">Вопрос 31</div>
+        <div class="qt">Если я стану слишком успешной и заметной, боюсь, что меня начнут не любить или завидовать.</div>
+        <div class="opts"><label><input type="radio" name="q30" value="1"><span class="pill">1</span></label><label><input type="radio" name="q30" value="2"><span class="pill">2</span></label><label><input type="radio" name="q30" value="3"><span class="pill">3</span></label><label><input type="radio" name="q30" value="4"><span class="pill">4</span></label><label><input type="radio" name="q30" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q31" data-sc="shine">
+        <div class="qn">Вопрос 32</div>
+        <div class="qt">Быть на виду для меня скорее опасно, чем радостно.</div>
+        <div class="opts"><label><input type="radio" name="q31" value="1"><span class="pill">1</span></label><label><input type="radio" name="q31" value="2"><span class="pill">2</span></label><label><input type="radio" name="q31" value="3"><span class="pill">3</span></label><label><input type="radio" name="q31" value="4"><span class="pill">4</span></label><label><input type="radio" name="q31" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q32" data-sc="shine">
+        <div class="qn">Вопрос 33</div>
+        <div class="qt">Где-то внутри я сама себя торможу, будто расти и подниматься мне нельзя.</div>
+        <div class="opts"><label><input type="radio" name="q32" value="1"><span class="pill">1</span></label><label><input type="radio" name="q32" value="2"><span class="pill">2</span></label><label><input type="radio" name="q32" value="3"><span class="pill">3</span></label><label><input type="radio" name="q32" value="4"><span class="pill">4</span></label><label><input type="radio" name="q32" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q33" data-sc="shine">
+        <div class="qn">Вопрос 34</div>
+        <div class="qt">Мне спокойнее оставаться в тени и быть удобной, чем быть яркой и вызвать чьё-то осуждение.</div>
+        <div class="opts"><label><input type="radio" name="q33" value="1"><span class="pill">1</span></label><label><input type="radio" name="q33" value="2"><span class="pill">2</span></label><label><input type="radio" name="q33" value="3"><span class="pill">3</span></label><label><input type="radio" name="q33" value="4"><span class="pill">4</span></label><label><input type="radio" name="q33" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q34" data-sc="shine">
+        <div class="qn">Вопрос 35</div>
+        <div class="qt">Большие деньги, известность, влияние притягивают меня — и одновременно пугают.</div>
+        <div class="opts"><label><input type="radio" name="q34" value="1"><span class="pill">1</span></label><label><input type="radio" name="q34" value="2"><span class="pill">2</span></label><label><input type="radio" name="q34" value="3"><span class="pill">3</span></label><label><input type="radio" name="q34" value="4"><span class="pill">4</span></label><label><input type="radio" name="q34" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+      <div class="q" id="q35" data-sc="shine">
+        <div class="qn">Вопрос 36</div>
+        <div class="qt">Если я поднимусь высоко, боюсь остаться там одна.</div>
+        <div class="opts"><label><input type="radio" name="q35" value="1"><span class="pill">1</span></label><label><input type="radio" name="q35" value="2"><span class="pill">2</span></label><label><input type="radio" name="q35" value="3"><span class="pill">3</span></label><label><input type="radio" name="q35" value="4"><span class="pill">4</span></label><label><input type="radio" name="q35" value="5"><span class="pill">5</span></label></div>
+        <div class="ends"><span>совсем нет</span><span>прямо про меня</span></div>
+      </div>
+
+  </form>
+  <div class="warnmsg" id="warn"></div>
+
+  <div class="bar">
+    <div class="progress"><i id="pi"></i></div>
+    <div class="cnt"><span id="cnt">0</span>/36</div>
+    <button type="button" class="go" id="go">Показать заключение</button>
+  </div>
+
+  <div id="result"></div>
+
+  <div class="foot">
+    Тест составлен под тебя. Это опора для разговора, а не приговор.<br>
+    Что откликнулось или, наоборот, задело — принеси на встречу. Разберём вместе.
+  </div>
+</div>
+
+<script>
+const SCALES = {"value": {"name": "Ценность = делание", "color": "#7c3aed"}, "chosen": {"name": "«Меня не выбирают»", "color": "#8b5cf6"}, "serve": {"name": "Служить и заслуживать", "color": "#a855f7"}, "weak": {"name": "Запрет на слабость", "color": "#c026d3"}, "money": {"name": "Деньги как проверка", "color": "#b4288f"}, "rank": {"name": "Ранг и иерархия", "color": "#7e22ce"}, "shine": {"name": "Страх быть большой", "color": "#6d28d9"}};
+const TXT = {"value": {"hi": "Ты почти не отделяешь свою ценность от того, что успела сделать. Ценят как будто не тебя, а твою пользу. Это и есть корень усталости: планка убегает быстрее, чем ты за ней бежишь, и «достаточно» не наступает никогда.", "mi": "Иногда ты можешь принять тепло просто так, но чуть что — и включается «надо заслужить». Ценность то и дело утекает в дела, и тогда пауза начинает пугать.", "lo": "Ты в целом веришь, что тебя можно любить и без подвигов. Это большая опора: значит, есть откуда возвращать себе достоинство, когда накрывает."}, "chosen": {"hi": "«Меня не выбирают просто так» звучит в тебе громко. Быть второй по счёту для тебя почти как быть невыбранной, и рядом всё время дежурит вопрос «а нужна ли я им». Это очень ранняя, детская боль, и она не про сегодняшних людей, а про то, как когда-то было с самыми первыми.", "mi": "Тревога «выберут ли меня» просыпается не всегда, но в значимых местах поднимается быстро. Тогда факт «меня позвали» перестаёт успокаивать: важнее, каким по счёту.", "lo": "Ты в основном чувствуешь, что твоё место рядом с людьми за тобой закреплено. Страх быть лишней есть, но не правит тобой."}, "serve": {"hi": "Ты живёшь развёрнутой к чужим потребностям и почти спиной к своим. Своё «хочу» кажется мелким рядом с чужим «надо». Так копится тихая обида: я слышу всех, а мои никто. Это не доброта, это стратегия — быть нужной, чтобы не бросили.", "mi": "Ты часто уступаешь и молчишь про свой вклад, хотя иногда уже можешь настоять на своём. Граница есть, но её легко смять чувством вины.", "lo": "Ты умеешь ставить своё «хочу» рядом с чужим «надо» и говорить «нет» без большой вины. Это дорогого стоит для человека с твоей историей."}, "weak": {"hi": "Слабость под сильным запретом. Своя уязвимость почти невыносима, и оттого чужая просьба вызывает не сочувствие, а стыд. Это защита: если нельзя быть слабой самой, невыносимо видеть слабость и в других. Но именно право быть слабой и есть то, чего тебе не хватает, чтобы отдохнуть.", "mi": "Ты умеешь быть уязвимой в безопасных местах, но чаще прячешь это. Просить трудно, а чужие просьбы иногда неприятно задевают.", "lo": "Ты можешь позволить себе быть слабой и попросить, не проваливаясь в стыд. Значит, сила и мягкость в тебе уже уживаются."}, "money": {"hi": "Деньги для тебя — не про быт, а про любовь и право быть своей. Поэтому в любой просьбе «вложись» ты слышишь не расчёт, а старый вопрос «докажи, что достойна». Здесь эхо очень раннего: когда-то тебе дали понять, что заботу и место надо заслужить. Сегодня чужая фраза про деньги нажимает на ту же кнопку.", "mi": "Тема денег заряжена: небольшая сумма способна поднять обиду или тревогу. Иногда за чужой просьбой ты слышишь упрёк, даже когда его нет.", "lo": "Деньги для тебя скорее остаются деньгами и не превращаются автоматически в проверку любви. Это здоровая опора в теме, где у тебя многое болело."}, "rank": {"hi": "Ты живёшь в очень неровной иерархии: с одними на равных, а рядом с теми, кому сама отдала высокий статус, будто становишься меньше. Уверенность включается и гаснет не от твоей силы, а от ранга собеседника. Отсюда и тяга к власти: не унижать, а перестать бояться быть униженной.", "mi": "Твоя устойчивость зависит от того, с кем ты. Перед авторитетной фигурой легко потерять почву, хотя в других местах ты вполне на своём.", "lo": "Ты держишь себя примерно одинаково с разными людьми, и чужой статус не так легко сбивает тебя с ног."}, "shine": {"hi": "Вот и главное. Быть большой, заметной, богатой для тебя не радость, а опасность. Внутри стоит сторож, который тормозит твой рост, потому что «наверху» ты ждёшь зависти, осуждения и одиночества. Заметь связь: если «меня не выбирают», то быть на виду — значит стать удобной мишенью для того, чтобы снова не выбрали, только уже при всех. В тени безопаснее. Но там тесно живой тебе.", "mi": "Успех тебя и манит, и пугает. Ты позволяешь себе хотеть большего, но на подступах к настоящей видимости включается торможение «мне туда нельзя».", "lo": "Ты в целом разрешаешь себе расти и быть заметной. Страх проявленности есть, но он не держит тебя за руки — это хорошая новость для всего, что ты хочешь построить."}};
+const NQ = 36;
+const answers = new Array(NQ).fill(0);
+const cards = [...document.querySelectorAll('.q')];
+const order = cards.map(c=>c.dataset.sc);
+
+const pi=document.getElementById("pi"), cnt=document.getElementById("cnt"), go=document.getElementById("go");
+document.getElementById("quiz").addEventListener("change",e=>{
+  if(e.target.name && e.target.name[0]==="q"){
+    const i=+e.target.name.slice(1);
+    answers[i]=+e.target.value;
+    document.getElementById("q"+i).classList.add("done");
+    const done=answers.filter(x=>x>0).length;
+    cnt.textContent=done;
+    pi.style.width=(done/NQ*100)+"%";
+    document.getElementById("warn").textContent="";
+  }
+});
+
+function scaleScores(){
+  const acc={},num={};
+  Object.keys(SCALES).forEach(k=>{acc[k]=0;num[k]=0});
+  order.forEach((k,i)=>{acc[k]+=answers[i];num[k]++;});
+  const out={};
+  Object.keys(SCALES).forEach(k=>{ out[k]=Math.round(((acc[k]/num[k])-1)/4*100); });
+  return out;
+}
+const LVL = p => p>=68?"hi":(p>=42?"mi":"lo");
+const LVLNAME = {hi:"выражено",mi:"заметно",lo:"мягко"};
+
+function render(){
+  const s=scaleScores();
+  const keys=Object.keys(SCALES).sort((a,b)=>s[b]-s[a]);
+  const top=keys.slice(0,2).map(k=>SCALES[k].name.replace(/[«»]/g,''));
+  const shineP=s.shine, valueP=s.value, chosenP=s.chosen;
+  let lead;
+  if(shineP>=60 && (chosenP>=55||valueP>=55)){
+    lead=`Картинка сложилась ясная. Сильнее всего в тебе звучат темы «${top[0].toLowerCase()}» и «${top[1].toLowerCase()}». И вот что они говорят вместе: твой страх быть большой — это не про амбиции. Это оборотная сторона «меня не выбирают». Пока ценность держится на делании, высота становится опасной: чем ты заметнее, тем больнее, если снова не выберут, и тем больше тех, кто может унизить. Поэтому тайный контракт звучит так: останусь удобной и в тени, зато меня не отвергнут при всех.`;
+  } else if(shineP>=55){
+    lead=`Заметнее всего в тебе тема «${top[0].toLowerCase()}». Твой страх проявленности держится не на лени и не на скромности, а на старом уравнении: быть большой = стать заметной мишенью. Пока безопасность ты добываешь тем, что удобна и полезна, любая высота ощущается как риск потерять эту защиту.`;
+  } else {
+    lead=`Сильнее всего сейчас звучат темы «${top[0].toLowerCase()}» и «${top[1].toLowerCase()}». Прямого запрета на успех у тебя меньше, чем можно было ждать, — и это ресурс. Но корень тот же: ценность пока приходится всё время подтверждать, и оттого расти как будто можно только заслужив право.`;
+  }
+  let out=`
+  <div class="verdict"><h2>Что получилось</h2><p class="big">${lead}</p></div>
+  <div class="scales"><h3>По семи темам</h3>`;
+  keys.forEach(k=>{
+    const p=s[k], lv=LVL(p);
+    out+=`<div class="sc">
+      <div class="row"><div class="nm">${SCALES[k].name}<span class="lvl ${lv}">${LVLNAME[lv]}</span></div><div class="pct">${p}%</div></div>
+      <div class="track"><i style="width:${p}%;background:linear-gradient(90deg,${SCALES[k].color},#b4288f)"></i></div>
+      <p class="txt">${TXT[k][lv]}</p></div>`;
+  });
+  out+=`</div>
+  <div class="closing">
+    <h3>Заключение</h3>
+    <p>Собери всё в одну линию. «Меня выбирают, только если я делаю» — и рядом «быть на виду опасно». Это два конца одной верёвки. Достоинство ты привыкла <b>зарабатывать</b>, а не иметь. Но заработанное всегда можно отнять новой задачей, поэтому гонка не кончается, а высота пугает: чем выше поднимешься, тем есть что терять и тем виднее, если «спишут».</p>
+    <p>Отсюда и деньги, которые бьют так больно. Чужое «вложись» ты слышишь не как быт, а как «докажи, что достойна» — тем самым голосом, что когда-то сказал про хлеб и воду. И отсюда стыд за тех, кто просит: просьба — это слабость, а слабость тебе запрещена, потому что слабую, как ты боишься, не выбирают.</p>
+    <p class="quote">Ты боишься быть большой не потому, что тебе туда не надо. А потому, что там, наверху, по твоему старому закону, тебя должны разлюбить. Этот закон писали не для взрослой тебя — и его можно переписать.</p>
+    <p>Хорошая новость видна прямо в твоих ответах: там, где баллы ниже, у тебя уже есть живая опора — способность быть на равных, принять тепло без заслуги, сказать своё «нет». С этого и будем растить право быть заметной без наказания.</p>
+    <p style="margin-top:18px;font-weight:700;color:var(--accent2)">Что взять с собой на встречу</p>
+    <ul class="qs">
+      <li><b>Достоинство без делания.</b> Что поднимается внутри на фразу «я ценна и сейчас, когда ничего не сделала» — тревога, злость, пустота?</li>
+      <li><b>Чей это голос.</b> Когда близкий говорит про деньги, чей голос ты слышишь на самом деле? И кто первым решил, что тебя без старания можно списать?</li>
+      <li><b>Цена высоты.</b> Представь, что ты стала успешной, заметной, богатой. Чего именно ты в этой картинке боишься — зависти, одиночества, унижения? Кто в ней от тебя отворачивается?</li>
+      <li><b>Право быть слабой.</b> Где за последнюю неделю ты не позволила себе попросить или показать усталость — и что было бы, если бы позволила?</li>
+    </ul>
+  </div>
+  <div style="text-align:center"><button class="redo" onclick="location.reload()">Пройти заново</button></div>`;
+  const r=document.getElementById("result");
+  r.innerHTML=out; r.classList.add("show");
+  r.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+go.addEventListener("click",()=>{
+  const done=answers.filter(x=>x>0).length;
+  if(done<NQ){
+    document.getElementById("warn").textContent="Остались неотвеченные вопросы ("+(NQ-done)+"). Без них картинка будет неполной.";
+    const first=answers.findIndex(x=>x===0);
+    if(first>-1) document.getElementById("q"+first).scrollIntoView({behavior:"smooth",block:"center"});
+    return;
+  }
+  render();
+});
+</script>
+</body>
+</html>
