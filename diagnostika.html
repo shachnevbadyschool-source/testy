@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Заявка на диагностическую сессию — Антон Шачнёв</title>
+<meta name="description" content="Заявка на бесплатную 30-минутную диагностическую встречу с психологом Антоном Шачнёвым.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5efe6;
+  --surface:#fffdf9;
+  --ink:#2b2521;
+  --muted:#847a70;
+  --accent:#b0602e;
+  --accent-dark:#8f4a20;
+  --accent-soft:#f0e2d3;
+  --line:#e8ded0;
+  --ok:#3f7d52;
+  --err:#b23b3b;
+  --radius:18px;
+  --shadow:0 18px 50px -24px rgba(70,45,20,.35);
+  font-family:'Manrope',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  line-height:1.55;font-size:16px;
+  background-image:radial-gradient(1200px 500px at 80% -10%, #fbf4ea 0%, rgba(251,244,234,0) 60%);
+}
+.wrap{max-width:640px;margin:0 auto;padding:22px 18px 60px}
+
+/* ---- Шапка ---- */
+.hero{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:30px 24px;box-shadow:var(--shadow);position:relative;overflow:hidden
+}
+.hero:before{content:"";position:absolute;inset:0 0 auto 0;height:5px;
+  background:linear-gradient(90deg,var(--accent),#d98a4e)}
+.kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 12px}
+h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:34px;line-height:1.12;margin:0 0 14px;letter-spacing:.2px}
+.lead{color:var(--muted);margin:0 0 18px;font-size:15.5px}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.fact{font-size:13px;color:var(--ink);background:var(--accent-soft);border-radius:999px;padding:6px 13px;font-weight:600}
+.note{font-size:13.5px;color:var(--muted);margin:18px 0 0;padding-top:16px;border-top:1px solid var(--line)}
+
+/* ---- Секции формы ---- */
+form{margin-top:22px}
+.section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:22px 20px;margin-bottom:16px;box-shadow:0 10px 30px -26px rgba(70,45,20,.4)}
+.section h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:23px;margin:0 0 4px;display:flex;align-items:center;gap:10px}
+.section .step{font:700 12px/1 'Manrope',sans-serif;color:var(--accent);background:var(--accent-soft);
+  width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.section .sub{color:var(--muted);font-size:13.5px;margin:0 0 16px}
+
+.field{margin-bottom:16px}
+.field:last-child{margin-bottom:0}
+label.q{display:block;font-weight:600;font-size:15px;margin-bottom:7px}
+label .req{color:var(--accent);font-weight:700}
+.hint{font-size:12.5px;color:var(--muted);margin:-2px 0 8px}
+
+input[type=text],input[type=number],textarea,select{
+  width:100%;font:inherit;color:var(--ink);background:#fff;
+  border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;transition:border-color .15s,box-shadow .15s
+}
+textarea{min-height:96px;resize:vertical}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px rgba(176,96,46,.12)}
+input::placeholder,textarea::placeholder{color:#b6aa9c}
+.at{position:relative}
+.at input{padding-left:30px}
+.at:before{content:"@";position:absolute;left:13px;top:12px;color:var(--muted);font-weight:600}
+
+/* шкала 1..10 */
+.scale{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+.scale input{position:absolute;opacity:0;pointer-events:none}
+.scale label{display:flex;align-items:center;justify-content:center;height:42px;border:1.5px solid var(--line);
+  border-radius:10px;font-weight:700;cursor:pointer;background:#fff;transition:.12s;font-size:15px}
+.scale input:checked+label{background:var(--accent);border-color:var(--accent);color:#fff}
+.scale-ends{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:7px}
+
+/* radio-чипы */
+.choices{display:flex;flex-direction:column;gap:9px}
+.choice{position:relative}
+.choice input{position:absolute;opacity:0;pointer-events:none}
+.choice label{display:block;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;
+  background:#fff;font-size:14.5px;transition:.12s}
+.choice input:checked+label{border-color:var(--accent);background:var(--accent-soft);font-weight:600}
+
+/* согласие */
+.agree{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1.5px solid var(--line);
+  border-radius:12px;padding:14px}
+.agree input{width:22px;height:22px;flex:none;margin-top:1px;accent-color:var(--accent)}
+.agree label{font-size:14px;color:var(--ink)}
+
+.errmsg{color:var(--err);font-size:12.5px;margin-top:6px;display:none}
+.field.invalid input,.field.invalid textarea,.field.invalid .scale label,.field.invalid .agree{border-color:var(--err)}
+.field.invalid .errmsg{display:block}
+
+/* кнопка */
+.submit{width:100%;font:700 17px/1 'Manrope',sans-serif;color:#fff;background:var(--accent);
+  border:none;border-radius:14px;padding:17px;cursor:pointer;transition:.15s;box-shadow:0 14px 30px -14px rgba(176,96,46,.7)}
+.submit:hover{background:var(--accent-dark)}
+.submit:disabled{opacity:.65;cursor:progress}
+.priv{font-size:12px;color:var(--muted);text-align:center;margin:14px 4px 0}
+
+/* honeypot */
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+/* success */
+.done{display:none;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:36px 26px;text-align:center;box-shadow:var(--shadow)}
+.done .mark{width:64px;height:64px;border-radius:50%;background:var(--accent-soft);color:var(--accent);
+  display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 16px}
+.done h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:28px;margin:0 0 10px}
+.done p{color:var(--muted);margin:0 auto 22px;max-width:420px}
+.tgbtn{display:inline-block;text-decoration:none;font-weight:700;color:#fff;background:var(--accent);
+  padding:14px 26px;border-radius:12px}
+@media(max-width:420px){ h1{font-size:29px} .scale label{height:38px;font-size:14px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ШАПКА -->
+  <header class="hero">
+    <p class="kicker">Психолог · гештальт-терапевт</p>
+    <h1>Заявка на диагностическую сессию</h1>
+    <p class="lead">30 минут один на один, бесплатно. Мы разберём, с чем ты сейчас, и я честно скажу, могу ли быть здесь полезен и как выглядела бы дальнейшая работа.</p>
+    <div class="facts">
+      <span class="fact">30 минут</span>
+      <span class="fact">Онлайн</span>
+      <span class="fact">Бесплатно</span>
+    </div>
+    <p class="note">Заявки я читаю лично и отвечаю в Telegram каждому, чей запрос мне откликается. Заполнение занимает около 5 минут. Чем честнее ответишь, тем полезнее будет встреча.</p>
+  </header>
+
+  <!-- ФОРМА -->
+  <form id="form" novalidate>
+
+    <!-- honeypot от спама -->
+    <div class="hp"><label>Не заполняйте это поле<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+
+    <section class="section">
+      <h2><span class="step">1</span> Знакомство</h2>
+      <p class="sub">Как с тобой связаться.</p>
+
+      <div class="field">
+        <label class="q" for="name">Как тебя зовут? <span class="req">*</span></label>
+        <input type="text" id="name" name="Имя" placeholder="Имя" autocomplete="name">
+        <div class="errmsg">Напиши, как к тебе обращаться.</div>
+      </div>
+
+      <div class="field">
+        <label class="q" for="age">Сколько тебе лет?</label>
+        <input type="number" id="age" name="Возраст" min="14" max="99" inputmode="numeric" placeholder="Например, 34">
+      </div>
+
+      <div class="field">
+        <label class="q" for="tg">Ник в Telegram <span class="req">*</span></label>
+        <p class="hint">Сюда я напишу по твоей заявке.</p>
+        <div class="at"><input type="text" id="tg" name="Telegram" placeholder="username" autocapitalize="off" autocomplete="off"></div>
+        <div class="errmsg">Оставь ник в Telegram, чтобы я мог ответить.</div>
+      </div>
+
+      <div class="field">
+        <label class="q" for="ig">Ник в Instagram</label>
+        <div class="at"><input type="text" id="ig" name="Instagram" placeholder="username" autocapitalize="off" autocomplete="off"></div>
+      </div>
+
+      <div class="field">
+        <label class="q" for="city">Город и часовой пояс</label>
+        <input type="text" id="city" name="Город" placeholder="Например, Омск, +6 к Москве">
+      </div>
+    </section>
+
+    <section class="section">
+      <h2><span class="step">2</span> С чем ты идёшь</h2>
+      <p class="sub">Это самая важная часть. Пиши своими словами, без причёсывания.</p>
+
+      <div class="field">
+        <label class="q" for="request">Что сейчас беспокоит или не даёт покоя? <span class="req">*</span></label>
+        <textarea id="request" name="Запрос" placeholder="Опиши ситуацию так, как чувствуешь её сам."></textarea>
+        <div class="errmsg">Опиши, пожалуйста, свою ситуацию хотя бы в паре фраз.</div>
+      </div>
+
+      <div class="field">
+        <label class="q" for="howlong">Как давно это длится?</label>
+        <input type="text" id="howlong" name="Как_давно" placeholder="Например, около года">
+      </div>
+
+      <div class="field">
+        <label class="q">Насколько сильно это мешает тебе жить прямо сейчас?</label>
+        <div class="scale" role="radiogroup" aria-label="Оценка от 1 до 10">
+          <!-- 1..10 -->
+        </div>
+        <div class="scale-ends"><span>1 · почти не мешает</span><span>10 · очень мешает</span></div>
+      </div>
+
+      <div class="field">
+        <label class="q" for="tried">Что ты уже пробовал, чтобы с этим справиться?</label>
+        <textarea id="tried" name="Что_пробовал" placeholder="Что помогало, что нет."></textarea>
+      </div>
+
+      <div class="field">
+        <label class="q" for="prev">Был ли раньше в терапии или у психолога?</label>
+        <input type="text" id="prev" name="Опыт_терапии" placeholder="Если да, коротко про опыт">
+      </div>
+    </section>
+
+    <section class="section">
+      <h2><span class="step">3</span> Готовность</h2>
+      <p class="sub">Пара вопросов, чтобы встреча прошла по делу.</p>
+
+      <div class="field">
+        <label class="q" for="result">Что хочешь получить от этой встречи? Как поймёшь, что она прошла не зря? <span class="req">*</span></label>
+        <textarea id="result" name="Желаемый_результат" placeholder="Твой ориентир на эти 30 минут."></textarea>
+        <div class="errmsg">Напиши, какой результат был бы для тебя ценным.</div>
+      </div>
+
+      <div class="field">
+        <label class="q">Если после диагностики я предложу формат дальнейшей работы, насколько ты сейчас готов вкладывать в это время и деньги?</label>
+        <div class="choices" id="ready">
+          <div class="choice"><input type="radio" id="r1" name="Готовность" value="Готов начать"><label for="r1">Готов начать, если подойдём друг другу</label></div>
+          <div class="choice"><input type="radio" id="r2" name="Готовность" value="Рассматриваю"><label for="r2">Рассматриваю, зависит от условий</label></div>
+          <div class="choice"><input type="radio" id="r3" name="Готовность" value="Присматриваюсь"><label for="r3">Пока только присматриваюсь</label></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="q" for="source">Откуда узнал обо мне?</label>
+        <input type="text" id="source" name="Откуда_узнал" placeholder="Instagram, Telegram, рекомендация">
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="field" id="confirmField">
+        <div class="agree">
+          <input type="checkbox" id="confirm" name="Подтверждение" value="Подтверждаю приход">
+          <label for="confirm">Подтверждаю, что приду в назначенное время, а если что-то изменится, предупрежу минимум за 3 часа. <span class="req">*</span></label>
+        </div>
+        <div class="errmsg">Отметь, пожалуйста, это подтверждение.</div>
+      </div>
+      <div class="field" id="consentField">
+        <div class="agree">
+          <input type="checkbox" id="consent" name="Согласие_данные" value="Согласен">
+          <label for="consent">Согласен, что мои ответы получит Антон для подготовки к встрече. <span class="req">*</span></label>
+        </div>
+        <div class="errmsg">Без согласия я не смогу принять заявку.</div>
+      </div>
+
+      <button type="submit" class="submit" id="btn">Отправить заявку</button>
+      <p class="priv">Данные видит только Антон. Никакой рассылки и передачи третьим лицам.</p>
+    </section>
+  </form>
+
+  <!-- ЭКРАН УСПЕХА -->
+  <div class="done" id="done">
+    <div class="mark">✓</div>
+    <h2>Заявка принята</h2>
+    <p>Спасибо за честность. Я читаю каждую заявку лично и напишу тебе в Telegram, чтобы согласовать время. Пока ждёшь, загляни в мой канал, там разборы и много полезного.</p>
+    <a class="tgbtn" id="tglink" href="#" target="_blank" rel="noopener">Открыть Telegram-канал</a>
+  </div>
+
+</div>
+
+<script>
+/* ============================================================
+   НАСТРОЙКА — заполнить два значения ниже
+   ============================================================ */
+const CONFIG = {
+  // 1) Ссылка-приёмник из Google Apps Script (см. инструкцию, шаг «Развернуть»)
+  ENDPOINT_URL: "https://script.google.com/macros/s/AKfycbx0yAhn_8eWxETvHDZh6yVyAJdZFkf73EFgAXYXYtR10XLZ4Y-Co-5968-qXOdxjedyAA/exec",
+  // 2) Ссылка на твой Telegram-канал (кнопка на экране «спасибо»)
+  CHANNEL_URL:  "https://t.me/+M5qAfr-d8IQ2MTA6"
+};
+/* ============================================================ */
+
+// строим шкалу 1..10
+(function(){
+  const box=document.querySelector('.scale');
+  for(let i=1;i<=10;i++){
+    const id='sc'+i;
+    box.insertAdjacentHTML('beforeend',
+      `<div><input type="radio" id="${id}" name="Острота_1_10" value="${i}"><label for="${id}">${i}</label></div>`);
+  }
+})();
+
+document.getElementById('tglink').href = CONFIG.CHANNEL_URL;
+
+const form=document.getElementById('form');
+const btn=document.getElementById('btn');
+
+function markInvalid(field, bad){ field.classList.toggle('invalid', bad); }
+
+form.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+
+  // honeypot: если бот заполнил — тихо выходим
+  if(form.website.value.trim()!=='') return;
+
+  // валидация обязательных
+  let ok=true;
+  const need=[['name','#name'],['tg','#tg'],['request','#request'],['result','#result']];
+  need.forEach(([_,sel])=>{
+    const el=document.querySelector(sel);
+    const bad=el.value.trim()==='';
+    markInvalid(el.closest('.field'), bad); if(bad) ok=false;
+  });
+  const cf=document.getElementById('confirm'), cField=document.getElementById('confirmField');
+  markInvalid(cField, !cf.checked); if(!cf.checked) ok=false;
+  const cs=document.getElementById('consent'), sField=document.getElementById('consentField');
+  markInvalid(sField, !cs.checked); if(!cs.checked) ok=false;
+
+  if(!ok){ document.querySelector('.invalid')?.scrollIntoView({behavior:'smooth',block:'center'}); return; }
+
+  // сбор данных
+  const fd=new FormData(form);
+  fd.delete('website');
+  fd.append('Отправлено', new Date().toLocaleString('ru-RU'));
+  const params=new URLSearchParams();
+  for(const [k,v] of fd.entries()) params.append(k,v);
+
+  btn.disabled=true; btn.textContent='Отправляю...';
+
+  try{
+    await fetch(CONFIG.ENDPOINT_URL, {method:'POST', mode:'no-cors', body:params});
+    // при mode:no-cors ответ непрозрачный, поэтому считаем отправку успешной
+    form.style.display='none';
+    document.querySelector('.hero').style.display='none';
+    document.getElementById('done').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }catch(err){
+    btn.disabled=false; btn.textContent='Отправить заявку';
+    alert('Не получилось отправить. Проверь интернет и попробуй ещё раз, либо напиши мне в Telegram.');
+  }
+});
+</script>
+</body>
+</html>
