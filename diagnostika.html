@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Заявка на диагностическую сессию — Антон Шачнёв</title>
-<meta name="description" content="Заявка на бесплатную 30-минутную диагностическую встречу с психологом Антоном Шачнёвым.">
+<title>Заявка на диагностическую сессию — Антон Шачнев</title>
+<meta name="description" content="Заявка на бесплатную 30-минутную диагностическую встречу с психологом Антоном Шачневым.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -51,7 +51,8 @@ h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:34px
 form{margin-top:22px}
 .section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
   padding:22px 20px;margin-bottom:16px;box-shadow:0 10px 30px -26px rgba(70,45,20,.4)}
-.section h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:23px;margin:0 0 4px;display:flex;align-items:center;gap:10px}
+.section h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:23px;line-height:1.15;margin:0 0 4px;display:flex;align-items:flex-start;gap:10px}
+.section h2 .step{margin-top:2px}
 .section .step{font:700 12px/1 'Manrope',sans-serif;color:var(--accent);background:var(--accent-soft);
   width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex:none}
 .section .sub{color:var(--muted);font-size:13.5px;margin:0 0 16px}
@@ -95,6 +96,14 @@ input::placeholder,textarea::placeholder{color:#b6aa9c}
 .agree input{width:22px;height:22px;flex:none;margin-top:1px;accent-color:var(--accent)}
 .agree label{font-size:14px;color:var(--ink)}
 
+/* блок подписки на канал */
+.substep{background:var(--accent-soft);border-radius:14px;padding:16px 16px 18px;margin-bottom:12px}
+.substep .subtitle{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:20px;margin:0 0 4px;color:var(--ink)}
+.substep .subtext{font-size:13px;color:#7c5638;margin:0 0 13px}
+.channelbtn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:700;font-size:14.5px;color:#fff;background:var(--accent);padding:11px 18px;border-radius:11px}
+.channelbtn:before{content:"✈";font-size:15px}
+.channelbtn:hover{background:var(--accent-dark)}
+
 .errmsg{color:var(--err);font-size:12.5px;margin-top:6px;display:none}
 .field.invalid input,.field.invalid textarea,.field.invalid .scale label,.field.invalid .agree{border-color:var(--err)}
 .field.invalid .errmsg{display:block}
@@ -126,15 +135,15 @@ input::placeholder,textarea::placeholder{color:#b6aa9c}
 
   <!-- ШАПКА -->
   <header class="hero">
-    <p class="kicker">Психолог · гештальт-терапевт</p>
+    <p class="kicker">Антон Шачнев — психотерапевт</p>
     <h1>Заявка на диагностическую сессию</h1>
-    <p class="lead">30 минут один на один, бесплатно. Мы разберём, с чем ты сейчас, и я честно скажу, могу ли быть здесь полезен и как выглядела бы дальнейшая работа.</p>
+    <p class="lead">30 минут один на один, бесплатно. Мы разберём твой запрос, и я честно скажу, могу ли быть здесь полезен и как выглядела бы наша дальнейшая работа.</p>
     <div class="facts">
       <span class="fact">30 минут</span>
       <span class="fact">Онлайн</span>
       <span class="fact">Бесплатно</span>
     </div>
-    <p class="note">Заявки я читаю лично и отвечаю в Telegram каждому, чей запрос мне откликается. Заполнение занимает около 5 минут. Чем честнее ответишь, тем полезнее будет встреча.</p>
+    <p class="note">Заявки я читаю лично и отвечаю каждому в Telegram. Заполнение занимает около 5 минут. Чем честнее ответишь, тем полезнее будет встреча.</p>
   </header>
 
   <!-- ФОРМА -->
@@ -177,12 +186,12 @@ input::placeholder,textarea::placeholder{color:#b6aa9c}
     </section>
 
     <section class="section">
-      <h2><span class="step">2</span> С чем ты идёшь</h2>
+      <h2><span class="step">2</span><span>С чем ты пришёл(ла) на диагностическую сессию <span style="font-weight:400;color:var(--muted);white-space:nowrap">(запрос)</span></span></h2>
       <p class="sub">Это самая важная часть. Пиши своими словами, без причёсывания.</p>
 
       <div class="field">
         <label class="q" for="request">Что сейчас беспокоит или не даёт покоя? <span class="req">*</span></label>
-        <textarea id="request" name="Запрос" placeholder="Опиши ситуацию так, как чувствуешь её сам."></textarea>
+        <textarea id="request" name="Запрос" placeholder="Опиши ситуацию так, как чувствуешь её сам(а)."></textarea>
         <div class="errmsg">Опиши, пожалуйста, свою ситуацию хотя бы в паре фраз.</div>
       </div>
 
@@ -200,12 +209,12 @@ input::placeholder,textarea::placeholder{color:#b6aa9c}
       </div>
 
       <div class="field">
-        <label class="q" for="tried">Что ты уже пробовал, чтобы с этим справиться?</label>
+        <label class="q" for="tried">Что ты уже пробовал(а), чтобы с этим справиться?</label>
         <textarea id="tried" name="Что_пробовал" placeholder="Что помогало, что нет."></textarea>
       </div>
 
       <div class="field">
-        <label class="q" for="prev">Был ли раньше в терапии или у психолога?</label>
+        <label class="q" for="prev">Был(а) ли раньше в терапии или у психолога?</label>
         <input type="text" id="prev" name="Опыт_терапии" placeholder="Если да, коротко про опыт">
       </div>
     </section>
@@ -221,21 +230,33 @@ input::placeholder,textarea::placeholder{color:#b6aa9c}
       </div>
 
       <div class="field">
-        <label class="q">Если после диагностики я предложу формат дальнейшей работы, насколько ты сейчас готов вкладывать в это время и деньги?</label>
+        <label class="q">Если после диагностики рекомендацией будет продолжение дальнейшей психотерапевтической работы, насколько ты сейчас готов(а) вкладывать в это время и деньги?</label>
         <div class="choices" id="ready">
-          <div class="choice"><input type="radio" id="r1" name="Готовность" value="Готов начать"><label for="r1">Готов начать, если подойдём друг другу</label></div>
+          <div class="choice"><input type="radio" id="r1" name="Готовность" value="Готов начать"><label for="r1">Готов(а) начать, если подойдём друг другу</label></div>
           <div class="choice"><input type="radio" id="r2" name="Готовность" value="Рассматриваю"><label for="r2">Рассматриваю, зависит от условий</label></div>
           <div class="choice"><input type="radio" id="r3" name="Готовность" value="Присматриваюсь"><label for="r3">Пока только присматриваюсь</label></div>
         </div>
       </div>
 
       <div class="field">
-        <label class="q" for="source">Откуда узнал обо мне?</label>
+        <label class="q" for="source">Откуда узнал(а) обо мне?</label>
         <input type="text" id="source" name="Откуда_узнал" placeholder="Instagram, Telegram, рекомендация">
       </div>
     </section>
 
     <section class="section">
+      <div class="field" id="subField">
+        <div class="substep">
+          <p class="subtitle">Подпишись на мой Telegram-канал</p>
+          <p class="subtext">Там я публикую разборы и материалы. Это обязательный шаг: перед встречей я пишу именно в Telegram.</p>
+          <a class="channelbtn" id="channelBtn" href="#" target="_blank" rel="noopener">Открыть канал и подписаться</a>
+        </div>
+        <div class="agree">
+          <input type="checkbox" id="subscribed" name="Подписка_на_канал" value="Подписался">
+          <label for="subscribed">Я подписался(ась) на Telegram-канал. <span class="req">*</span></label>
+        </div>
+        <div class="errmsg">Подпишись на канал и отметь этот пункт.</div>
+      </div>
       <div class="field" id="confirmField">
         <div class="agree">
           <input type="checkbox" id="confirm" name="Подтверждение" value="Подтверждаю приход">
@@ -246,7 +267,7 @@ input::placeholder,textarea::placeholder{color:#b6aa9c}
       <div class="field" id="consentField">
         <div class="agree">
           <input type="checkbox" id="consent" name="Согласие_данные" value="Согласен">
-          <label for="consent">Согласен, что мои ответы получит Антон для подготовки к встрече. <span class="req">*</span></label>
+          <label for="consent">Согласен(на), что мои ответы получит Антон для подготовки к встрече. <span class="req">*</span></label>
         </div>
         <div class="errmsg">Без согласия я не смогу принять заявку.</div>
       </div>
@@ -289,6 +310,7 @@ const CONFIG = {
 })();
 
 document.getElementById('tglink').href = CONFIG.CHANNEL_URL;
+document.getElementById('channelBtn').href = CONFIG.CHANNEL_URL;
 
 const form=document.getElementById('form');
 const btn=document.getElementById('btn');
@@ -309,6 +331,8 @@ form.addEventListener('submit', async (e)=>{
     const bad=el.value.trim()==='';
     markInvalid(el.closest('.field'), bad); if(bad) ok=false;
   });
+  const sub=document.getElementById('subscribed'), subField=document.getElementById('subField');
+  markInvalid(subField, !sub.checked); if(!sub.checked) ok=false;
   const cf=document.getElementById('confirm'), cField=document.getElementById('confirmField');
   markInvalid(cField, !cf.checked); if(!cf.checked) ok=false;
   const cs=document.getElementById('consent'), sField=document.getElementById('consentField');
