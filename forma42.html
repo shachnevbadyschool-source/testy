@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#D9642F">
+<title>Форма 42</title>
+<meta name="description" content="Персональный дашборд трансформации Антона: программа, трекер и еженедельный чек-ин">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+:root{
+  --bg:#EEF0EE; --surface:#FFFFFF; --surface-2:#F5F7F5; --border:#D8DDDA;
+  --text:#181C1E; --dim:#586165; --faint:#8A9296;
+  --accent:#D9642F; --accent-ink:#A9481D; --accent-soft:#FBE7DA;
+  --teal:#1F4C52; --teal-ink:#1F4C52; --teal-soft:#E3EEEE;
+  --good:#3E8C61; --warn:#B67C22; --bad:#BC4B3B;
+  --shadow:0 1px 2px rgba(20,30,32,.05),0 6px 20px rgba(20,30,32,.06);
+  --radius:14px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#101315; --surface:#191D20; --surface-2:#21262A; --border:#2D3438;
+    --text:#EBEEEC; --dim:#98A1A5; --faint:#6C7579;
+    --accent:#F0894E; --accent-ink:#F0894E; --accent-soft:#2A1C13;
+    --teal:#74B9C0; --teal-ink:#74B9C0; --teal-soft:#152A2D;
+    --good:#5FB484; --warn:#DBA649; --bad:#E0705C;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101315; --surface:#191D20; --surface-2:#21262A; --border:#2D3438;
+  --text:#EBEEEC; --dim:#98A1A5; --faint:#6C7579;
+  --accent:#F0894E; --accent-ink:#F0894E; --accent-soft:#2A1C13;
+  --teal:#74B9C0; --teal-ink:#74B9C0; --teal-soft:#152A2D;
+  --good:#5FB484; --warn:#DBA649; --bad:#E0705C;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+img{max-width:100%}
+[hidden]{display:none!important}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  line-height:1.5; margin:0; -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:640px; margin:0 auto; padding:0 16px 96px}
+h1,h2,h3{margin:0}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+.eyebrow{font-family:"Oswald",sans-serif; text-transform:uppercase; letter-spacing:.14em; font-weight:600; font-size:12px; color:var(--dim)}
+
+/* ---------- Header ---------- */
+header{padding:26px 0 18px}
+.brandrow{display:flex; align-items:flex-start; justify-content:space-between; gap:14px}
+.title{font-family:"Oswald",sans-serif; font-weight:700; font-size:clamp(40px,13vw,62px); line-height:.92; letter-spacing:-.01em; text-transform:uppercase}
+.title .num{color:var(--accent)}
+.subtitle{color:var(--dim); font-size:14px; margin-top:6px}
+.subtitle b{color:var(--text); font-weight:600}
+.daycard{
+  flex:0 0 auto; text-align:center; background:var(--teal); color:#fff;
+  border-radius:var(--radius); padding:12px 16px; min-width:92px; box-shadow:var(--shadow);
+}
+:root[data-theme="dark"] .daycard, :root:not([data-theme="light"]) .daycard{background:var(--teal-soft); color:var(--teal)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .daycard{background:var(--teal-soft); color:var(--teal)}}
+.daycard .k{font-family:"Oswald",sans-serif; text-transform:uppercase; letter-spacing:.1em; font-size:10px; opacity:.85}
+.daycard .v{font-family:"Oswald",sans-serif; font-weight:700; font-size:38px; line-height:1}
+.themebtn{background:none; border:1px solid var(--border); color:var(--dim); border-radius:9px; width:34px; height:34px; cursor:pointer; font-size:15px}
+
+/* ---------- Goals strip ---------- */
+.goals{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:18px}
+.goal{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:12px 12px 13px; box-shadow:var(--shadow)}
+.goal .h{font-family:"Oswald",sans-serif; font-weight:600; text-transform:uppercase; letter-spacing:.06em; font-size:12px; color:var(--accent-ink)}
+.goal .b{font-size:12.5px; color:var(--dim); margin-top:5px}
+.goal .b b{color:var(--text); font-weight:600}
+
+/* ---------- Tabs ---------- */
+nav.tabs{position:sticky; top:0; z-index:20; display:flex; gap:4px; margin:18px -16px 0; padding:8px 16px;
+  background:color-mix(in srgb,var(--bg) 88%, transparent); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border); overflow-x:auto; scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs button{
+  flex:0 0 auto; font-family:"Oswald",sans-serif; font-weight:600; text-transform:uppercase; letter-spacing:.05em;
+  font-size:13px; color:var(--dim); background:none; border:none; padding:8px 12px; border-radius:9px; cursor:pointer; white-space:nowrap;
+}
+nav.tabs button[aria-selected="true"]{background:var(--accent); color:#fff}
+:root[data-theme="dark"] nav.tabs button[aria-selected="true"], :root:not([data-theme="light"]) nav.tabs button[aria-selected="true"]{color:#14100c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) nav.tabs button[aria-selected="true"]{color:#14100c}}
+nav.tabs button:focus-visible{outline:2px solid var(--teal); outline-offset:2px}
+
+section.panel{padding-top:20px}
+.panel h2{font-family:"Oswald",sans-serif; text-transform:uppercase; font-weight:600; letter-spacing:.03em; font-size:15px; color:var(--dim); margin:26px 0 12px}
+.panel h2:first-child{margin-top:6px}
+
+/* ---------- Day cards ---------- */
+.day{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); margin-bottom:14px; overflow:hidden}
+.day > summary{list-style:none; cursor:pointer; padding:15px 16px; display:flex; align-items:center; gap:12px}
+.day > summary::-webkit-details-marker{display:none}
+.daytag{font-family:"Oswald",sans-serif; font-weight:700; font-size:20px; width:40px; height:40px; display:grid; place-items:center; border-radius:10px; background:var(--accent-soft); color:var(--accent-ink); flex:0 0 auto}
+.day .dtitle{font-family:"Oswald",sans-serif; font-weight:600; text-transform:uppercase; letter-spacing:.02em; font-size:16px}
+.day .dsub{font-size:12px; color:var(--faint)}
+.day .chev{margin-left:auto; color:var(--faint); transition:transform .2s}
+.day[open] .chev{transform:rotate(180deg)}
+.ex{border-top:1px solid var(--border); padding:12px 16px}
+.ex .top{display:flex; justify-content:space-between; align-items:baseline; gap:10px}
+.ex .name{font-weight:600; font-size:14.5px}
+.ex .scheme{font-size:13px; color:var(--teal-ink); font-weight:600; white-space:nowrap}
+.ex .meta{display:flex; flex-wrap:wrap; gap:6px; margin-top:7px}
+.pill{font-family:"Oswald",sans-serif; font-weight:500; text-transform:uppercase; letter-spacing:.04em; font-size:10.5px; padding:2px 8px; border-radius:20px; background:var(--surface-2); color:var(--dim); border:1px solid var(--border)}
+.pill.rir{background:var(--teal-soft); color:var(--teal-ink); border-color:transparent}
+.ex .note{font-size:12.5px; color:var(--dim); margin-top:8px}
+.ex .swap{font-size:12px; color:var(--faint); margin-top:5px}
+.ex .swap b{color:var(--dim); font-weight:600}
+
+/* ---------- Rules / callouts ---------- */
+.rule{display:flex; gap:11px; padding:13px 14px; background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:10px; margin-bottom:10px; box-shadow:var(--shadow)}
+.rule.warn{border-left-color:var(--bad)}
+.rule .ico{font-size:17px; line-height:1.3}
+.rule .t{font-size:13.5px}
+.rule .t b{font-weight:600}
+.rule .t .lead{font-family:"Oswald",sans-serif; text-transform:uppercase; letter-spacing:.04em; font-size:12px; color:var(--text); font-weight:600; display:block; margin-bottom:2px}
+
+/* ---------- Nutrition tiles ---------- */
+.macros{display:grid; grid-template-columns:repeat(2,1fr); gap:10px}
+.macro{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow)}
+.macro.big{grid-column:span 2; display:flex; align-items:center; gap:16px; background:var(--teal); color:#fff; border-color:transparent}
+:root[data-theme="dark"] .macro.big, :root:not([data-theme="light"]) .macro.big{background:var(--teal-soft); color:var(--teal)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .macro.big{background:var(--teal-soft); color:var(--teal)}}
+.macro .lab{font-family:"Oswald",sans-serif; text-transform:uppercase; letter-spacing:.08em; font-size:11px; opacity:.9}
+.macro .val{font-family:"Oswald",sans-serif; font-weight:700; font-size:30px; line-height:1; margin-top:4px}
+.macro .val small{font-size:14px; font-weight:500; opacity:.7}
+.macro .hint{font-size:11.5px; color:var(--dim); margin-top:6px}
+.macro.big .hint{color:rgba(255,255,255,.8)}
+:root[data-theme="dark"] .macro.big .hint,:root:not([data-theme="light"]) .macro.big .hint{color:var(--teal)}
+
+/* ---------- Forms / tracker ---------- */
+.card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px; box-shadow:var(--shadow); margin-bottom:14px}
+label.f{display:block; font-family:"Oswald",sans-serif; text-transform:uppercase; letter-spacing:.05em; font-size:11px; color:var(--dim); margin:0 0 5px}
+input,textarea,select{
+  width:100%; font-family:inherit; font-size:15px; color:var(--text); background:var(--surface-2);
+  border:1px solid var(--border); border-radius:10px; padding:10px 12px;
+}
+input[type="number"]{font-family:"IBM Plex Mono",monospace}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--accent); outline-offset:1px; border-color:transparent}
+textarea{resize:vertical; min-height:52px}
+.row2{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+.field{margin-bottom:12px}
+.btn{font-family:"Oswald",sans-serif; font-weight:600; text-transform:uppercase; letter-spacing:.05em; font-size:14px;
+  background:var(--accent); color:#fff; border:none; border-radius:10px; padding:12px 16px; cursor:pointer; width:100%}
+:root[data-theme="dark"] .btn,:root:not([data-theme="light"]) .btn{color:#14100c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn{color:#14100c}}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:none; color:var(--dim); border:1px solid var(--border)}
+.saved{font-size:12px; color:var(--good); text-align:center; margin-top:8px; min-height:16px}
+
+/* weights table */
+.wt{display:flex; align-items:center; gap:10px; padding:9px 0; border-top:1px solid var(--border)}
+.wt:first-child{border-top:none}
+.wt .n{flex:1; font-size:13.5px}
+.wt input{width:88px; text-align:center; padding:7px 8px}
+.wt .u{font-size:12px; color:var(--faint); width:22px}
+
+/* sparkline */
+.spark{width:100%; height:64px; display:block; margin-top:10px}
+.spark .ln{fill:none; stroke:var(--accent); stroke-width:2.5; stroke-linejoin:round; stroke-linecap:round}
+.spark .dot{fill:var(--accent)}
+.spark .base{stroke:var(--border); stroke-width:1}
+.sparkhint{font-size:12px; color:var(--faint); margin-top:8px}
+
+.log{border-top:1px solid var(--border); padding:10px 0; font-size:13px}
+.log:first-of-type{border-top:none}
+.log .d{font-family:"Oswald",sans-serif; text-transform:uppercase; letter-spacing:.05em; font-size:11px; color:var(--accent-ink); margin-bottom:3px}
+.log .kv{color:var(--dim)}
+.log .kv b{color:var(--text); font-weight:600}
+.muted{color:var(--faint); font-size:12.5px}
+.checklist{list-style:none; padding:0; margin:0}
+.checklist li{display:flex; gap:9px; padding:7px 0; border-top:1px solid var(--border); font-size:13.5px; align-items:baseline}
+.checklist li:first-child{border-top:none}
+.checklist .b{color:var(--accent); font-weight:700}
+.footer{text-align:center; color:var(--faint); font-size:11.5px; margin-top:30px; line-height:1.6}
+.rangewrap{display:flex; align-items:center; gap:12px}
+.rangewrap output{font-family:"IBM Plex Mono",monospace; font-weight:600; color:var(--accent-ink); min-width:20px; text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brandrow">
+    <div>
+      <div class="eyebrow">Проект трансформации · старт 08.09.2026</div>
+      <h1 class="title">Форма<span class="num">42</span></h1>
+      <div class="subtitle">Антон · рекомпозиция + бокс · цель <b>~15% жира, сухая масса</b></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+      <button class="themebtn" id="theme" aria-label="Сменить тему">◐</button>
+      <div class="daycard"><div class="k">День</div><div class="v mono" id="dayn">1</div></div>
+    </div>
+  </div>
+
+  <div class="goals">
+    <div class="goal"><div class="h">3 месяца</div><div class="b">Талия <b>−4–6 см</b>, жир <b>−4–6 кг</b>, первый рельеф</div></div>
+    <div class="goal"><div class="h">6 месяцев</div><div class="b">~<b>22% жира</b>, пресс проступает, полумарафон</div></div>
+    <div class="goal"><div class="h">12 месяцев</div><div class="b">~<b>15% жира</b>, ~75 кг, V-спина, грудь &gt; живот</div></div>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-tab="prog">Программа</button>
+  <button role="tab" aria-selected="false" data-tab="track">Дневник</button>
+  <button role="tab" aria-selected="false" data-tab="check">Чек-ин</button>
+  <button role="tab" aria-selected="false" data-tab="food">Питание</button>
+  <button role="tab" aria-selected="false" data-tab="rules">Правила</button>
+</nav>
+
+<!-- ========== ПРОГРАММА ========== -->
+<section class="panel" id="prog">
+  <div class="rule">
+    <div class="ico">🎯</div>
+    <div class="t"><span class="lead">Этап 1 · 4 недели</span>Силовая 3×/нед вокруг бокса. Работаем при <b>RIR 2–3</b> (2–3 повтора в запасе), <b>без отказа</b>, дышим на каждом повторе. Отдых 90–120 сек. 45–55 минут.</div>
+  </div>
+  <div id="days"></div>
+  <div class="rule warn">
+    <div class="ico">🥊</div>
+    <div class="t"><span class="lead">Расстановка недели</span>Силовую и бокс по возможности в разные дни. Тяжёлые ноги — не перед жёстким боксом. День груди/плеч — не впритык к ударке. Минимум 1 полный выходной. Пришли дни бокса — расставлю точно.</div>
+  </div>
+</section>
+
+<!-- ========== ДНЕВНИК ========== -->
+<section class="panel" id="track" hidden>
+  <h2>Замеры тела</h2>
+  <div class="card">
+    <div class="row2">
+      <div class="field"><label class="f" for="m-w">Вес, кг</label><input id="m-w" type="number" step="0.1" inputmode="decimal" placeholder="82.8"></div>
+      <div class="field"><label class="f" for="m-t">Талия, см</label><input id="m-t" type="number" step="0.1" inputmode="decimal" placeholder="—"></div>
+    </div>
+    <button class="btn" id="m-save">Записать замер</button>
+    <div class="saved" id="m-msg"></div>
+    <svg class="spark" id="spark" viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true"></svg>
+    <div class="sparkhint" id="m-hist">Записывай вес утром, натощак, до воды — в одинаковых условиях. Тренд важнее одной цифры.</div>
+  </div>
+
+  <h2>Рабочие веса</h2>
+  <div class="card">
+    <p class="muted" style="margin:0 0 6px">Обновляй после тренировки — увидишь прогрессию по неделям. Сохраняется автоматически.</p>
+    <div id="weights"></div>
+  </div>
+</section>
+
+<!-- ========== ЧЕК-ИН ========== -->
+<section class="panel" id="check" hidden>
+  <div class="rule">
+    <div class="ico">📋</div>
+    <div class="t"><span class="lead">Раз в неделю</span>Заполни и пришли мне в чат — я разберу тренд и решу: оставляем / +нагрузка / −нагрузка / меняем. Оценивай по неделе, не по одному дню.</div>
+  </div>
+  <div class="card">
+    <div class="row2">
+      <div class="field"><label class="f" for="c-w">Средний вес, кг</label><input id="c-w" type="number" step="0.1" inputmode="decimal"></div>
+      <div class="field"><label class="f" for="c-t">Талия, см</label><input id="c-t" type="number" step="0.1" inputmode="decimal"></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label class="f" for="c-tr">Тренировок сделано</label><input id="c-tr" type="text" inputmode="text" placeholder="3 зал / 3 бокс"></div>
+      <div class="field"><label class="f" for="c-sleep">Средний сон, ч</label><input id="c-sleep" type="number" step="0.1" inputmode="decimal"></div>
+    </div>
+    <div class="field"><label class="f" for="c-lift">Как изменились рабочие веса?</label><textarea id="c-lift"></textarea></div>
+    <div class="field"><label class="f" for="c-box">Как прошёл бокс?</label><textarea id="c-box"></textarea></div>
+    <div class="field"><label class="f">Энергия <output id="o-en">6</output>/10</label><div class="rangewrap"><input id="c-en" type="range" min="1" max="10" value="6"></div></div>
+    <div class="field"><label class="f">Голод <output id="o-hun">5</output>/10</label><div class="rangewrap"><input id="c-hun" type="range" min="1" max="10" value="5"></div></div>
+    <div class="field"><label class="f">Стресс <output id="o-str">6</output>/10</label><div class="rangewrap"><input id="c-str" type="range" min="1" max="10" value="6"></div></div>
+    <div class="field"><label class="f" for="c-pain">Боли / дискомфорт?</label><textarea id="c-pain" placeholder="Спина, суставы, плечо…"></textarea></div>
+    <div class="field"><label class="f" for="c-diet">Легко ли было с питанием и алкоголем?</label><textarea id="c-diet"></textarea></div>
+    <div class="field"><label class="f" for="c-block">Что помешало плану?</label><textarea id="c-block"></textarea></div>
+    <button class="btn" id="c-save">Сохранить чек-ин</button>
+    <div class="saved" id="c-msg"></div>
+  </div>
+  <h2>История чек-инов</h2>
+  <div id="checkhist"><p class="muted">Пока пусто. Первый чек-ин — через неделю.</p></div>
+</section>
+
+<!-- ========== ПИТАНИЕ ========== -->
+<section class="panel" id="food" hidden>
+  <div class="rule">
+    <div class="ico">🍽️</div>
+    <div class="t"><span class="lead">Ориентир · калибруем по талии</span>Мягкий дефицит. Трен. дни ~2300, отдых ~1900. Рулим по среднему весу и талии за неделю, не по калькулятору.</div>
+  </div>
+  <div class="macros">
+    <div class="macro big">
+      <div><div class="lab">Калории / день</div><div class="val mono">2100<small> ккал</small></div></div>
+      <div class="hint">Дефицит ~15–20% от поддержки (~2500). Не ниже — иначе страдают мышцы и сон.</div>
+    </div>
+    <div class="macro"><div class="lab">Белок</div><div class="val mono" style="color:var(--accent-ink)">160<small> г</small></div><div class="hint">Святое. ×2 к нынешнему. Мясо+яйца+творог+протеин из банки.</div></div>
+    <div class="macro"><div class="lab">Углеводы</div><div class="val mono">200<small> г</small></div><div class="hint">Вокруг бокса и силовой. Лапшу/пельмени вписываем, не запрещаем.</div></div>
+    <div class="macro"><div class="lab">Жиры</div><div class="val mono">70<small> г</small></div><div class="hint">Для гормонов и суставов. Рыба, яйца, орехи, оливковое.</div></div>
+    <div class="macro"><div class="lab">Вода</div><div class="val mono">4<small> л</small></div><div class="hint">Клетчатка 25–30 г — крупы, фрукты, псиллиум.</div></div>
+  </div>
+  <h2>Принципы</h2>
+  <ul class="checklist">
+    <li><span class="b">→</span><span><b>Никаких жёстких диет.</b> Они запускают твой цикл «сорвался-переел». Только умеренный живой дефицит.</span></li>
+    <li><span class="b">→</span><span><b>Белок в каждый основной приём.</b> Он сохраняет мышцы и лучше всех насыщает.</span></li>
+    <li><span class="b">→</span><span><b>Последний приём раньше.</b> Сдвигаем с 22–23 к 21 — легче и еде, и сну.</span></li>
+    <li><span class="b">→</span><span><b>Вокруг тренировки</b> — углеводы: до для энергии, после для восстановления.</span></li>
+    <li><span class="b">→</span><span><b>Алкоголь останавливает жиросжигание.</b> Потолок + защищаем ночь перед боксом и силовой.</span></li>
+  </ul>
+</section>
+
+<!-- ========== ПРАВИЛА ========== -->
+<section class="panel" id="rules" hidden>
+  <h2>Безопасность · без компромиссов</h2>
+  <div class="rule warn">
+    <div class="ico">❤️</div>
+    <div class="t"><span class="lead">Давление + штанга</span>Гипертония + Конкор. <b>Никакого натуживания и отказа.</b> Дышим на каждом повторе, без макс-грайндов, особенно над головой. Тонометр — мерить до/после силовой первые недели.</div>
+  </div>
+  <div class="rule warn">
+    <div class="ico">📉</div>
+    <div class="t"><span class="lead">Пульс врёт</span>Бета-блокатор режет ЧСС — <b>пульсовые зоны не работают.</b> Кардио и бокс дозируем по ощущению (talk-test), часы — только как тренд.</div>
+  </div>
+  <div class="rule warn">
+    <div class="ico">🦴</div>
+    <div class="t"><span class="lead">Спина и суставы</span>Протрузии → без осевой нагрузки и тяжёлого над головой сейчас. Сустав в остром обострении — не грузим, обходим. Пересдать СОЭ/СРБ + гормоны через 3–4 нед, «зелёный свет» у терапевта.</div>
+  </div>
+
+  <h2>Сон · рычаг №1</h2>
+  <ul class="checklist">
+    <li><span class="b">1</span><span>Отбой ступенчато к 24:00: эта неделя — не позже <b>01:00</b>, дальше −15–20 мин/нед.</span></li>
+    <li><span class="b">2</span><span>Кот: автокормушка по таймеру или закрытая дверь. Ночные кормёжки по требованию — разорвать.</span></li>
+    <li><span class="b">3</span><span>Поздние консультации бьют по засыпанию — последнюю не позже 21:00, если можно.</span></li>
+    <li><span class="b">4</span><span>За час до сна: тускло, экраны вниз. Магний глицинат на ночь.</span></li>
+    <li><span class="b">5</span><span>Apple Watch: включить сон и HRV. Упала HRV + плохой сон 2–3 дня → разгрузка.</span></li>
+  </ul>
+
+  <h2>Добавки</h2>
+  <ul class="checklist">
+    <li><span class="b" style="color:var(--good)">✓</span><span><b>Креатин</b> 5 г/день постоянно · <b>Витамин D3</b> ~2000 МЕ · <b>Омега-3</b> 1–2 г · <b>Протеин</b> — это еда</span></li>
+    <li><span class="b" style="color:var(--warn)">±</span><span><b>Магний глицинат</b> 200–400 мг на ночь — под твой сон и стресс</span></li>
+    <li><span class="b" style="color:var(--bad)">✕</span><span>Детоксы, жиросжигатели, BCAA, тесто-бустеры — слитые деньги. Стимуляторные предтреники <b>опасны</b> при твоём давлении</span></li>
+  </ul>
+
+  <h2>Прогрессия</h2>
+  <div class="rule">
+    <div class="ico">📈</div>
+    <div class="t">Набрал верх вилки повторов при RIR 2 во всех подходах → <b>+2.5 кг</b>, снова с низа вилки. Не добрал 2 тренировки подряд → вес оставляем. <b>Deload на 4-й неделе</b> (−40% объёма) — обязательно. Написал «плохо спал / устал» → режем объём, а не терпим.</div>
+  </div>
+</section>
+
+<div class="footer">Форма 42 · персональный дашборд · данные хранятся только в этом браузере<br>Обновляется по мере этапов. Не заменяет врача.</div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var LS = {
+    get:function(k,f){ try{ var v=localStorage.getItem(k); return v==null?f:JSON.parse(v);}catch(e){return f;} },
+    set:function(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); return true;}catch(e){return false;} }
+  };
+  var K="forma42:";
+
+  /* ---- Day counter ---- */
+  var start=new Date(2026,8,8); // 8 Sep 2026
+  var now=new Date();
+  var d0=new Date(start.getFullYear(),start.getMonth(),start.getDate());
+  var d1=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  var days=Math.floor((d1-d0)/86400000)+1;
+  document.getElementById("dayn").textContent=days<1?1:days;
+
+  /* ---- Theme toggle ---- */
+  var root=document.documentElement;
+  var savedTheme=LS.get(K+"theme",null);
+  if(savedTheme) root.setAttribute("data-theme",savedTheme);
+  document.getElementById("theme").addEventListener("click",function(){
+    var cur=root.getAttribute("data-theme");
+    var next = cur==="dark" ? "light" : cur==="light" ? "dark" :
+      (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "light":"dark");
+    root.setAttribute("data-theme",next); LS.set(K+"theme",next);
+  });
+
+  /* ---- Program data ---- */
+  var PROGRAM=[
+    {tag:"A", title:"Верх · Жим", sub:"Грудь · плечи · трицепс", ex:[
+      {n:"Жим гантелей на наклоне 30°", s:"3×8–10", rir:"RIR 2–3", rest:"120с", note:"Верх груди — та самая «превалирующая над животом». Гантели безопаснее штанги для плеча.", swap:"Замена: жим в Смита / тренажёре"},
+      {n:"Жим в тренажёре сидя (грудь)", s:"2×10–12", rir:"RIR 2", rest:"90с", note:"Добиваем грудь без стабилизации, спине легко.", swap:""},
+      {n:"Разведение гантелей / кроссовер", s:"2×12–15", rir:"RIR 2", rest:"60с", note:"Растяжение и полнота формы груди.", swap:""},
+      {n:"Жим гантелей сидя вверх, нейтр. хват", s:"3×10–12", rir:"RIR 3", rest:"90с", note:"Плечи-«шапки». Нейтральный хват бережёт шею. Чисто, без грайнда.", swap:""},
+      {n:"Трицепс на блоке (канат)", s:"3×12–15", rir:"RIR 2", rest:"60с", note:"2/3 объёма руки — это трицепс.", swap:""}
+    ]},
+    {tag:"B", title:"Низ · Ноги", sub:"Квадрицепс · ягодицы · кор", ex:[
+      {n:"Жим ногами", s:"3×10–12", rir:"RIR 2–3", rest:"120с", note:"Ноги без осевой нагрузки на спину — идеально при протрузиях.", swap:"Замена: гакк-присед"},
+      {n:"Румынская тяга с гантелями", s:"3×10–12", rir:"RIR 3", rest:"90с", note:"Задняя цепь и ягодицы. Спина ровная, вес умеренный.", swap:""},
+      {n:"Разгибание ног в тренажёре", s:"2×12–15", rir:"RIR 2", rest:"60с", note:"Каплевидная мышца над коленом — «прорисованные» ноги.", swap:""},
+      {n:"Сгибание ног лёжа", s:"2×12–15", rir:"RIR 2", rest:"60с", note:"Баланс задней поверхности, здоровье колена.", swap:""},
+      {n:"Планка + «мёртвый жук»", s:"3×30–45с", rir:"—", rest:"45с", note:"Глубокий кор — твой корсет для спины. Без скручиваний с нагрузкой на шею.", swap:""}
+    ]},
+    {tag:"C", title:"Верх · Тяга", sub:"Спина · задние дельты · бицепс", ex:[
+      {n:"Тяга верхнего блока к груди", s:"3×10–12", rir:"RIR 2–3", rest:"120с", note:"Ширина спины = V-силуэт. Пока не подтягивания — бережём после паузы.", swap:"Замена: подтягивания с резиной"},
+      {n:"Тяга горизонтального блока", s:"3×10–12", rir:"RIR 2", rest:"90с", note:"Толщина спины и осанка — антидот сидячей работе и шее.", swap:""},
+      {n:"Обратные разведения / задняя дельта", s:"2×15", rir:"RIR 2", rest:"60с", note:"Круглое плечо и здоровье ротаторов.", swap:""},
+      {n:"Бицепс гантелями", s:"3×10–12", rir:"RIR 2", rest:"60с", note:"Супинация в верхней точке.", swap:""},
+      {n:"Фермерская прогулка", s:"2×30–40 м", rir:"—", rest:"90с", note:"Хват, трапеции, кор — и функционально для бокса.", swap:""}
+    ]}
+  ];
+
+  var daysEl=document.getElementById("days");
+  var weightsEl=document.getElementById("weights");
+  PROGRAM.forEach(function(day,di){
+    var det=document.createElement("details"); det.className="day"; if(di===0) det.open=true;
+    var sum=document.createElement("summary");
+    sum.innerHTML='<div class="daytag">'+day.tag+'</div><div><div class="dtitle">'+day.title+'</div><div class="dsub">'+day.sub+'</div></div><div class="chev">▾</div>';
+    det.appendChild(sum);
+    day.ex.forEach(function(e){
+      var div=document.createElement("div"); div.className="ex";
+      var html='<div class="top"><span class="name">'+e.n+'</span><span class="scheme">'+e.s+'</span></div>'+
+        '<div class="meta"><span class="pill rir">'+e.rir+'</span><span class="pill">отдых '+e.rest+'</span></div>'+
+        '<div class="note">'+e.note+'</div>'+ (e.swap?'<div class="swap">'+e.swap+'</div>':'');
+      div.innerHTML=html; det.appendChild(div);
+    });
+    daysEl.appendChild(det);
+
+    // weights tracker rows (skip bodyweight/carry items)
+    day.ex.forEach(function(e){
+      if(e.rir==="—") return;
+      var key=K+"wt:"+e.n;
+      var row=document.createElement("div"); row.className="wt";
+      var inp=document.createElement("input"); inp.type="number"; inp.step="0.5"; inp.inputMode="decimal";
+      inp.setAttribute("aria-label",e.n); inp.value=LS.get(key,"");
+      inp.addEventListener("change",function(){ LS.set(key,inp.value); });
+      var nm=document.createElement("div"); nm.className="n"; nm.innerHTML='<b style="color:var(--accent-ink);font-family:Oswald;font-weight:600">'+day.tag+'</b> '+e.n;
+      var u=document.createElement("div"); u.className="u"; u.textContent="кг";
+      row.appendChild(nm); row.appendChild(inp); row.appendChild(u);
+      weightsEl.appendChild(row);
+    });
+  });
+
+  /* ---- Tabs ---- */
+  var tabs=document.querySelectorAll('nav.tabs button');
+  var panels={prog:document.getElementById("prog"),track:document.getElementById("track"),check:document.getElementById("check"),food:document.getElementById("food"),rules:document.getElementById("rules")};
+  tabs.forEach(function(b){
+    b.addEventListener("click",function(){
+      tabs.forEach(function(x){x.setAttribute("aria-selected","false");});
+      b.setAttribute("aria-selected","true");
+      Object.keys(panels).forEach(function(k){ panels[k].hidden = (k!==b.dataset.tab); });
+      window.scrollTo({top:0,behavior:"smooth"});
+    });
+  });
+
+  /* ---- Measurements + sparkline ---- */
+  function fmtDate(ts){ var d=new Date(ts); return ("0"+d.getDate()).slice(-2)+"."+("0"+(d.getMonth()+1)).slice(-2); }
+  function renderSpark(){
+    var data=LS.get(K+"measures",[]);
+    var svg=document.getElementById("spark"), hint=document.getElementById("m-hist");
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var withW=data.filter(function(m){return m.w!=null && m.w!=="";});
+    if(withW.length<2){ svg.style.display="none";
+      hint.textContent = withW.length===1 ? "Первый замер записан. Со второго появится график тренда." :
+      "Записывай вес утром, натощак, до воды — в одинаковых условиях. Тренд важнее одной цифры."; return; }
+    svg.style.display="block";
+    var vals=withW.map(function(m){return +m.w;});
+    var min=Math.min.apply(null,vals), max=Math.max.apply(null,vals);
+    var pad=(max-min)*0.2||1; min-=pad; max+=pad;
+    var W=300,H=64,mx=6,my=8;
+    function X(i){return mx+i*(W-2*mx)/(withW.length-1);}
+    function Y(v){return my+(H-2*my)*(1-(v-min)/(max-min));}
+    var ns="http://www.w3.org/2000/svg";
+    var base=document.createElementNS(ns,"line"); base.setAttribute("class","base");
+    base.setAttribute("x1",mx);base.setAttribute("x2",W-mx);base.setAttribute("y1",H-my);base.setAttribute("y2",H-my); svg.appendChild(base);
+    var pts=withW.map(function(m,i){return X(i)+","+Y(+m.w);}).join(" ");
+    var pl=document.createElementNS(ns,"polyline"); pl.setAttribute("class","ln"); pl.setAttribute("points",pts); svg.appendChild(pl);
+    var last=withW.length-1;
+    [0,last].forEach(function(i){ var c=document.createElementNS(ns,"circle"); c.setAttribute("class","dot"); c.setAttribute("cx",X(i)); c.setAttribute("cy",Y(+withW[i].w)); c.setAttribute("r",3.2); svg.appendChild(c); });
+    var first=withW[0], lastM=withW[last];
+    var delta=(+lastM.w - +first.w).toFixed(1);
+    var wt=lastM.t? (" · талия "+lastM.t+" см"):"";
+    hint.innerHTML='<b style="color:var(--text)">'+lastM.w+' кг</b> ('+(delta>0?"+":"")+delta+' кг с '+fmtDate(first.ts)+')'+wt;
+  }
+  document.getElementById("m-save").addEventListener("click",function(){
+    var w=document.getElementById("m-w").value.trim(), t=document.getElementById("m-t").value.trim();
+    if(!w && !t){ flash("m-msg","Введи вес или талию","var(--bad)"); return; }
+    var data=LS.get(K+"measures",[]);
+    data.push({ts:Date.now(), w:w||null, t:t||null});
+    LS.set(K+"measures",data);
+    document.getElementById("m-w").value=""; document.getElementById("m-t").value="";
+    flash("m-msg","Замер записан ✓","var(--good)"); renderSpark();
+  });
+  function flash(id,txt,color){ var el=document.getElementById(id); el.textContent=txt; el.style.color=color||"var(--good)"; setTimeout(function(){ el.textContent=""; },2600); }
+  renderSpark();
+
+  /* ---- Check-in ranges ---- */
+  [["c-en","o-en"],["c-hun","o-hun"],["c-str","o-str"]].forEach(function(p){
+    var r=document.getElementById(p[0]),o=document.getElementById(p[1]);
+    r.addEventListener("input",function(){o.textContent=r.value;});
+  });
+  function renderCheckins(){
+    var data=LS.get(K+"checkins",[]);
+    var box=document.getElementById("checkhist");
+    if(!data.length){ box.innerHTML='<p class="muted">Пока пусто. Первый чек-ин — через неделю.</p>'; return; }
+    box.innerHTML="";
+    data.slice().reverse().forEach(function(c){
+      var el=document.createElement("div"); el.className="card"; el.style.padding="13px 15px"; el.style.marginBottom="10px";
+      el.innerHTML='<div class="log"><div class="d">'+new Date(c.ts).toLocaleDateString("ru-RU",{day:"2-digit",month:"long"})+
+        '</div><div class="kv">Вес <b>'+(c.w||"—")+'</b> · Талия <b>'+(c.t||"—")+'</b> · Сон <b>'+(c.sleep||"—")+'ч</b><br>'+
+        'Тренировки: <b>'+(c.tr||"—")+'</b><br>Энергия <b>'+c.en+'</b> · голод <b>'+c.hun+'</b> · стресс <b>'+c.str+'</b>'+
+        (c.pain?'<br>Боли: '+c.pain:'')+(c.block?'<br>Помешало: '+c.block:'')+'</div></div>';
+      box.appendChild(el);
+    });
+  }
+  document.getElementById("c-save").addEventListener("click",function(){
+    var g=function(id){return document.getElementById(id).value.trim();};
+    var rec={ts:Date.now(), w:g("c-w"),t:g("c-t"),tr:g("c-tr"),sleep:g("c-sleep"),lift:g("c-lift"),box:g("c-box"),
+      en:document.getElementById("c-en").value,hun:document.getElementById("c-hun").value,str:document.getElementById("c-str").value,
+      pain:g("c-pain"),diet:g("c-diet"),block:g("c-block")};
+    var data=LS.get(K+"checkins",[]); data.push(rec); LS.set(K+"checkins",data);
+    ["c-w","c-t","c-tr","c-sleep","c-lift","c-box","c-pain","c-diet","c-block"].forEach(function(id){document.getElementById(id).value="";});
+    flash("c-msg","Чек-ин сохранён ✓ Теперь пришли его мне в чат","var(--good)"); renderCheckins();
+  });
+  renderCheckins();
+})();
+</script>
+
+</body>
+</html>
