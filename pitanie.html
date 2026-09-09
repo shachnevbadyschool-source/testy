@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#D9642F">
+<title>Рацион · Форма 42</title>
+<meta name="description" content="Рабочий рацион на день: цифры, готовый план по приёмам, конструктор продуктов и поправка на изжогу">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+:root{
+  --bg:#EEF0EE; --surface:#FFFFFF; --surface-2:#F5F7F5; --border:#D8DDDA;
+  --text:#181C1E; --dim:#586165; --faint:#8A9296;
+  --accent:#D9642F; --accent-ink:#A9481D; --accent-soft:#FBE7DA;
+  --teal:#1F4C52; --teal-ink:#1F4C52; --teal-soft:#E3EEEE;
+  --gold:#B7841F; --gold-soft:#F7EED6;
+  --green:#3E8C61; --green-soft:#E1F0E7;
+  --bad:#BC4B3B; --bad-soft:#F8E3DF;
+  --shadow:0 1px 2px rgba(20,30,32,.05),0 6px 20px rgba(20,30,32,.06);
+  --radius:14px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#101315; --surface:#191D20; --surface-2:#21262A; --border:#2D3438;
+    --text:#EBEEEC; --dim:#98A1A5; --faint:#6C7579;
+    --accent:#F0894E; --accent-ink:#F0894E; --accent-soft:#2A1C13;
+    --teal:#74B9C0; --teal-ink:#74B9C0; --teal-soft:#152A2D;
+    --gold:#D9B45A; --gold-soft:#2A2413;
+    --green:#5FB484; --green-soft:#14271C;
+    --bad:#E0705C; --bad-soft:#2C1714;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101315; --surface:#191D20; --surface-2:#21262A; --border:#2D3438;
+  --text:#EBEEEC; --dim:#98A1A5; --faint:#6C7579;
+  --accent:#F0894E; --accent-ink:#F0894E; --accent-soft:#2A1C13;
+  --teal:#74B9C0; --teal-ink:#74B9C0; --teal-soft:#152A2D;
+  --gold:#D9B45A; --gold-soft:#2A2413;
+  --green:#5FB484; --green-soft:#14271C;
+  --bad:#E0705C; --bad-soft:#2C1714;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+img{max-width:100%}
+[hidden]{display:none!important}
+body{background:var(--bg); color:var(--text); font-family:"IBM Plex Sans",system-ui,-apple-system,sans-serif; line-height:1.55; margin:0; -webkit-text-size-adjust:100%}
+.wrap{max-width:640px; margin:0 auto; padding:0 16px 70px}
+h1,h2,h3{margin:0}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+.eyebrow{font-family:"Oswald",sans-serif; text-transform:uppercase; letter-spacing:.14em; font-weight:600; font-size:12px; color:var(--dim)}
+
+header{padding:28px 0 8px}
+.title{font-family:"Oswald",sans-serif; font-weight:700; font-size:clamp(38px,12vw,58px); line-height:.94; letter-spacing:-.01em; text-transform:uppercase}
+.title .ac{color:var(--accent)}
+.subtitle{color:var(--dim); font-size:14.5px; margin-top:8px; max-width:52ch}
+
+h2.sec{font-family:"Oswald",sans-serif; text-transform:uppercase; font-weight:600; letter-spacing:.04em; font-size:16px; color:var(--text); margin:34px 0 6px; display:flex; align-items:center; gap:9px}
+h2.sec .em{font-size:19px}
+.sec-sub{color:var(--dim); font-size:13px; margin:0 0 14px}
+
+/* macro tiles */
+.macros{display:grid; grid-template-columns:repeat(2,1fr); gap:10px}
+.macro{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow); border-top:3px solid var(--accent)}
+.macro.big{grid-column:span 2; border-top-color:var(--teal)}
+.macro.p{border-top-color:var(--accent)} .macro.c{border-top-color:var(--teal)}
+.macro.f{border-top-color:var(--gold)} .macro.w{border-top-color:var(--green)}
+.macro .lab{font-family:"Oswald",sans-serif; text-transform:uppercase; letter-spacing:.07em; font-size:11px; color:var(--dim)}
+.macro .val{font-family:"Oswald",sans-serif; font-weight:700; font-size:30px; line-height:1; margin-top:3px; color:var(--text)}
+.macro .val small{font-size:14px; font-weight:500; color:var(--dim)}
+.macro .hint{font-size:11.5px; color:var(--dim); margin-top:6px}
+
+.note{display:flex; gap:10px; padding:12px 14px; background:var(--accent-soft); border-radius:11px; margin:14px 0; font-size:13.5px}
+.note .em{font-size:17px; line-height:1.2}
+.note b{font-weight:600}
+
+/* meal cards */
+.meal{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); margin-bottom:13px; overflow:hidden}
+.meal .head{display:flex; align-items:center; gap:12px; padding:13px 15px; border-bottom:1px solid var(--border)}
+.meal .n{font-family:"Oswald",sans-serif; font-weight:700; font-size:19px; width:38px; height:38px; display:grid; place-items:center; border-radius:10px; background:var(--accent-soft); color:var(--accent-ink); flex:0 0 auto}
+.meal .ttl{font-family:"Oswald",sans-serif; font-weight:600; text-transform:uppercase; letter-spacing:.02em; font-size:15.5px}
+.meal .time{font-size:12px; color:var(--faint)}
+.meal ul{list-style:none; margin:0; padding:11px 15px 4px}
+.meal li{display:flex; gap:9px; padding:4px 0; font-size:14px}
+.meal li .b{color:var(--accent); font-weight:700; flex:0 0 auto}
+.meal li b{font-weight:600}
+.meal .mac{display:flex; flex-wrap:wrap; gap:6px; padding:8px 15px 14px}
+.chip{font-family:"IBM Plex Mono",monospace; font-size:11.5px; font-weight:600; padding:3px 9px; border-radius:20px; background:var(--surface-2); color:var(--dim); border:1px solid var(--border)}
+.chip.kcal{background:var(--accent-soft); color:var(--accent-ink); border-color:transparent}
+.chip.p{color:var(--accent-ink)} .chip.f{color:var(--gold)} .chip.c{color:var(--teal-ink)}
+
+.total{background:var(--teal); color:#fff; border-radius:var(--radius); padding:16px 18px; box-shadow:var(--shadow); margin-top:4px}
+:root[data-theme="dark"] .total, :root:not([data-theme="light"]) .total{background:var(--teal-soft); color:var(--teal)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .total{background:var(--teal-soft); color:var(--teal)}}
+.total .lab{font-family:"Oswald",sans-serif; text-transform:uppercase; letter-spacing:.08em; font-size:12px; opacity:.9}
+.total .row{display:flex; flex-wrap:wrap; gap:14px; margin-top:6px; font-family:"Oswald",sans-serif; font-weight:700; font-size:22px}
+.total .row span small{font-size:13px; font-weight:500; opacity:.8}
+
+.tweak{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px}
+.tweak div{background:var(--surface); border:1px solid var(--border); border-radius:11px; padding:11px 13px; font-size:13px; box-shadow:var(--shadow)}
+.tweak .t{font-family:"Oswald",sans-serif; text-transform:uppercase; font-size:11px; letter-spacing:.05em; color:var(--accent-ink); font-weight:600; margin-bottom:3px}
+
+/* constructor */
+.grp{background:var(--surface); border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:11px; padding:13px 15px; margin-bottom:11px; box-shadow:var(--shadow)}
+.grp.prot{border-left-color:var(--accent)} .grp.carb{border-left-color:var(--teal)}
+.grp.fat{border-left-color:var(--gold)} .grp.veg{border-left-color:var(--green)}
+.grp h3{font-family:"Oswald",sans-serif; text-transform:uppercase; letter-spacing:.04em; font-size:14px; margin-bottom:8px; display:flex; align-items:center; gap:8px}
+.grp ul{list-style:none; margin:0; padding:0}
+.grp li{font-size:13.5px; padding:3px 0; color:var(--text)}
+.grp li .q{color:var(--dim)}
+.grp .no{color:var(--bad); font-size:13px; margin-top:7px; font-weight:500}
+
+/* heartburn / rules */
+.block{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:15px 16px; box-shadow:var(--shadow); margin-bottom:12px}
+.block.warn{background:var(--bad-soft); border-color:transparent}
+.two{display:grid; grid-template-columns:1fr; gap:11px}
+@media(min-width:520px){.two{grid-template-columns:1fr 1fr}}
+.mini h3{font-family:"Oswald",sans-serif; text-transform:uppercase; font-size:13px; letter-spacing:.04em; margin-bottom:7px}
+.mini.good h3{color:var(--green)} .mini.bad h3{color:var(--bad)}
+.mini ul{list-style:none; margin:0; padding:0}
+.mini li{font-size:13.5px; padding:3px 0 3px 18px; position:relative}
+.mini.good li::before{content:"✓"; position:absolute; left:0; color:var(--green); font-weight:700}
+.mini.bad li::before{content:"✕"; position:absolute; left:0; color:var(--bad); font-weight:700}
+.behav{margin-top:12px; padding-top:12px; border-top:1px solid var(--border)}
+.behav .t{font-family:"Oswald",sans-serif; text-transform:uppercase; font-size:12px; letter-spacing:.05em; color:var(--accent-ink); font-weight:600; margin-bottom:6px}
+.behav li{font-size:13.5px; padding:3px 0}
+
+ul.rules{list-style:none; padding:0; margin:0}
+ul.rules li{display:flex; gap:10px; padding:9px 0; border-top:1px solid var(--border); font-size:14px; align-items:baseline}
+ul.rules li:first-child{border-top:none}
+ul.rules .b{color:var(--accent); font-weight:700}
+ul.rules b{font-weight:600}
+
+.med{font-size:12.5px; color:var(--faint); background:var(--surface-2); border-radius:10px; padding:11px 13px; margin-top:14px}
+.footer{text-align:center; color:var(--faint); font-size:11.5px; margin-top:26px; line-height:1.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Форма 42 · рабочий рацион</div>
+  <h1 class="title">Питание<span class="ac">.</span></h1>
+  <p class="subtitle">Мягкий дефицит, много белка, простая еда. Живот делается здесь на 70%. Всё в граммах и штуках — бери и делай.</p>
+</header>
+
+<h2 class="sec"><span class="em">🎯</span>Цифры на день</h2>
+<div class="macros">
+  <div class="macro big"><div class="lab">Калории</div><div class="val mono">~2100<small> ккал</small></div><div class="hint">В день тренировки +200, в выходной −200</div></div>
+  <div class="macro p"><div class="lab">Белок</div><div class="val mono">160–180<small> г</small></div><div class="hint">Главное. Сохраняет мышцы, гасит голод</div></div>
+  <div class="macro c"><div class="lab">Углеводы</div><div class="val mono">~200<small> г</small></div><div class="hint">Крупы, картофель, фрукты. Вокруг тренировки</div></div>
+  <div class="macro f"><div class="lab">Жиры</div><div class="val mono">~65<small> г</small></div><div class="hint">Немного: яйца, рыба, орехи, ложка масла</div></div>
+  <div class="macro w"><div class="lab">Вода</div><div class="val mono">3.5–4<small> л</small></div><div class="hint">Клетчатка 25–30 г — крупы, фрукты</div></div>
+</div>
+<div class="note"><span class="em">💡</span><div><b>«Сахар» режем</b> — это конфеты, печенье, сладкие напитки, выпечка. А <b>фрукты (банан, яблоко) — это не тот сахар</b>, они в плане. Не путай их.</div></div>
+
+<h2 class="sec"><span class="em">🍽️</span>Готовый день</h2>
+<p class="sec-sub">Шаблон. Готовим просто: варка, запекание, гриль, тушение. Никакого фритюра.</p>
+
+<div class="meal">
+  <div class="head"><div class="n">1</div><div><div class="ttl">Завтрак</div><div class="time">~09:30</div></div></div>
+  <ul>
+    <li><span class="b">•</span><span>Омлет из <b>3 яиц</b> (1 ч.л. масла, не жарить в луже масла)</span></li>
+    <li><span class="b">•</span><span>Овсянка на воде — <b>70 г сухой крупы</b> (~полстакана)</span></li>
+    <li><span class="b">•</span><span><b>1 банан</b></span></li>
+  </ul>
+  <div class="mac"><span class="chip kcal">~580 ккал</span><span class="chip p">Б 29</span><span class="chip f">Ж 22</span><span class="chip c">У 70</span></div>
+</div>
+
+<div class="meal">
+  <div class="head"><div class="n">2</div><div><div class="ttl">Обед</div><div class="time">~13:30</div></div></div>
+  <ul>
+    <li><span class="b">•</span><span>Куриная грудка — <b>180 г готовой</b> (запечённая/отварная)</span></li>
+    <li><span class="b">•</span><span>Гречка или рис — <b>70 г сухой крупы</b></span></li>
+    <li><span class="b">•</span><span>Огурец + листовой салат, <b>1 ч.л. оливкового масла</b></span></li>
+  </ul>
+  <div class="mac"><span class="chip kcal">~595 ккал</span><span class="chip p">Б 63</span><span class="chip f">Ж 14</span><span class="chip c">У 54</span></div>
+</div>
+
+<div class="meal">
+  <div class="head"><div class="n">3</div><div><div class="ttl">Перекус</div><div class="time">~16:30</div></div></div>
+  <ul>
+    <li><span class="b">•</span><span>Протеиновый коктейль: <b>1 мерная ложка (30 г) на 300 мл воды</b></span></li>
+    <li><span class="b">•</span><span>Горсть орехов — <b>20 г</b> (~10–12 миндалин / грецких)</span></li>
+    <li><span class="b">•</span><span><b>1 яблоко</b></span></li>
+  </ul>
+  <div class="mac"><span class="chip kcal">~330 ккал</span><span class="chip p">Б 28</span><span class="chip f">Ж 14</span><span class="chip c">У 26</span></div>
+</div>
+
+<div class="meal">
+  <div class="head"><div class="n">4</div><div><div class="ttl">Ужин · лёгкий, пораньше</div><div class="time">~20:00</div></div></div>
+  <ul>
+    <li><span class="b">•</span><span>Белая рыба (треска/минтай/судак) — <b>200 г</b>, запечённая</span></li>
+    <li><span class="b">•</span><span>Картофель отварной <b>200 г</b> (или рис 40 г сухой)</span></li>
+    <li><span class="b">•</span><span>Тушёные овощи (морковь, стручковая фасоль) — <b>150 г</b></span></li>
+  </ul>
+  <div class="mac"><span class="chip kcal">~400 ккал</span><span class="chip p">Б 34</span><span class="chip f">Ж 5</span><span class="chip c">У 45</span></div>
+</div>
+
+<div class="meal">
+  <div class="head"><div class="n">+</div><div><div class="ttl">На ночь · если голоден</div><div class="time">по желанию</div></div></div>
+  <ul>
+    <li><span class="b">•</span><span>Творог 5% — <b>150 г</b></span></li>
+  </ul>
+  <div class="mac"><span class="chip kcal">~165 ккал</span><span class="chip p">Б 25</span><span class="chip f">Ж 7</span><span class="chip c">У 5</span></div>
+</div>
+
+<div class="total">
+  <div class="lab">Итого за день</div>
+  <div class="row"><span>~2070<small> ккал</small></span><span>Б ~179</span><span>Ж ~62</span><span>У ~200</span></div>
+</div>
+
+<div class="tweak">
+  <div><div class="t">День тренировки</div>+ банан или +50 г риса на обед → ~2300 ккал</div>
+  <div><div class="t">Выходной</div>убери творог или гарнир → ~1850 ккал</div>
+</div>
+
+<h2 class="sec"><span class="em">🥤</span>Коктейль — по нюансам</h2>
+<div class="block">
+  <ul style="list-style:none;margin:0;padding:0">
+    <li style="padding:4px 0;font-size:14px">• <b>1 мерная ложка</b> порошка (смотри граммы на банке, обычно 30 г) = ~24 г белка.</li>
+    <li style="padding:4px 0;font-size:14px">• Пока изжога — <b>строго на воде</b>, 250–300 мл (молоко может усиливать изжогу).</li>
+    <li style="padding:4px 0;font-size:14px">• Уйдёт изжога — можно на нежирном молоке (+8 г белка, +120 ккал на стакан).</li>
+    <li style="padding:4px 0;font-size:14px">• В период изжоги <b>не пей на ночь</b>.</li>
+  </ul>
+</div>
+
+<h2 class="sec"><span class="em">🧱</span>Конструктор: из чего набирать</h2>
+<p class="sec-sub">Чтобы не одними пельменями. Собирай приёмы из этих блоков.</p>
+
+<div class="grp prot">
+  <h3>🥩 Белок <span style="font-weight:400;color:var(--dim);font-size:12px">· 30–55 г за приём</span></h3>
+  <ul>
+    <li>Куриная грудка / индейка <span class="q">— 180 г готовой = ~55 г</span></li>
+    <li>Белая рыба <span class="q">— 200 г = ~36 г</span></li>
+    <li>Яйца <span class="q">— 1 шт = 6 г (омлет из 3)</span></li>
+    <li>Творог 2–5% <span class="q">— 100 г = ~16 г</span></li>
+    <li>Постная говядина <span class="q">— 150 г = ~38 г</span></li>
+    <li>Протеин <span class="q">— 1 ложка = ~24 г</span></li>
+  </ul>
+</div>
+
+<div class="grp carb">
+  <h3>🌾 Углеводы <span style="font-weight:400;color:var(--dim);font-size:12px">· медленные, 50–70 г сухой крупы</span></h3>
+  <ul>
+    <li>Овсянка, гречка, рис</li>
+    <li>Картофель отварной/запечённый <span class="q">— 200–250 г</span></li>
+    <li>Фрукты: банан, яблоко, груша</li>
+  </ul>
+  <div class="no">✕ вон: сахар, хлеб, булки, выпечка, белый батон</div>
+</div>
+
+<div class="grp fat">
+  <h3>🥜 Жиры <span style="font-weight:400;color:var(--dim);font-size:12px">· чуть-чуть, для гормонов</span></h3>
+  <ul>
+    <li>Оливковое масло <span class="q">— 1 ч.л. в салат</span></li>
+    <li>Орехи <span class="q">— 20–25 г в день</span></li>
+    <li>Жир из яиц и рыбы уже идёт в счёт</li>
+  </ul>
+  <div class="no">✕ избегаем: фритюр, жирное жареное мясо, сало, колбасу</div>
+</div>
+
+<div class="grp veg">
+  <h3>🥒 Овощи и клетчатка</h3>
+  <ul>
+    <li>Огурец, листовой салат, тушёная морковь, стручковая фасоль</li>
+    <li>Клетчатка ещё из овсянки и гречки</li>
+  </ul>
+</div>
+
+<h2 class="sec"><span class="em">🔥</span>Поправка на изжогу</h2>
+<p class="sec-sub">Временно, пока горит. Изжогу гасит что и как ты ешь, а не «трава».</p>
+<div class="block warn">
+  <div class="two">
+    <div class="mini good">
+      <h3>Сейчас налегай</h3>
+      <ul>
+        <li>Овсянка, банан</li>
+        <li>Отварное / запечённое</li>
+        <li>Нежирное, некрупные порции</li>
+        <li>Картофель, рис, творог 2%</li>
+      </ul>
+    </div>
+    <div class="mini bad">
+      <h3>Сейчас убери</h3>
+      <ul>
+        <li>Жареное и жирное</li>
+        <li>Острое</li>
+        <li>Помидоры и цитрусы (кислые)</li>
+        <li>Сырой лук / чеснок, газировку</li>
+        <li>Алкоголь — топ-триггер</li>
+      </ul>
+    </div>
+  </div>
+  <div class="behav">
+    <div class="t">Поведение (важнее продуктов)</div>
+    <ul style="list-style:none;margin:0;padding:0">
+      <li>• Не есть за <b>3 часа до сна</b></li>
+      <li>• После еды <b>не ложиться</b> 30–60 мин, посиди/походи</li>
+      <li>• Ешь <b>меньшими порциями, но чаще</b> — не переедай за раз</li>
+    </ul>
+  </div>
+</div>
+
+<h2 class="sec"><span class="em">📌</span>Правила</h2>
+<ul class="rules">
+  <li><span class="b">→</span><span><b>Сахар и хлебобулочное — исключаем.</b></span></li>
+  <li><span class="b">→</span><span><b>Пельмени / шаурма / фастфуд — только редкое исключение.</b> Поел раз в кои-то веки — ок, но рацион строим не на них.</span></li>
+  <li><span class="b">→</span><span><b>Белок в каждый основной приём</b> — он держит мышцы и насыщает.</span></li>
+  <li><span class="b">→</span><span><b>Последний приём раньше</b> — и животу, и сну, и изжоге легче.</span></li>
+  <li><span class="b">→</span><span><b>Судим по талии и среднему весу за неделю</b>, а не по одной цифре на весах.</span></li>
+</ul>
+
+<div class="med">⚕️ Если изжога держится неделями и на новом режиме не уходит — это к гастроэнтерологу. Рацион — рабочий ориентир, он не заменяет врача. Калории и белок калибруем по реальному тренду талии и веса.</div>
+
+<div class="footer">Форма 42 · рацион Этапа 1 · собрано под задачу «убрать живот, сохранить мышцы»<br>Обновляется по мере этапов</div>
+
+</div>
+</body>
+</html>
