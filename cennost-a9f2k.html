@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Из чего сделана моя ценность</title>
+<style>
+:root{
+  --accent:#c98a2b; --accent2:#8f5f16; --accent3:#e0a94a;
+  --steel:#4b6b82; --steel2:#7d9bb0;
+  --bg:#0f1115; --card:#171a21; --card2:#1c2029; --ink:#e8eaf0; --muted:#9aa3b2;
+  --line:#272c37; --warn:#f59e0b; --danger:#ef4444; --ok:#22c55e; --violet:#a78bfa;
+}
+@media (prefers-color-scheme: light){
+  :root{ --bg:#eef1f6; --card:#ffffff; --card2:#f4f2ec; --ink:#1a1d24; --muted:#5b6472; --line:#e4e7ee; }
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{
+  background:
+   radial-gradient(1100px 560px at 82% -12%, color-mix(in srgb,var(--accent3) 20%,transparent), transparent 60%),
+   radial-gradient(900px 520px at -12% 112%, color-mix(in srgb,var(--steel) 18%,transparent), transparent 55%),
+   var(--bg);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto;padding:26px 18px 90px}
+.hero{text-align:center;padding:22px 8px 6px}
+.hero .emoji{font-size:50px;filter:drop-shadow(0 6px 16px rgba(0,0,0,.3))}
+.hero h1{margin:.3em 0 .12em;font-size:2rem;letter-spacing:-.02em;
+  background:linear-gradient(120deg,var(--accent3),var(--steel2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero .sub{color:var(--muted);font-size:1.02rem;max-width:60ch;margin:0 auto}
+.meta{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.chip{font-size:.78rem;font-weight:700;letter-spacing:.02em;color:var(--muted);
+  background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+.card{background:color-mix(in srgb,var(--card) 94%,transparent);
+  border:1px solid var(--line);border-radius:20px;padding:24px 22px;margin:18px 0;
+  box-shadow:0 18px 40px -30px rgba(0,0,0,.6)}
+.tag{display:inline-flex;align-items:center;gap:8px;font-size:.76rem;font-weight:800;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--accent3);
+  background:color-mix(in srgb,var(--accent3) 12%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent3) 30%,transparent);
+  border-radius:999px;padding:5px 12px;margin-bottom:14px}
+.card h2{font-size:1.32rem;letter-spacing:-.01em;margin:.1em 0 .3em}
+.card .time{float:right;font-size:.8rem;color:var(--muted);font-weight:700;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:4px 10px}
+.card p{margin:.5em 0}
+.muted{color:var(--muted)}
+.small{font-size:.9rem}
+.q{margin:18px 0 6px;font-weight:600;font-size:1.05rem}
+.hint{font-size:.86rem;color:var(--muted);margin:.15em 0 .5em}
+textarea,input[type=text]{width:100%;background:var(--card2);border:1.5px solid var(--line);
+  border-radius:12px;color:var(--ink);font:inherit;padding:11px 13px;resize:vertical}
+textarea:focus,input:focus{outline:none;border-color:color-mix(in srgb,var(--accent) 55%,transparent)}
+textarea{min-height:64px}
+.scale{display:flex;align-items:center;gap:14px;margin:8px 0 4px}
+.scale input[type=range]{flex:1;accent-color:var(--accent)}
+.scale .val{flex:none;width:52px;text-align:center;font-weight:800;font-size:1.2rem;
+  color:var(--accent3);background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:4px 0}
+.ends{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:-2px}
+.pf{border:1px solid var(--line);border-radius:14px;overflow:auto;margin-top:8px}
+.pf table{width:100%;border-collapse:collapse;min-width:520px}
+.pf th,.pf td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);font-size:.92rem;vertical-align:middle}
+.pf th{background:var(--card2);font-size:.74rem;text-transform:uppercase;letter-spacing:.03em;color:var(--muted)}
+.pf td:first-child{font-weight:600}
+.pf input.pct{width:66px;text-align:center;background:var(--card2);border:1.5px solid var(--line);border-radius:9px;color:var(--ink);font:inherit;font-weight:700;padding:7px 4px}
+.pf input.mini{width:54px;text-align:center;background:var(--card2);border:1.5px solid var(--line);border-radius:9px;color:var(--ink);font:inherit;padding:7px 4px}
+.pf input.aname{width:58%;background:transparent;border:none;border-bottom:1px dashed var(--line);border-radius:0;padding:2px 2px;font-weight:600}
+.pf tr.sum td{background:var(--card2);font-weight:800}
+#pfsum{font-weight:900}
+.flag{margin-top:10px;font-size:.9rem;padding:10px 12px;border-radius:11px;border:1px solid var(--line);background:var(--card2)}
+.flag.risk{border-color:color-mix(in srgb,var(--danger) 55%,transparent);color:var(--danger);background:color-mix(in srgb,var(--danger) 10%,transparent)}
+.flag.ok{border-color:color-mix(in srgb,var(--ok) 45%,transparent)}
+.callout{border-left:3px solid var(--accent);background:var(--card2);border-radius:0 12px 12px 0;padding:12px 16px;margin:14px 0;font-size:.95rem}
+.callout.steel{border-left-color:var(--steel2)}
+.note-th{font-size:.86rem;color:var(--ink);border:1px solid var(--line);border-left:3px solid var(--steel2);border-radius:0 12px 12px 0;padding:12px 15px;margin:12px 0;background:color-mix(in srgb,var(--steel) 9%,transparent)}
+.note-th .lbl{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--steel2);font-weight:800;margin-bottom:5px}
+.note-th b{color:var(--steel2)}
+.note-th ul{margin:.4em 0 0;padding-left:18px}
+.note-th li{margin:3px 0}
+.poles{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:640px){.poles{grid-template-columns:1fr}}
+.pole{border:1px solid var(--line);border-radius:14px;padding:14px}
+.pole h4{margin:.1em 0 .5em;font-size:1rem}
+.pole.up h4{color:var(--ok)}
+.pole.down h4{color:var(--steel2)}
+hr.sep{border:none;border-top:1px dashed var(--line);margin:16px 0}
+ol.qs{padding-left:20px}
+ol.qs li{margin:6px 0}
+.arc{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:14px 0 2px}
+@media (max-width:720px){.arc{grid-template-columns:repeat(3,1fr)}}
+.arc .step{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:.78rem}
+.arc .step b{display:block;font-size:.8rem;color:var(--accent3);margin-bottom:3px}
+/* OUTPUT */
+#output{margin-top:6px}
+.out-head{text-align:center;margin-bottom:6px}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+@media (max-width:680px){.tiles{grid-template-columns:1fr 1fr}}
+.tile{background:var(--card2);border:1px solid var(--line);border-radius:16px;padding:14px 12px;text-align:center}
+.tile .n{font-size:1.7rem;font-weight:900;line-height:1.1}
+.tile .k{font-size:.74rem;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);margin-top:4px}
+.tile .d{font-size:.78rem;color:var(--muted);margin-top:5px}
+.tile.hi .n{color:var(--danger)} .tile.mid .n{color:var(--warn)} .tile.lo .n{color:var(--ok)} .tile.neu .n{color:var(--steel2)}
+.sec{margin:16px 0;padding:16px 16px;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--card) 92%,transparent)}
+.sec h3{margin:.1em 0 .4em;font-size:1.08rem;display:flex;align-items:center;gap:9px}
+.sec h3 .ic{font-size:1.2rem}
+.sec .src{margin-top:9px;font-size:.8rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px}
+.sec .src b{color:var(--steel2)}
+.bar{height:9px;border-radius:999px;background:var(--card2);border:1px solid var(--line);overflow:hidden;margin:8px 0 3px}
+.bar>i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent3))}
+.foot{text-align:center;color:var(--muted);font-size:.82rem;margin-top:30px}
+.foot .warn{color:var(--warn);font-weight:700}
+.srcbox{font-size:.82rem;color:var(--muted)}
+.srcbox li{margin:6px 0}
+.btnrow{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.btn{appearance:none;border:1px solid var(--line);background:var(--card2);color:var(--ink);font:inherit;font-weight:700;padding:10px 18px;border-radius:12px;cursor:pointer}
+.btn.primary{background:linear-gradient(120deg,var(--accent),var(--accent2));color:#fff;border:none}
+@media print{body{background:#fff;color:#000}.card,.sec{box-shadow:none;break-inside:avoid}.btnrow{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="emoji">📊</div>
+    <h1>Из чего сделана моя ценность</h1>
+    <div class="sub">Это не про «уйти в чувства». Это честный аудит: где сейчас лежит твоё ощущение «я чего-то стою», насколько оно устойчиво и что будет, если один из источников убрать. Заполняешь сама, спокойно, в своём темпе. Внизу страница сама соберёт разбор по твоим цифрам.</div>
+    <div class="meta">
+      <span class="chip">персонально для тебя</span>
+      <span class="chip">≈ 40–50 минут</span>
+      <span class="chip">можно в несколько заходов</span>
+    </div>
+  </div>
+
+  <!-- ВСТУПЛЕНИЕ -->
+  <div class="card">
+    <span class="tag">Как пользоваться</span>
+    <h2>Пара слов перед стартом</h2>
+    <p>Это та самая работа, которую я обещал прислать. Она собрана <b>по нашим сессиям</b> — ты узнаешь в ней себя. Идея простая: мы с тобой не раз выходили на то, что твоя ценность привязана к тому, <b>что ты делаешь и чем полезна</b>. Давай посмотрим на это твоим же профессиональным языком — как на инвестиционный портфель: из чего он собран, где концентрация, что в твоих руках, а что отдано внешнему управлению.</p>
+    <ul class="qs small">
+      <li>Отвечай тем, что приходит <b>первым</b> — оно точнее «правильного».</li>
+      <li>Короткие шкалы двигаешь пальцем, в полях пишешь своими словами. Ничего никуда не отправляется — всё остаётся у тебя на экране.</li>
+      <li>Можно пройти за один раз, можно в несколько заходов (хоть в самолёте). Внизу кнопка <b>«Сохранить в PDF»</b> — сохрани себе, принесём на встречу.</li>
+      <li>Нет «неправильных» ответов. Если на что-то честный ответ — «пока не знаю», так и пиши. Это нормальный старт.</li>
+    </ul>
+    <div class="arc">
+      <div class="step"><b>Блок 1</b>Замер на сегодня</div>
+      <div class="step"><b>Блок 2</b>Портфель ценности</div>
+      <div class="step"><b>Блок 3</b>Моё условие</div>
+      <div class="step"><b>Блок 4</b>Качели</div>
+      <div class="step"><b>Блок 5</b>Что удержано</div>
+      <div class="step"><b>Блок 6</b>Попросить за своё</div>
+      <div class="step"><b>Блок 7</b>Своя опора</div>
+    </div>
+  </div>
+
+  <!-- БЛОК 1 -->
+  <div class="card">
+    <span class="time">5 мин</span>
+    <span class="tag">Блок 1 · Экспресс-скрининг</span>
+    <h2>Замер на сегодня</h2>
+    <p class="muted small">Быстрые шкалы 0–10. Первое, что приходит, — точнее «правильного».</p>
+
+    <div class="q">Насколько прямо сейчас я ощущаю себя ценной / значимой</div>
+    <div class="scale"><input id="s1" type="range" min="0" max="10" value="5"><span class="val">5</span></div>
+    <div class="ends"><span>совсем нет</span><span>полностью</span></div>
+
+    <div class="q">Насколько это ощущение устойчиво — или качается день ото дня</div>
+    <div class="scale"><input id="s2" type="range" min="0" max="10" value="5"><span class="val">5</span></div>
+    <div class="ends"><span>штормит</span><span>стабильно</span></div>
+
+    <div class="q">Как часто в последнее время «материю себя» / злюсь на себя</div>
+    <div class="scale"><input id="s3" type="range" min="0" max="10" value="5"><span class="val">5</span></div>
+    <div class="ends"><span>почти нет</span><span>постоянно</span></div>
+
+    <div class="q">Тело: изжога, горло, зажатость, напряжение</div>
+    <div class="scale"><input id="s4" type="range" min="0" max="10" value="5"><span class="val">5</span></div>
+    <div class="ends"><span>тихо</span><span>сильно</span></div>
+
+    <div class="q">Слёзы близко — и насколько я разрешаю им быть, а не сдерживаю</div>
+    <div class="scale"><input id="s5" type="range" min="0" max="10" value="5"><span class="val">5</span></div>
+    <div class="ends"><span>всё держу</span><span>отпускаю</span></div>
+
+    <div class="q">Дом без работы ощущается как…</div>
+    <div class="scale"><input id="s6" type="range" min="0" max="10" value="5"><span class="val">5</span></div>
+    <div class="ends"><span>ущербно / пусто</span><span>нормально / хорошо</span></div>
+
+    <div class="callout">Это просто «снимок на сегодня». В конце будет с чем сверить. Двигай ползунки как чувствуешь прямо сейчас, не как «должно быть».</div>
+  </div>
+
+  <!-- БЛОК 2 -->
+  <div class="card">
+    <span class="time">14 мин</span>
+    <span class="tag">Блок 2 · Ядро</span>
+    <h2>Портфель ценности</h2>
+    <p><b>Как заполнять (объясни ей вслух так):</b> «Представь всё твоё ощущение “я чего-то стою” как 100 монеток. Разложим их по полочкам — откуда это чувство реально приходит. Плюс по каждой строке отметим ещё две вещи».</p>
+    <ol class="qs small">
+      <li><b>%</b> — сколько монеток из 100 лежит в этом источнике. Сумма всех строк = 100.</li>
+      <li><b>Контроль 0–10</b> — насколько это в её руках, а не зависит от других. (Вклад под процент — высокий контроль; «меня зовут подружки» — низкий.)</li>
+      <li><b>Удар 0–10</b> — насколько просядет ценность, если это завтра исчезнет.</li>
+    </ol>
+
+    <div class="pf">
+      <table>
+        <thead><tr><th>Источник ценности</th><th>%</th><th>Контроль&nbsp;0–10</th><th>Удар&nbsp;0–10</th></tr></thead>
+        <tbody id="pfbody">
+          <tr class="pfrow" data-name="Работа / должность / функция"><td>Работа / должность / функция</td><td><input class="pct" type="number" min="0" max="100" value="0"></td><td><input class="mini" type="number" min="0" max="10"></td><td><input class="mini" type="number" min="0" max="10"></td></tr>
+          <tr class="pfrow" data-name="Деньги / доход / независимость"><td>Деньги / доход / независимость</td><td><input class="pct" type="number" min="0" max="100" value="0"></td><td><input class="mini" type="number" min="0" max="10"></td><td><input class="mini" type="number" min="0" max="10"></td></tr>
+          <tr class="pfrow" data-name="Востребованность (меня зовут, я нужна)"><td>Востребованность (меня зовут, я нужна)</td><td><input class="pct" type="number" min="0" max="100" value="0"></td><td><input class="mini" type="number" min="0" max="10"></td><td><input class="mini" type="number" min="0" max="10"></td></tr>
+          <tr class="pfrow" data-name="Польза другим (помогаю, решаю, тяну)"><td>Польза другим (помогаю, решаю, тяну)</td><td><input class="pct" type="number" min="0" max="100" value="0"></td><td><input class="mini" type="number" min="0" max="10"></td><td><input class="mini" type="number" min="0" max="10"></td></tr>
+          <tr class="pfrow" data-name="Роль мамы / жены"><td>Роль мамы / жены</td><td><input class="pct" type="number" min="0" max="100" value="0"></td><td><input class="mini" type="number" min="0" max="10"></td><td><input class="mini" type="number" min="0" max="10"></td></tr>
+          <tr class="pfrow" data-name="Тело, форма, как выгляжу"><td>Тело, форма, как выгляжу</td><td><input class="pct" type="number" min="0" max="100" value="0"></td><td><input class="mini" type="number" min="0" max="10"></td><td><input class="mini" type="number" min="0" max="10"></td></tr>
+          <tr class="pfrow" data-name="Достижения, статус, «я сильная»"><td>Достижения, статус, «я сильная»</td><td><input class="pct" type="number" min="0" max="100" value="0"></td><td><input class="mini" type="number" min="0" max="10"></td><td><input class="mini" type="number" min="0" max="10"></td></tr>
+          <tr class="pfrow" data-name="Просто я, безотносительно к делу"><td>Просто я, безотносительно к делу</td><td><input class="pct" type="number" min="0" max="100" value="0"></td><td><input class="mini" type="number" min="0" max="10"></td><td><input class="mini" type="number" min="0" max="10"></td></tr>
+          <tr class="pfrow" data-custom="1"><td>Своё: <input class="aname" type="text" placeholder="…"></td><td><input class="pct" type="number" min="0" max="100" value="0"></td><td><input class="mini" type="number" min="0" max="10"></td><td><input class="mini" type="number" min="0" max="10"></td></tr>
+          <tr class="sum"><td>Итого</td><td><span id="pfsum">0</span>%</td><td colspan="2" class="muted small">должно быть 100</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="pfflag" class="flag">Заполни проценты — посчитаю концентрацию.</div>
+
+    <div class="q">Самый тяжёлый актив портфеля (наибольший %). Что будет с ощущением «я чего-то стою», если завтра его не станет?</div>
+    <textarea placeholder="Честно, без «справлюсь»…"></textarea>
+
+    <div class="callout steel">Ты это знаешь лучше меня: портфель, где 70% в одном инструменте с чужим управлением — это не богатство, это уязвимость. Не потому что мало. Потому что <b>не диверсифицировано и не в твоих руках</b>. С ощущением «я чего-то стою» — ровно так же.</div>
+  </div>
+
+  <!-- БЛОК 3 -->
+  <div class="card">
+    <span class="time">9 мин</span>
+    <span class="tag">Блок 3 · Правило</span>
+    <h2>Условие, по которому я имею право быть ценной</h2>
+    <p>У ценности часто стоит негласное условие — как ковенант в кредитном договоре: «право действует, ПОКА выполняется пункт…». Допиши фразу — сколько вариантов придёт.</p>
+
+    <div class="q">Я имею право чувствовать себя ценной, если / пока я…</div>
+    <textarea placeholder="…полезна · …справляюсь сама · …сильная · …зарабатываю · …меня выбирают · …никого не подвожу…"></textarea>
+
+    <div class="q">Что происходит с ощущением ценности в момент, когда условие не выполнено? (не смогла, отказала, ошиблась, сижу дома)</div>
+    <textarea placeholder="что говорю себе, что делаю…"></textarea>
+
+    <div class="q">Проверка ковенанта: этот пункт я подписывала осознанно и он мне сейчас служит — или он стоит по умолчанию и я просто плачу по нему проценты?</div>
+    <textarea placeholder="…"></textarea>
+  </div>
+
+  <!-- БЛОК 4 -->
+  <div class="card">
+    <span class="time">8 мин</span>
+    <span class="tag">Блок 4 · Волатильность</span>
+    <h2>Качели: два полюса</h2>
+    <p>У портфеля есть волатильность — размах колебаний. У неё он большой: то «всё прекрасно, жизнь удалась», то «дома ущербно». Разложим оба полюса и найдём переключатель.</p>
+    <div class="poles">
+      <div class="pole up">
+        <h4>▲ «Всё прекрасно»</h4>
+        <div class="q small">Что этому предшествует (что включает)</div>
+        <textarea></textarea>
+        <div class="q small">Что говорю себе</div>
+        <textarea></textarea>
+        <div class="q small">Как это в теле</div>
+        <input type="text" placeholder="…">
+      </div>
+      <div class="pole down">
+        <h4>▼ «Ущербно / пусто»</h4>
+        <div class="q small">Что этому предшествует (что включает)</div>
+        <textarea></textarea>
+        <div class="q small">Что говорю себе</div>
+        <textarea></textarea>
+        <div class="q small">Как это в теле</div>
+        <input type="text" placeholder="…">
+      </div>
+    </div>
+    <div class="q">Переключатель. Что именно щёлкает между полюсами? Часто это одна мысль или одно событие.</div>
+    <input type="text" placeholder="напр.: остаюсь наедине с собой без задачи → «я никчёмна»">
+    <div class="callout">Вопрос на подумать, не на ответить прямо сейчас: возможно, амплитуда — это не «то хорошо, то плохо», а <b>одно и то же напряжение</b> с разным знаком. Внизу — «я не нужна». Наверху — «смотрите, как я нужна». Оба про одно и то же.</div>
+  </div>
+
+  <!-- БЛОК 5 -->
+  <div class="card">
+    <span class="time">7 мин</span>
+    <span class="tag">Блок 5 · Что удержано</span>
+    <h2>Строка, которую портфель не показывает</h2>
+    <p>Она много плачет, но и много держит. Держать — тоже работа, она стоит энергии, как обслуживание долга. Посмотрим, что именно удерживается — практично, без «давай почувствуем».</p>
+
+    <div class="q">Где в теле я больше всего сдерживаю? (горло, грудь, челюсть, живот)</div>
+    <input type="text" placeholder="…">
+
+    <div class="q">Если бы это место умело говорить словами — оно бы сказало кому и что?</div>
+    <div class="hint">Не «что я чувствую», а буквально: какая фраза там застряла.</div>
+    <textarea placeholder="«Мне …», «Я устала …», «Хватит требовать, чтобы я …»"></textarea>
+
+    <div class="q">Что я сейчас не разрешаю себе сказать вслух — потому что это «не свойственно сильному человеку»?</div>
+    <textarea placeholder="…"></textarea>
+
+    <div class="q">Слёзы, когда приходят, — они про что чаще?</div>
+    <div class="hint">злость, которую некуда деть · усталость держать всё · жалость к себе, которую стыдно · облегчение · «меня никто не спросил, как мне» · другое</div>
+    <input type="text" placeholder="свой вариант">
+    <div class="callout steel">Слёзы — не поломка системы. Это сброс перегруза, который иначе уходит в изжогу и в срывы дома. Разрешить им быть — это не слабость, а <b>перераспределение нагрузки</b> с тела на нормальный канал.</div>
+  </div>
+
+  <!-- БЛОК 6 · ДЕНЬГИ / ПОПРОСИТЬ ЗА СВОЁ -->
+  <div class="card">
+    <span class="time">8 мин</span>
+    <span class="tag">Блок 6 · Назвать цену</span>
+    <h2>Попросить за свою работу</h2>
+    <p>Это то, что мы с тобой разбирали в последний раз и обещали не бросать. Ты делаешь людям сильную, экспертную работу — и застреваешь ровно в одном месте: <b>назвать за неё цену</b>. Здесь ценность напрямую встречается с деньгами, поэтому блок отдельный.</p>
+
+    <div class="q">Вспомни последний случай, когда ты сделала работу и не взяла (или не назвала) за неё деньги. Что конкретно ты сделала?</div>
+    <textarea placeholder="что именно: пересобрала резюме, разобрала, дала рекомендации…"></textarea>
+
+    <div class="q">В какой момент нужно было назвать цену — и что поднялось в теле? (щёки/уши, сердце, ладони, горло)</div>
+    <input type="text" placeholder="напр.: горят уши, тахикардия, ладошки потеют">
+
+    <div class="q">Какая мысль встаёт прямо перед тем, как назвать сумму? Допиши честно.</div>
+    <div class="hint">«Он подумает, что я…» · «Неудобно, мы же…» · «А вдруг то, что я дала, того не стоит» · «Он обидится и исчезнет»</div>
+    <textarea placeholder="…"></textarea>
+
+    <div class="q">Что на самом деле страшно потерять, если назову цену? А что я теряю каждый раз, когда НЕ называю?</div>
+    <textarea placeholder="слева — чего боюсь; справа — чем плачу за молчание (деньги, ресурс, «гештальт не закрыт», разочарование)…"></textarea>
+
+    <div class="callout">Разница между «бесплатно помогла» и «работа» — это одна фраза, сказанная <b>в начале</b>: «я сейчас работаю сама на себя, моя услуга стоит столько-то». Не в конце, когда уже сделала и обидно. В начале — как в любой переговорке, которые ты вела годами.</div>
+
+    <div class="q">Моя цена. Впиши конкретную цифру за конкретную услугу — ту, что назовёшь вслух в следующий раз.</div>
+    <input type="text" placeholder="напр.: пересборка резюме + рекомендации — 10 000 ₽">
+
+    <div class="q">Мини-репетиция. Напиши дословно фразу, которой назовёшь цену. Коротко, без извинений и без «ну, если что, можно подвинуться».</div>
+    <div class="hint">После фразы — пауза. Молчишь. Пауза твоя, не твоя задача её спасать.</div>
+    <textarea placeholder="«Рынок такой-то. Мои услуги стоят ___. Поэтому с тебя ___.»"></textarea>
+  </div>
+
+  <!-- БЛОК 7 -->
+  <div class="card">
+    <span class="time">5 мин</span>
+    <span class="tag">Блок 7 · Своя опора</span>
+    <h2>Безусловный актив</h2>
+    <p>В портфеле нужен инструмент, который не зависит от рынка, — тот, что не отберут ни увольнение, ни тишина дома, ни то, что перестали звать.</p>
+
+    <div class="q">Что во мне останется, когда я ничего не доказываю и никому не полезна прямо сейчас?</div>
+    <textarea placeholder="даже если пусто — так и запиши: «пока не знаю». это честный старт."></textarea>
+
+    <div class="q">Один маленький актив «просто для себя» на эту неделю — то, что я делаю не чтобы быть кому-то нужной, а потому что мне.</div>
+    <input type="text" placeholder="конкретно и по-мелкому, без подвига">
+
+    <div class="q">Договор с собой на спад (заключаю сейчас, пока есть ресурс). Если накатит «ущербно / пусто» — я не пересиживаю и не терплю молча, а пишу своему терапевту сразу и приношу это как следующую часть работы, а не как провал.</div>
+    <input type="text" placeholder="да / мои условия">
+  </div>
+
+  <!-- АВТО-ВЫВОД -->
+  <div class="card" id="outcard">
+    <div class="out-head">
+      <span class="tag">Автоматический разбор</span>
+      <h2>Что показал аудит</h2>
+      <p class="muted small">Считается сам по шкалам и портфелю. Меняешь цифры — разбор пересобирается. Опора на исследования указана в каждом блоке.</p>
+    </div>
+    <div id="output"></div>
+    <div class="btnrow">
+      <button class="btn primary" onclick="window.print()">Сохранить в PDF / распечатать</button>
+    </div>
+  </div>
+
+  <!-- ИСТОЧНИКИ -->
+  <div class="card">
+    <span class="tag">Опора · фактчек</span>
+    <h2>На чём построен разбор</h2>
+    <ul class="srcbox">
+      <li><b>Crocker, J., &amp; Wolfe, C. T. (2001).</b> Contingencies of Self-Worth. <i>Psychological Review, 108(3), 593–623.</i> — важен не «уровень» самооценки, а её контингенции: за что человек считает, что он стоит; это одновременно источник мотивации и зона уязвимости.</li>
+      <li><b>Deci, E. L., &amp; Ryan, R. M.</b> — Self-Determination Theory: различение <i>contingent</i> и <i>true/autonomous</i> self-esteem; устойчивая опора автономна, а не заработана извне.</li>
+      <li><b>Rogers, C. (1959).</b> «Conditions of worth» — усвоенное правило «я ценен, если…», принятое как своё.</li>
+      <li><b>Winnicott, D. W. (1935); Klein, M. (1940).</b> — о том, как подъём, идеализация и контроль могут временно закрывать внутреннюю тревогу и ощущение пустоты, вместо того чтобы её прожить.</li>
+      <li><b>McDougall, J.</b> «Театры тела»; <b>van der Kolk, B. (2014)</b> «The Body Keeps the Score» — невыраженный аффект соматизируется (напряжение уходит в тело: изжога, горло).</li>
+      <li><b>Mindell, A. (1995).</b> Sitting in the Fire — понятие ранга.</li>
+    </ul>
+    <p class="muted small">Это не «эзотерика» и не «всё из детства». За каждым блоком — проверенные исследования самооценки и психосоматики. Сам инструмент собран под тебя, на практичном и рациональном языке.</p>
+  </div>
+
+  <div class="foot">
+    <p>Сделано персонально для тебя · по материалам наших сессий</p>
+    <p>Из чего сделана моя ценность · «ценность = функция» → своя опора, не заёмная</p>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s)};
+  var $$=function(s,r){return Array.from((r||document).querySelectorAll(s))};
+
+  // live scale readouts
+  $$('.scale input[type=range]').forEach(function(r){
+    var v=r.parentElement.querySelector('.val');
+    var upd=function(){v.textContent=r.value};
+    r.addEventListener('input',function(){upd();render()});upd();
+  });
+
+  var body=$('#pfbody'), sumEl=$('#pfsum'), flag=$('#pfflag'), out=$('#output');
+
+  function num(el,def){var v=parseFloat(el&&el.value);return isNaN(v)?(def===undefined?null:def):v;}
+
+  function readPortfolio(){
+    var rows=$$('.pfrow',body).map(function(tr){
+      var name=tr.dataset.name;
+      if(tr.dataset.custom){var an=$('.aname',tr);name=(an&&an.value.trim())||'Своё';}
+      return {
+        name:name,
+        pct:num($('.pct',tr),0)||0,
+        control:num($('.mini',tr)),                    // may be null
+        hit:num($$('.mini',tr)[1])                     // second mini = hit
+      };
+    });
+    return rows;
+  }
+
+  function recalcFlag(rows){
+    var total=rows.reduce(function(a,r){return a+r.pct},0);
+    sumEl.textContent=total;
+    var mx=Math.max.apply(null,rows.map(function(r){return r.pct}).concat([0]));
+    flag.className='flag';
+    if(total===0){flag.textContent='Заполни проценты — посчитаю концентрацию.';return total;}
+    var msg='Сумма: '+total+'%. ';
+    if(total!==100){msg+='Своди к 100 (сейчас '+(total>100?'перебор':'недобор')+'). ';}
+    if(mx>=50){flag.classList.add('risk');msg+='⚠ Риск концентрации: один актив несёт '+mx+'%.';}
+    else if(mx>=35){flag.classList.add('risk');msg+='Высокая концентрация: сильнейший актив '+mx+'%.';}
+    else if(total===100){flag.classList.add('ok');msg+='Диверсификация приличная — сильнейший актив '+mx+'%.';}
+    flag.textContent=msg;
+    return total;
+  }
+
+  function lvlClass(v,hiIsBad){ // v 0-100 or 0-10 mapped externally; expect 0-100
+    if(hiIsBad) return v>=60?'hi':(v>=35?'mid':'lo');
+    return v>=60?'lo':(v>=35?'mid':'hi');
+  }
+
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+
+  function render(){
+    var s1=+$('#s1').value,s2=+$('#s2').value,s3=+$('#s3').value,s4=+$('#s4').value,s5=+$('#s5').value,s6=+$('#s6').value;
+    var rows=readPortfolio();
+    var total=recalcFlag(rows);
+    var filled=total>0;
+
+    // metrics
+    var top=rows.slice().sort(function(a,b){return b.pct-a.pct})[0]||{pct:0,name:'—'};
+    var topShare=filled?Math.round(top.pct/total*100):0;
+    // external dependence: weight pct by (10-control)/10; control null -> assume 5
+    var extNum=0, ctlKnown=false;
+    rows.forEach(function(r){ if(r.pct>0){ var c=(r.control===null?5:r.control); if(r.control!==null)ctlKnown=true; extNum+=r.pct*(10-c)/10; }});
+    var extPct=filled?Math.round(extNum/total*100):0;
+    // fragility: weighted avg hit (0-10); null->5
+    var frNum=0; rows.forEach(function(r){ if(r.pct>0){ frNum+=r.pct*(r.hit===null?5:r.hit); }});
+    var fragility=filled?Math.round(frNum/total*10):0; // 0-100
+    // "просто я" share
+    var selfRow=rows.find(function(r){return /просто я/i.test(r.name)})||{pct:0};
+    var selfShare=filled?Math.round(selfRow.pct/total*100):0;
+    // volatility 0-100 from устойчивость
+    var volat=Math.round((10-s2)*10);
+    // holding 0-100
+    var holding=Math.round(((10-s5)*0.6 + s4*0.4)*10);
+    var rented = s1>=7 && s2<=4;
+
+    var H='';
+
+    // TILES
+    H+='<div class="tiles">';
+    H+=tile(filled?topShare+'%':'—', 'концентрация', filled?('сильнейший актив: '+esc(top.name)):'заполни портфель', filled?lvlClass(topShare,true):'neu');
+    H+=tile(filled?extPct+'%':'—','вне моего контроля', filled?'доля ценности на чужом управлении':'—', filled?lvlClass(extPct,true):'neu');
+    H+=tile(filled?fragility+'%':'—','хрупкость', filled?'насколько просядет при потере активов':'—', filled?lvlClass(fragility,true):'neu');
+    H+=tile(volat+'%','волатильность','размах качелей (из устойчивости)',lvlClass(volat,true));
+    H+=tile(holding+'%','удержано','сколько зажимается в теле',lvlClass(holding,true));
+    H+=tile(filled?selfShare+'%':'—','«просто я»','ценность вне функции',filled?lvlClass(selfShare,false):'neu');
+    H+='</div>';
+
+    if(!filled){
+      H+='<div class="sec"><h3><span class="ic">📥</span>Портфель ещё не заполнен</h3><p class="muted">Впиши проценты в блоке 2 — и здесь соберётся разбор концентрации, внешней зависимости и хрупкости. Пока показываю только состояние по шкалам.</p></div>';
+    }
+
+    // 1. Тип самооценки
+    var t1='<div class="sec"><h3><span class="ic">⚖️</span>Тип самооценки: условная или своя</h3>';
+    if(filled){
+      if(extPct>=50 || topShare>=45){
+        t1+='<p><b>Самооценка сейчас условная и сконцентрированная.</b> '+extPct+'% ощущения «я чего-то стою» держится на том, чем управляют извне, а сильнейший актив несёт '+topShare+'%. По исследованию контингенций самооценки это ровно та конфигурация, где всплеск мотивации и провал самоценности — две стороны одной монеты: пока условие выполняется, ты на подъёме; не выполнилось — обвал.</p>';
+      } else if(extPct>=30){
+        t1+='<p><b>Смешанная опора.</b> Заметная часть ('+extPct+'%) всё ещё на внешнем управлении, но есть и что-то своё. Это рабочая зона: видно, куда переносить вес.</p>';
+      } else {
+        t1+='<p><b>Опора преимущественно своя.</b> Внешняя зависимость '+extPct+'% — низкая. Если это не «правильный ответ», а честный, — это устойчивая база, редкая для тебя.</p>';
+      }
+    } else {
+      t1+='<p class="muted">Заполни портфель, чтобы оценить, насколько ценность условная.</p>';
+    }
+    t1+='<div class="src"><b>Опора:</b> Crocker &amp; Wolfe (2001), <i>Psychological Review</i>; Deci &amp; Ryan (SDT): устойчивая самооценка — автономная, а не заработанная извне; Rogers — «conditions of worth».</div></div>';
+    H+=t1;
+
+    // 2. Риск концентрации (portfolio)
+    if(filled){
+      var t2='<div class="sec"><h3><span class="ic">📉</span>Риск концентрации портфеля</h3>';
+      t2+='<div class="bar"><i style="width:'+Math.min(100,topShare)+'%"></i></div>';
+      if(topShare>=45){
+        t2+='<p>Актив «'+esc(top.name)+'» несёт '+topShare+'% всей ценности. На твоём же языке: портфель, где почти половина в одном инструменте, — это не сила, а уязвимость. Именно так уже было с работой: пока держала — «я значима», ушла — обвал. Сейчас, вероятно, вес просто <b>переехал в другой актив</b>, а конструкция та же.</p>';
+      } else if(topShare>=30){
+        t2+='<p>Сильнейший актив «'+esc(top.name)+'» — '+topShare+'%. Умеренно высоко. Стоит проверить: если он завтра исчезнет, чем держится остальное?</p>';
+      } else {
+        t2+='<p>Вес распределён (топ-актив '+topShare+'%). Это устойчивее, чем ставка на один источник.</p>';
+      }
+      t2+='<div class="src"><b>Опора:</b> модель контингенций самооценки — «ставка» на один домен (Crocker &amp; Wolfe, 2001; исходно W. James): чем уже опора, тем резче падения.</div></div>';
+      H+=t2;
+    }
+
+    // 3. Качели / маниакальная защита
+    var t3='<div class="sec"><h3><span class="ic">🎢</span>Качели: подъём и падение</h3>';
+    if(volat>=60 || (s1>=7&&s2<=4)){
+      t3+='<p><b>Размах большой, и это не случайно.</b> Ощущение ценности высокое, но неустойчивое. Часто подъём «всё прекрасно» работает ещё и как защита — он прикрывает встречу с «а вдруг я не нужна», а не отменяет её. Поэтому за пиком нередко закономерно идёт спад. Смысл не в том, чтобы удержать пик, а в том, чтобы следующий провал встретить как работу, а не пересидеть его молча.</p>';
+    } else if(volat>=35){
+      t3+='<p>Умеренные колебания. Полюса есть, но не рвут. Разложенные в блоке 4 «переключатели» — то, с чем стоит работать точечно.</p>';
+    } else {
+      t3+='<p>Колебания сейчас небольшие — состояние относительно ровное. Хорошее окно для глубины без срочности.</p>';
+    }
+    t3+='<div class="src"><b>Опора:</b> Winnicott (1935), Klein (1940) — о том, как подъём и контроль могут служить защитой от тревоги и чувства беспомощности.</div></div>';
+    H+=t3;
+
+    // 4. Меня зовут = я нужна
+    if(filled){
+      var soc=rows.find(function(r){return /востребованн/i.test(r.name)})||{pct:0};
+      var help=rows.find(function(r){return /польза друг/i.test(r.name)})||{pct:0};
+      var socShare=Math.round((soc.pct+help.pct)/total*100);
+      if(socShare>=25){
+        var t4='<div class="sec"><h3><span class="ic">🤝</span>«Меня зовут / я полезна = я нужна»</h3>';
+        t4+='<p>'+socShare+'% ценности держится на востребованности и пользе другим. Это та же конструкция «быть выбранной»: ценность подтверждается взглядом извне («зовут → значит, нужна»). Раньше подтверждали клиенты и должность, теперь — приглашения. Практический вопрос к ней: «нравится сама поездка — или что зовут?»</p>';
+        t4+='<div class="src"><b>Опора:</b> база знаний — разбор «быть выбранной» (Кляйн: «умиротворение преследователя»; ценность через выбранность).</div></div>';
+        H+=t4;
+      }
+    }
+
+    // 5. Тело и удержанное
+    var t5='<div class="sec"><h3><span class="ic">🫁</span>Тело и удержанное</h3>';
+    if(holding>=60){
+      t5+='<p><b>Удержания много.</b> Слёзы близко, но канал в основном перекрыт, а тело напряжено. То, что не проходит через нормальный канал (слова, слёзы, злость по адресу), уходит в симптом — у тебя в изжогу и горло. Это не слабость системы, это перегруз, ищущий выход.</p>';
+    } else if(holding>=35){
+      t5+='<p>Часть удерживается. Есть смысл сверять: где именно зажимается и какая фраза там застряла (блок 5).</p>';
+    } else {
+      t5+='<p>Каналы относительно открыты — то, что поднимается, находит выход. Это ресурс.</p>';
+    }
+    t5+='<div class="src"><b>Опора:</b> психосоматика невыраженного аффекта — McDougall «Театры тела», van der Kolk (2014); подавленная агрессия → телесный симптом.</div></div>';
+    H+=t5;
+
+    // 6. Куда двигаться
+    var t6='<div class="sec"><h3><span class="ic">🧭</span>Куда двигаться</h3><p>';
+    var moves=[];
+    if(filled && (extPct>=40||topShare>=40)) moves.push('главная задача — <b>диверсификация</b>: постепенно переносить вес в активы, которые в твоих руках, а не выданы извне');
+    if(filled && selfShare<10) moves.push('строка «просто я» почти пустая ('+selfShare+'%) — это и есть точка роста: начать с одного маленького «безусловного актива» на неделю (блок 6)');
+    if(volat>=50) moves.push('заключить <b>договор на спад</b> сейчас, на ресурсе, чтобы следующее падение пришло в работу, а не в «пересидеть»');
+    if(holding>=50) moves.push('дать телу канал: разрешить слёзам/злости адрес, чтобы не уходило в изжогу');
+    if(!moves.length) moves.push('состояние ровное — использовать окно для глубины: что во мне остаётся, когда я ничего не доказываю');
+    t6+=moves.join('; ')+'.';
+    t6+='</p><div class="src"><b>Опора:</b> SDT (Deci &amp; Ryan) — автономная опора; собственный инсайт клиентки: «я себе не нужна там — не значит, что я не нужна нигде».</div></div>';
+    H+=t6;
+
+    out.innerHTML=H;
+  }
+
+  function tile(n,k,d,cls){
+    return '<div class="tile '+(cls||'neu')+'"><div class="n">'+n+'</div><div class="k">'+k+'</div><div class="d">'+(d||'')+'</div></div>';
+  }
+
+  body.addEventListener('input',render);
+  render();
+})();
+</script>
+</body>
+</html>
