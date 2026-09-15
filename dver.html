@@ -1,0 +1,370 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Дверь. Как пройти через паническую атаку</title>
+<style>
+  :root{
+    --bg:#F5F1EA; --bg2:#EFEAE1; --text:#201B18; --dim:#7C7269;
+    --accent:#CE2434; --accent-soft:#D9642B; --line:#E6DFD4; --panel:#FFFFFF;
+    --ink:#1c1613;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --serif:"Georgia","Times New Roman",serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:
+      radial-gradient(1200px 600px at 80% -5%, #FBF7F0 0%, rgba(251,247,240,0) 60%),
+      radial-gradient(900px 500px at -10% 10%, #F0E7DA 0%, rgba(240,231,218,0) 55%),
+      var(--bg);
+    color:var(--text); font-family:var(--sans); font-size:18px; line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px; margin:0 auto; padding:28px 20px 64px;}
+  h2.sec{font-family:var(--serif); font-size:27px; margin:38px 0 4px;}
+  p.sub{color:var(--dim); font-size:15px; margin:0 0 18px;}
+
+  /* HERO */
+  .hero{position:relative; padding:34px 26px 30px; border-radius:22px;
+    background:linear-gradient(180deg,#1c1613 0%, #2a201b 100%); color:#F6EFE6;
+    overflow:hidden; box-shadow:0 24px 60px -30px rgba(28,22,19,.6);}
+  .hero::after{content:""; position:absolute; right:-60px; top:-60px; width:220px; height:220px;
+    border-radius:50%; background:radial-gradient(circle at 30% 30%, rgba(206,36,52,.55), rgba(206,36,52,0) 70%);}
+  .badge{display:inline-block; font-size:13px; letter-spacing:.18em; text-transform:uppercase;
+    color:#E7B7AF; border:1px solid rgba(231,183,175,.4); padding:5px 12px; border-radius:999px; margin-bottom:16px;}
+  .hero h1{font-family:var(--serif); font-weight:700; font-size:34px; line-height:1.12; margin:0 0 12px;}
+  .hero h1 b{color:#F5A79C;}
+  .hero p{margin:0; color:#D8CabD; font-size:17px; max-width:52ch;}
+  .hero .sig{margin-top:18px; font-style:italic; color:#EAD9C9; font-size:16px; border-left:2px solid var(--accent); padding-left:14px;}
+
+  /* SOS */
+  .sos{margin:18px 0 6px; background:var(--panel); border:2px solid var(--accent); border-radius:18px;
+    padding:22px 24px; box-shadow:0 18px 40px -30px rgba(206,36,52,.6);}
+  .sos h2{margin:0 0 4px; font-family:var(--serif); font-size:22px; color:var(--accent);}
+  .sos .lead{margin:0 0 14px; font-size:15px; color:var(--dim);}
+  .sos ol{margin:0; padding-left:0; list-style:none; counter-reset:s;}
+  .sos li{counter-increment:s; position:relative; padding:9px 0 9px 40px; border-bottom:1px dashed var(--line); font-size:17px;}
+  .sos li:last-child{border-bottom:none;}
+  .sos li::before{content:counter(s); position:absolute; left:0; top:7px; width:27px; height:27px;
+    background:var(--accent); color:#fff; border-radius:50%; font-family:var(--serif); font-weight:700;
+    font-size:15px; display:flex; align-items:center; justify-content:center;}
+  .sos .end{margin:14px 0 0; font-size:15.5px; color:#5a4f46; background:var(--bg2); border-radius:10px; padding:11px 14px;}
+
+  /* FACTS */
+  .facts{display:flex; flex-wrap:wrap; gap:10px; margin:20px 0 6px;}
+  .fact{flex:1 1 150px; background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:14px 16px;}
+  .fact .n{font-family:var(--serif); font-size:26px; color:var(--accent); font-weight:700; line-height:1;}
+  .fact .t{font-size:14px; color:var(--dim); margin-top:5px;}
+  .normline{margin:14px 0 0; font-size:16px; color:#3a322c;}
+
+  /* EDU cards */
+  .edu{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:20px 22px; margin:14px 0;}
+  .edu h3{margin:0 0 8px; font-size:19px; display:flex; gap:10px; align-items:baseline;}
+  .edu h3 .ic{color:var(--accent); font-family:var(--serif); font-weight:700;}
+  .edu p{margin:0 0 10px; font-size:16.5px;}
+  .edu p:last-child{margin-bottom:0;}
+  .edu .hl{background:#FBEAE9; padding:1px 5px; border-radius:5px;}
+
+  /* CHAIN */
+  .chain{margin:12px 0 4px;}
+  .chain .node{background:var(--bg2); border:1px solid var(--line); border-radius:12px; padding:11px 14px;
+    font-size:15.5px; position:relative;}
+  .chain .node b{color:var(--accent);}
+  .chain .arr{text-align:center; color:var(--accent); font-size:18px; line-height:1; margin:5px 0;}
+  .chain .loop{margin-top:10px; font-size:15px; color:#5a4f46; font-style:italic;}
+
+  /* TUNNEL svg wrap */
+  .tunnelfig{display:flex; gap:12px; align-items:center; justify-content:center; flex-wrap:wrap; margin:10px 0 6px;}
+  .tunnelfig figure{margin:0; text-align:center;}
+  .tunnelfig figcaption{font-size:13px; color:var(--dim); margin-top:6px;}
+
+  /* WHY ENDS band */
+  .why{margin:14px 0; background:linear-gradient(180deg,#2a201b,#1c1613); color:#F3E7DB; border-radius:16px; padding:22px;}
+  .why h3{margin:0 0 8px; font-family:var(--serif); font-size:20px; color:#F5A79C;}
+  .why p{margin:0; font-size:16.5px; color:#E7D7C7;}
+  .why b{color:#F5A79C;}
+
+  /* STEPS */
+  .step{position:relative; background:var(--panel); border:1px solid var(--line); border-radius:18px;
+    padding:20px 22px 18px 70px; margin:14px 0; box-shadow:0 12px 30px -26px rgba(28,22,19,.5);}
+  .step .num{position:absolute; left:18px; top:20px; width:38px; height:38px; border-radius:50%;
+    background:var(--accent); color:#fff; font-family:var(--serif); font-weight:700; font-size:19px;
+    display:flex; align-items:center; justify-content:center;}
+  .step h3{margin:0 0 6px; font-size:19px;}
+  .step p{margin:0 0 8px; font-size:16.5px;}
+  .step .say{display:inline-block; background:#FBEAE9; color:#8f1a25; border:1px solid #F0CFCC;
+    border-radius:10px; padding:8px 12px; font-size:16px; font-style:italic; margin:2px 0 4px;}
+  .step ul{margin:6px 0 0; padding-left:20px;}
+  .step li{margin:4px 0; font-size:16px;}
+  .step li b{color:var(--accent);}
+  .mini{font-size:14.5px; color:var(--dim); margin-top:8px; border-top:1px dashed var(--line); padding-top:8px;}
+  .why-tag{display:inline-block; font-size:13px; color:var(--accent-soft); font-weight:600; margin-bottom:4px; letter-spacing:.02em;}
+
+  /* soft blocks */
+  .soft{margin:24px 0; background:linear-gradient(180deg,#F7F2EA,#F2ECE1); border:1px solid var(--line);
+    border-radius:18px; padding:22px;}
+  .soft.accent{border-left:4px solid var(--accent);}
+  .soft h2{font-family:var(--serif); font-size:21px; margin:0 0 10px;}
+  .soft li{margin:6px 0;}
+  .soft .big{font-family:var(--serif); font-size:19px; color:var(--accent); margin:6px 0 4px;}
+
+  /* RED FLAGS */
+  .red{margin:26px 0; border-radius:18px; padding:22px; background:#2a201b; color:#F3E7DB; border:1px solid #4a3a30;}
+  .red h2{color:#F5A79C; font-family:var(--serif); font-size:21px; margin:0 0 6px;}
+  .red p.i{color:#D8C6B6; font-size:15px; margin:0 0 12px;}
+  .red ul{margin:0; padding-left:20px;}
+  .red li{margin:8px 0; font-size:16px;}
+  .phones{display:flex; flex-wrap:wrap; gap:10px; margin-top:16px;}
+  .phone{flex:1 1 160px; background:rgba(206,36,52,.14); border:1px solid rgba(245,167,156,.35); border-radius:12px; padding:12px 14px;}
+  .phone .big{font-family:var(--serif); font-size:22px; color:#F5A79C; font-weight:700;}
+  .phone .lbl{font-size:13px; color:#D8C6B6; margin-top:2px;}
+
+  /* INVITE / story */
+  .invite{margin:26px 0; background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--accent);
+    border-radius:14px; padding:22px;}
+  .invite h2{font-family:var(--serif); font-size:20px; margin:0 0 8px;}
+  .invite p{margin:0 0 10px; font-size:16.5px;}
+  .invite .sig{font-style:italic; color:#5a4f46;}
+
+  .cta{margin:24px 0 8px; text-align:center; padding:24px; background:linear-gradient(180deg,#1c1613,#2a201b);
+    color:#F6EFE6; border-radius:18px;}
+  .cta h2{font-family:var(--serif); font-size:22px; margin:0 0 8px; color:#F5A79C;}
+  .cta p{margin:0 auto; max-width:48ch; color:#D8CabD; font-size:16px;}
+
+  .disc{margin-top:26px; font-size:13.5px; color:var(--dim); background:var(--bg2); border:1px solid var(--line);
+    border-radius:14px; padding:16px 18px; line-height:1.55;}
+  .src{margin-top:12px; font-size:12.5px; color:var(--dim); line-height:1.5;}
+  .src b{color:#5a4f46;}
+  .foot{margin-top:20px; text-align:center; color:var(--dim); font-size:13px;}
+
+  @media (max-width:520px){
+    body{font-size:17px;}
+    .hero h1{font-size:28px;}
+    h2.sec{font-size:23px;}
+    .step{padding:18px 16px 16px 60px;}
+    .step .num{left:14px; width:34px; height:34px; font-size:17px;}
+  }
+  @media print{ body{background:#fff;} .hero,.cta,.red,.why{box-shadow:none;} .step,.edu{break-inside:avoid;} }
+</style>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="badge">Дверь · инструкция</span>
+    <h1>Как пройти через <b>паническую атаку</b></h1>
+    <p>Разберём, что с тобой на самом деле происходит и почему это не опасно. А в конце ты будешь точно знать, что делать, когда накрывает. Сохрани эту страницу в телефон.</p>
+    <div class="sig">Я сам прожил в панических атаках несколько лет и вышел из них. Знаю этот ужас изнутри. Эта дверь для тебя. — Антон Шачнёв</div>
+  </div>
+
+  <!-- SOS -->
+  <div class="sos">
+    <h2>Если накрывает прямо сейчас</h2>
+    <p class="lead">Не читай всё. Сделай по порядку. Дальше на странице разберём, почему это работает.</p>
+    <ol>
+      <li>Скажи вслух или про себя: «Это паническая атака. Это не опасно. Она пройдёт.»</li>
+      <li>Не борись со страхом. Разреши волне быть. Ты не сдаёшься, ты перестаёшь подливать в огонь.</li>
+      <li>Осмотрись и назови вслух 5 вещей, которые видишь вокруг. Верни себя в комнату.</li>
+      <li>Выдох длиннее вдоха: вдох носом на счёт 4, мягкий выдох на 6–8. Несколько раз, без усилия.</li>
+      <li>Почувствуй стопы в полу. Умой лицо или подержи руки под прохладной водой. Ты здесь.</li>
+    </ol>
+    <p class="end">Волна дойдёт до пика за 5–10 минут и начнёт спадать сама. Твоё тело физически не может держать это долго. Так будет и в этот раз.</p>
+  </div>
+
+  <!-- FACTS -->
+  <div class="facts">
+    <div class="fact"><div class="n">5–10<span style="font-size:15px"> мин</span></div><div class="t">пик волны, дальше только на спад</div></div>
+    <div class="fact"><div class="n">20–30<span style="font-size:15px"> мин</span></div><div class="t">и адреналин расходуется, тело успокаивается</div></div>
+    <div class="fact"><div class="n">100%</div><div class="t">атак заканчиваются. Эта тоже закончится</div></div>
+  </div>
+  <p class="normline">Паническая атака это ложная тревога. Тело нажало на газ и выбросило адреналин, как будто рядом опасность. Но опасности нет. От панической атаки не умирают, не сходят с ума и не теряют себя. Это очень страшно и при этом не вредно.</p>
+
+  <!-- EDU -->
+  <h2 class="sec">Что на самом деле с тобой происходит</h2>
+  <p class="sub">Когда понимаешь механизм, страх теряет часть власти. Вот что творится внутри, по шагам.</p>
+
+  <div class="edu">
+    <h3><span class="ic">1.</span> Ложная тревога: сработала сигнализация</h3>
+    <p>В глубине мозга есть <b>миндалина</b> (амигдала) — древний детектор угрозы, вроде пожарной сигнализации. Иногда она срабатывает не на пожар, а на дым от тостера: принимает обычное ощущение (кольнуло в груди, сердце застучало, кружится голова) за смертельную опасность и мгновенно жмёт тревожную кнопку.</p>
+    <p>Весь путь от ложной тревоги до выброса гормонов занимает <span class="hl">считаные секунды</span>. Поэтому атака накрывает так внезапно, будто из ниоткуда. Это сбой сигнализации, а не поломка тебя.</p>
+  </div>
+
+  <div class="edu">
+    <h3><span class="ic">2.</span> Гормональная вспышка: режим «бей или беги»</h3>
+    <p>Миндалина посылает SOS надпочечникам, и в кровь выбрасывается <b>адреналин</b>, за ним норадреналин и кортизол. За секунды тело переходит в режим спасения жизни. Отсюда все симптомы, и у каждого есть безобидное объяснение:</p>
+    <ul style="margin:2px 0 10px; padding-left:20px;">
+      <li>сердце колотится — гонит кровь к мышцам, чтобы бежать;</li>
+      <li>дыхание частит — набирает кислород про запас;</li>
+      <li>кружится голова, немеют руки и лицо — кровь ушла к крупным мышцам;</li>
+      <li>всё дрожит, бросает в жар или холод — тело на пике мобилизации.</li>
+    </ul>
+    <p>Каждый симптом пугает, но каждый из них безопасен. Это не сбой, это исправно работающая система защиты, которая просто включилась не вовремя.</p>
+  </div>
+
+  <div class="edu">
+    <h3><span class="ic">3.</span> Петля «страха страха»: как паника раскручивает себя</h3>
+    <p>Самое коварное впереди. Ещё в 1986 году английский психолог Дэвид Кларк описал, как паника сама себя раскручивает. Эта модель до сих пор лежит в основе доказательной работы с ПА. Цепочка такая:</p>
+    <div class="chain">
+      <div class="node"><b>Триггер.</b> Усталость, духота, ощущение в теле, «то самое» место</div>
+      <div class="arr">↓</div>
+      <div class="node"><b>Внимание падает в тело.</b> Ты начинаешь прислушиваться к себе и замечать каждое ощущение</div>
+      <div class="arr">↓</div>
+      <div class="node"><b>Катастрофическая трактовка.</b> «Со мной что-то не так. Я умираю. Я схожу с ума»</div>
+      <div class="arr">↓</div>
+      <div class="node"><b>Мозг верит и добавляет адреналина.</b> Симптом усиливается</div>
+      <div class="arr">↓</div>
+      <div class="node"><b>Страх растёт → круг повторяется</b> и затягивается туже</div>
+      <p class="loop">А сверху добавляется второй слой: ты начинаешь бояться самого страха. Ещё только едешь туда, где однажды накрыло, а уже боишься, что накроет снова. Это и есть замкнутый круг «страха страха».</p>
+    </div>
+    <p style="margin-top:12px">Хорошая новость: петлю можно разорвать в любой точке. И проще всего там, где ты сам, через внимание, трактовку и дыхание. Именно это делают шаги ниже.</p>
+  </div>
+
+  <div class="edu">
+    <h3><span class="ic">4.</span> Туннель: почему схлопывается мир</h3>
+    <p>В момент атаки будто сужается зрение, и всё внимание схлопывается в одну точку: на угрозе, на симптоме, на страшной мысли. Это не выдумка. Исследования показывают, что под сильным стрессом внимание физически сужается (учёные называют это <b>когнитивным туннелем</b>, ещё с работ начала 1980-х): мозг усиливает то, что в центре, и подавляет всё по краям, хуже замечает периферию.</p>
+    <div class="tunnelfig">
+      <figure>
+        <svg width="120" height="96" viewBox="0 0 120 96" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Суженное туннельное восприятие">
+          <rect x="0" y="0" width="120" height="96" rx="10" fill="#2a201b"/>
+          <circle cx="60" cy="48" r="13" fill="#F5A79C"/>
+        </svg>
+        <figcaption>В панике: узкий туннель</figcaption>
+      </figure>
+      <div style="font-size:22px; color:var(--accent);">→</div>
+      <figure>
+        <svg width="120" height="96" viewBox="0 0 120 96" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Расширенное восприятие после заземления">
+          <rect x="0" y="0" width="120" height="96" rx="10" fill="#F5A79C"/>
+          <circle cx="60" cy="48" r="13" fill="#2a201b"/>
+        </svg>
+        <figcaption>После заземления: мир вернулся</figcaption>
+      </figure>
+    </div>
+    <p>Древний смысл понятен: перед лицом хищника не до пейзажа. Но в панике хищника нет, а туннель делает только хуже: ты варишься в своём страхе, отрезанный от реальности. Отсюда главный ключ: <span class="hl">чтобы выйти, туннель нужно расширить обратно</span>. Поэтому и работает заземление на шаге 3.</p>
+  </div>
+
+  <div class="why">
+    <h3>Почему это всегда заканчивается</h3>
+    <p>Адреналин физически не может держаться долго, он <b>сгорает за минуты</b>. Следом сама включается парасимпатическая нервная система, встроенный тормоз тела, и всё возвращается к покою. Пик проходит за 5–10 минут, волна стихает за 20–30. Твоё тело просто <b>не умеет паниковать вечно</b>, даже когда очень старается. Оно всегда возвращается к норме. Всегда.</p>
+  </div>
+
+  <!-- STEPS -->
+  <h2 class="sec">Что делать, шаг за шагом</h2>
+  <p class="sub">То же, что в шпаргалке наверху, только теперь понятно, почему каждый шаг работает.</p>
+
+  <div class="step">
+    <div class="num">1</div>
+    <span class="why-tag">разрываем петлю в точке трактовки</span>
+    <h3>Назови то, что происходит</h3>
+    <p>Пока паника работает на автомате, она равна реальности. Но стоит назвать её словами, и штурвал переходит от автоматической части мозга к осознанной, петля размыкается. Сначала назови прямо:</p>
+    <span class="say">«Это паническая атака. Это не опасно. Волна дойдёт до пика и схлынет.»</span>
+    <p style="margin-top:12px">А потом скажи себе фразу, которая вытащила меня из моих семи лет и которую я говорю себе до сих пор:</p>
+    <span class="say">«Это одно из тысячи моих состояний. Оно скоро закончится, и начнётся новое.»</span>
+  </div>
+
+  <div class="step">
+    <div class="num">2</div>
+    <span class="why-tag">перестаём подкармливать адреналин</span>
+    <h3>Не воюй с телом. Дай волне пройти</h3>
+    <p>Инстинкт кричит «борись» или «беги». Но чем сильнее борешься со страхом, тем больше пугаешься своих же симптомов, и тем больше адреналина мозг подбрасывает в топку. Самое сильное, что можно сделать, это перестать воевать.</p>
+    <p>Принять не значит терпеть и страдать молча. Значит перестать бороться с собственным телом и позволить волне подняться и опасть. Ты не сдаёшься. Ты просто перестаёшь её подкармливать страхом страха.</p>
+  </div>
+
+  <div class="step">
+    <div class="num">3</div>
+    <span class="why-tag">расширяем туннель обратно</span>
+    <h3>Вернись в реальность здесь и сейчас</h3>
+    <p>Помнишь про туннель? Сейчас ты будешь раздвигать его стенки и возвращать себе периферию. Не спеша, вслух или про себя, назови:</p>
+    <ul>
+      <li><b>5</b> вещей, которые ты видишь</li>
+      <li><b>4</b> вещи, которых можешь коснуться (потрогай их)</li>
+      <li><b>3</b> звука, которые слышишь</li>
+      <li><b>2</b> запаха</li>
+      <li><b>1</b> вкус</li>
+    </ul>
+    <p style="margin-top:10px">Потом почувствуй стопы в полу и вес тела на опоре. Умой лицо или подержи руки под прохладной водой. Холод, опора и перебор ощущений вытаскивают тебя из головы обратно в комнату. Это и есть выход из туннеля.</p>
+  </div>
+
+  <div class="step">
+    <div class="num">4</div>
+    <span class="why-tag">включаем встроенный тормоз</span>
+    <h3>Сделай выдох длиннее вдоха</h3>
+    <p>Долгий выдох это природная кнопка парасимпатики, того самого тормоза. Дыши спокойно, без усилия:</p>
+    <ul>
+      <li>вдох носом на счёт <b>4</b></li>
+      <li>выдох мягко, через чуть сжатые губы, на счёт <b>6–8</b></li>
+      <li>повтори несколько раз, не спеша</li>
+    </ul>
+    <p class="mini">Не старайся дышать «изо всех сил» и не делай глубоких форсированных вдохов. Если закружилась голова или закололо в руках и лице, это просто от учащённого дыхания, это не опасно. Перестань специально дышать и дай дыханию успокоиться самому. Задача не «правильно дышать», а немного удлинить выдох.</p>
+  </div>
+
+  <div class="step">
+    <div class="num">5</div>
+    <span class="why-tag">даём выход накопленному заряду</span>
+    <h3>Если хочется, дай телу немного движения</h3>
+    <p>За атакой часто стоит много зажатой энергии. Если есть возможность и хочется, разомни кисти, встряхни руками, пройдись, выдохни со звуком, тихо промычи на выдохе. Мягко, без насилия над собой. Не заставляй, просто разреши.</p>
+  </div>
+
+  <!-- ANCHOR -->
+  <div class="soft accent">
+    <h2>Якорь, который всегда с тобой</h2>
+    <p>Многим в остром моменте помогают якоря. У кого-то это тонометр и таблетка от давления в кармане, у кого-то нашатырь в сумке. Такой предмет успокаивает, потому что даёт ощущение контроля: «если что, он со мной». И это правда работает.</p>
+    <p>Но есть ловушка. Когда ты отдаёшь предмету всю силу, а однажды забываешь его дома, паника может накрыть сама собой, просто потому что якоря нет рядом. Поэтому запомни главное:</p>
+    <p class="big">Ни один предмет тебя не спасает. Ты спасаешь себя сам.</p>
+    <p>Внешние якоря хороши как временная опора. Но настоящий якорь ты растишь внутри. Для меня этот внутренний якорь и есть та фраза: «Это одно из тысячи моих состояний, и оно скоро закончится». Она всегда со мной, её нельзя забыть дома.</p>
+  </div>
+
+  <!-- AFTER -->
+  <div class="soft">
+    <h2>Когда волна схлынула</h2>
+    <ul>
+      <li>Похвали себя. Ты справился, снова.</li>
+      <li>Не убегай от места, где накрыло, и не вычёркивай ситуацию из жизни. Избегание кажется спасением, но именно оно кормит «страх страха» и делает круг только уже. Мягко возвращайся туда, где было тревожно.</li>
+      <li>Попей воды, поешь, отдохни. После адреналиновой волны тело устало, это нормально.</li>
+      <li>Будь к себе бережен весь день. Ты прошёл через шторм.</li>
+    </ul>
+  </div>
+
+  <!-- RED FLAGS -->
+  <div class="red">
+    <h2>⚠️ Когда это НЕ просто паническая атака</h2>
+    <p class="i">В этих случаях не занимайся самопомощью, а обратись за помощью. Симптомы паники и настоящей опасности бывают похожи, и различить их может только врач.</p>
+    <ul>
+      <li>Сильная боль или давление в груди, боль отдаёт в руку или челюсть, резкая одышка, обморок, перебои в сердце. Особенно если это <b>впервые</b>. Не решай сам, что «это просто ПА», вызови скорую.</li>
+      <li>Приступы частые, мешают жить, ты избегаешь всё больше мест. Это повод пойти к врачу (психиатр, психотерапевт), а не справляться в одиночку.</li>
+      <li>Появились мысли, что не хочется жить, или желание навредить себе. Это сигнал обратиться за помощью сразу.</li>
+      <li>Стойкое чувство, что мир или тело «ненастоящие», и оно не проходит. Состояние на фоне алкоголя, отмены или веществ. Недавняя травма, насилие или тяжёлая потеря. Нужна очная помощь специалиста.</li>
+    </ul>
+    <div class="phones">
+      <div class="phone"><div class="big">112</div><div class="lbl">единый номер экстренных служб, работает с любого телефона</div></div>
+      <div class="phone"><div class="big">103</div><div class="lbl">скорая помощь</div></div>
+      <div class="phone"><div class="big">8 (495) 400-99-99</div><div class="lbl">единый телефон доверия МЧС России, круглосуточно, анонимно, бесплатно</div></div>
+      <div class="phone"><div class="big">8-800-2000-122</div><div class="lbl">телефон доверия для подростков и родителей, бесплатно по России</div></div>
+    </div>
+    <p style="margin:16px 0 0; font-size:15px; color:#D8C6B6;">Когда врач подтвердил, что физически ты здоров, ты можешь спокойно опираться на шаги выше и на ту фразу из первого шага. Именно так было у меня: толстая медкарта, и ни одной реальной проблемы. Это снимает главный страх, что случится непоправимое.</p>
+  </div>
+
+  <!-- STORY -->
+  <div class="invite">
+    <h2>От меня лично</h2>
+    <p>Я жил так несколько лет. Скорая почти через день, страх страха по кругу. Я из семьи врачей в третьем поколении, и даже с этим мы не могли найти того, кто мне поможет. Моя толстая медкарта показывала, что я обследован весь и абсолютно здоров, а мне всё равно каждый день было плохо.</p>
+    <p>Однажды один специалист сказал мне фразу, которая начала что-то поворачивать: «Радуйся, ты абсолютно здоров. Нет ни одного органа, где мы нашли бы проблему». Тогда я впервые задумался, что дело не в теле как в поломке.</p>
+    <p>Позже я понял: паника не была моим врагом. Это была пожарная сигнализация. Она кричала, что я слишком много лет давил в себе чувства за маской силы, сбил режим и образ жизни, и тело начало разгружать этот груз само. Атака была не поломкой, а сигналом, что пора заняться собой и пойти в тело.</p>
+    <p>А развернулось всё из отчаяния. Однажды по дороге домой я так устал бояться и чувствовал, что задолбал всех родных, что решил: сегодня скорую не вызываю, будь как будет. По сути я просто перестал бороться и согласился с тем, что произойдёт. И атака не пришла.</p>
+    <p style="margin-top:14px">Поэтому: пережить атаку можно самому, ты уже умеешь. А вот разобраться с корнем, с теми самыми задавленными чувствами, чтобы атаки ушли, почти всем гораздо легче не в одиночку, а в работе с телом и в личной терапии. Это не про слабость и не про твою вину. Ты не обязан проходить это один.</p>
+    <p class="sig">— Антон</p>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <h2>Ты уже сделал первый шаг</h2>
+    <p>Ты написал «дверь» и открыл эту инструкцию. Значит, ты ищешь выход, а не просто терпишь. Это и есть начало. Сохрани эту страницу, возвращайся к ней, когда нужно. И знай, что выход есть.</p>
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div class="disc">
+    <b>Важно.</b> Этот материал это поддержка и самопомощь, а не медицинская помощь, не диагностика и не психотерапия. Он не заменяет консультацию врача или психолога. Если тебе плохо физически, если приступы повторяются или мешают жить, обратись к специалисту. В экстренной ситуации звони 103 или 112. Автор делится личным опытом и общими рекомендациями и не несёт ответственности за решения, принятые на основе этого текста. Прислушивайся к себе и при сомнениях выбирай очную помощь.
+    <div class="src"><b>На чём основан этот гайд.</b> Механизм паники: когнитивная модель панического расстройства Д. Кларка (1986). Заземление 5-4-3-2-1 и дыхание: рекомендации Cleveland Clinic и NHS. Сужение внимания под стрессом («когнитивный туннель»): исследования восприятия при остром стрессе (Г. Диркин, 1983, и последующие). Роль дыхания, заземления и телесной саморегуляции: телесно-ориентированная традиция (А. Лоуэн, В. Райх) и нейронаука предсказывающего мозга и интероцепции. Формулировки выверены с учётом клинической и этической супервизии.</div>
+  </div>
+
+  <div class="foot">Антон Шачнёв · клинический психолог, телесный терапевт</div>
+
+</div>
