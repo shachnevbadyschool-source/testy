@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Между встречами · перезапись</title>
+<style>
+  :root{
+    --bg:#f4f1fa; --card:#ffffff; --ink:#241f2e; --muted:#6b6478;
+    --accent:#7c3aed; --accent2:#5b21b6; --soft:#efe9fb; --line:#e5dff2;
+    --good:#0f9d70; --warn:#c2410c; --shadow:0 10px 30px rgba(60,30,110,.10);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#161320; --card:#1e1a2b; --ink:#efeaf7; --muted:#a79fbb;
+      --accent:#a684f5; --accent2:#c4b1fa; --soft:#2a2340; --line:#332b4a;
+      --good:#34d399; --warn:#fb923c; --shadow:0 12px 34px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#161320; --card:#1e1a2b; --ink:#efeaf7; --muted:#a79fbb;
+    --accent:#a684f5; --accent2:#c4b1fa; --soft:#2a2340; --line:#332b4a;
+    --good:#34d399; --warn:#fb923c; --shadow:0 12px 34px rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.65; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:32px 16px 64px}
+  header.hero{
+    text-align:center; padding:34px 22px; border-radius:22px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#fff; box-shadow:var(--shadow); margin-bottom:26px;
+  }
+  header.hero .kicker{font-size:.8rem; letter-spacing:.14em; text-transform:uppercase; opacity:.9; margin-bottom:10px}
+  header.hero h1{margin:0 0 10px; font-size:1.7rem; line-height:1.25; font-weight:800}
+  header.hero p{margin:0; opacity:.95; font-size:1.02rem}
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:18px;
+    padding:22px 22px; margin:18px 0; box-shadow:var(--shadow);
+  }
+  .card h2{margin:0 0 6px; font-size:1.22rem; display:flex; align-items:center; gap:10px}
+  .card h2 .n{
+    flex:0 0 auto; width:30px; height:30px; border-radius:50%;
+    background:var(--soft); color:var(--accent2); font-size:.95rem; font-weight:800;
+    display:grid; place-items:center;
+  }
+  .sub{color:var(--muted); font-size:.96rem; margin:2px 0 14px}
+  p{margin:.6em 0}
+  .lead{font-size:1.05rem}
+  .soft{background:var(--soft); border:none}
+  .quote{
+    border-left:3px solid var(--accent); padding:6px 0 6px 16px; margin:14px 0;
+    font-style:italic; color:var(--ink);
+  }
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin:12px 0}
+  .chip{
+    background:var(--soft); color:var(--accent2); border-radius:999px;
+    padding:7px 13px; font-size:.92rem; font-weight:600;
+  }
+  .mantra{
+    background:linear-gradient(135deg,var(--soft),transparent);
+    border:1px dashed var(--accent); border-radius:16px; padding:18px 20px; margin:16px 0;
+  }
+  .mantra ul{margin:8px 0 0; padding-left:0; list-style:none}
+  .mantra li{padding:7px 0; font-size:1.08rem; font-weight:600; border-bottom:1px solid var(--line)}
+  .mantra li:last-child{border-bottom:none}
+  .mantra li::before{content:"›"; color:var(--accent); font-weight:800; margin-right:10px}
+  .steps{counter-reset:s; padding:0; margin:12px 0 0; list-style:none}
+  .steps li{position:relative; padding:8px 0 8px 34px; margin:0}
+  .steps li::before{
+    counter-increment:s; content:counter(s);
+    position:absolute; left:0; top:7px; width:24px; height:24px; border-radius:50%;
+    background:var(--accent); color:#fff; font-size:.82rem; font-weight:700; display:grid; place-items:center;
+  }
+  .note{border-left:3px solid var(--warn); background:transparent; padding-left:16px}
+  .body-map{
+    display:flex; align-items:center; gap:14px; background:var(--soft);
+    border-radius:14px; padding:14px 16px; margin:12px 0;
+  }
+  .body-map .em{font-size:1.9rem; line-height:1}
+  .tree{display:flex; flex-direction:column; gap:8px; margin:10px 0}
+  .tree .row{display:flex; gap:12px; align-items:flex-start}
+  .tree .tag{
+    flex:0 0 88px; text-align:center; font-size:.78rem; font-weight:700; letter-spacing:.03em;
+    text-transform:uppercase; color:#fff; border-radius:10px; padding:8px 6px;
+  }
+  .tree .root .tag{background:var(--accent2)}
+  .tree .leaf .tag{background:var(--muted)}
+  .tree .txt{flex:1; padding-top:4px}
+  footer{color:var(--muted); text-align:center; font-size:.86rem; margin-top:30px; line-height:1.5}
+  .heart{color:var(--accent); font-weight:700}
+  @media (max-width:480px){
+    header.hero h1{font-size:1.42rem}
+    .tree .tag{flex-basis:70px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">между встречами</div>
+    <h1>Перезапись правила</h1>
+    <p>Небольшая опора на неделю после нашей глубокой встречи. Это не задание, которое надо сделать «правильно». Это способ побыть рядом с собой.</p>
+  </header>
+
+  <div class="card">
+    <p class="lead">На встрече мы сделали важное: вытащили наружу очень старое правило, увидели, откуда оно, и начали писать вместо него новое. Ты была живой, а не удобной — и даже поплакала. Это не срыв, это и есть настоящая работа.</p>
+    <p>Не надо на этой неделе ничего «прорабатывать» и куда-то бежать. Наоборот — дай сделанному осесть. Ниже всё мягкое и по желанию.</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">1</span> Что мы нашли</h2>
+    <p class="sub">Коротко, чтобы держать картинку в голове.</p>
+    <p>Есть <b>боль</b> — «меня как будто не выбирают, не понимают, не ценят». А под ней глубже лежит <b>правило</b>, которое эту боль и производит:</p>
+    <div class="quote">«Меня выбирают и любят, только если я удобная и правильная. А просто так, какая я есть, — как будто не нужна».</div>
+    <p>Это правило придумал не взрослый человек. Его когда-то приняла маленькая девочка, чтобы выжить и остаться любимой. Тогда это было умное, спасительное решение. Вопрос только один: <b>нужно ли оно тебе сейчас, взрослой?</b></p>
+
+    <div class="tree">
+      <div class="row root"><div class="tag">корень</div><div class="txt">правило «любят, только если удобная» — это станок, который набивает боль</div></div>
+      <div class="row leaf"><div class="tag">листья</div><div class="txt">обиды, «меня не выбрали», побеги в одиночество, злость на себя — всё это следствия, а не причина</div></div>
+    </div>
+    <p class="sub">Поэтому мы работаем с корнем, а не гоняемся за листьями.</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">2</span> Твоя новая фраза</h2>
+    <p class="sub">Всё это ты сказала сама. Это не мои слова — твои.</p>
+    <div class="mantra">
+      <ul>
+        <li>Меня выбирают просто так</li>
+        <li>Со мной приятно находиться</li>
+        <li>Я могу просить о помощи</li>
+        <li>Я могу иметь своё мнение</li>
+        <li>Я выбираю себя и свои чувства</li>
+        <li>Я выбираю, как мне думать и как мне удобно</li>
+      </ul>
+    </div>
+    <p><b>Сделай из этого короткую мантру.</b> Выбери одну–две строки, которые сегодня отзываются сильнее всего. Не старайся взять все — возьми ту, что цепляет. Короткая фраза, которую легко вспомнить в один вдох. Например: «меня выбирают просто так» или «я выбираю себя».</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">3</span> Тело помнит быстрее головы</h2>
+    <p class="sub">У тебя есть два очень точных датчика.</p>
+    <div class="body-map"><span class="em">⚠️</span><div><b>Шея и плечи, ком в горле, «полосочка» под солнечным сплетением.</b> Когда ловишь это напряжение — плечи поехали вверх, горло сжалось — это сигнал: «я опять соскользнула в старое правило, опять пытаюсь стать удобной».</div></div>
+    <div class="body-map"><span class="em">🌸</span><div><b>Грудная клетка раскрывается, плечи назад, лёгкое «кайфово».</b> Это твоё живое. Оно появляется, когда ты — та самая, свободная и настоящая.</div></div>
+    <p><b>Мини-практика на 30 секунд, когда поймала напряжение в шее:</b></p>
+    <ol class="steps">
+      <li>Заметь: «ага, вот оно, старое правило включилось».</li>
+      <li>Медленный вдох и выдох.</li>
+      <li>Положи ладони туда, где сжалось — на шею или плечи, — и мягко себя приобними. Погрей это место.</li>
+      <li>Про себя скажи свою короткую фразу.</li>
+    </ol>
+    <p class="sub">Не чтобы «исправиться». А чтобы напомнить телу: сейчас рядом взрослая, и она на твоей стороне.</p>
+  </div>
+
+  <div class="card soft">
+    <h2><span class="n">4</span> Одно живое за неделю — по желанию</h2>
+    <p>Если само захочется, можешь заметить <b>один момент</b>, где ты позволила себе быть чуть неудобной и живой:</p>
+    <div class="chips">
+      <span class="chip">сказать «мне так не удобно»</span>
+      <span class="chip">сказать «я не знаю»</span>
+      <span class="chip">попросить о помощи</span>
+      <span class="chip">оставить своё мнение при себе целым</span>
+    </div>
+    <p>Не надо ничего выписывать и «приносить отчёт». Достаточно про себя отметить: «о, вот сейчас я была живой, а не удобной — и мир не разрушился». <b>А можешь и не делать — это тоже нормально и это не провал.</b></p>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">5</span> Если через день-два накатит</h2>
+    <p class="note">Скорее всего может прийти волна: «зачем я вообще всё это ворошила», злость, желание свернуться или сбежать. Это <b>не поломка</b>. Это старое правило сопротивляется, потому что его впервые тронули. Так и должно быть после глубокой работы.</p>
+    <p>В такой момент — ничего не решай и не ругай себя. Не обязательно что-то делать. Можно просто выдохнуть, положить руку на шею и вспомнить: волна пройдёт. И, если захочется, просто напиши мне. Я на месте.</p>
+  </div>
+
+  <div class="card" style="text-align:center; background:linear-gradient(135deg,var(--soft),transparent)">
+    <p class="lead" style="margin-top:0"><span class="heart">В пятницу продолжим.</span></p>
+    <p>Мы уже нашли и назвали главное. Дальше будем спокойно расширять эту глубину и укреплять новую опору — шаг за шагом, в твоём темпе. Тебе не нужно приходить «готовой» или «правильной». Приходи живой. Именно это ценно.</p>
+  </div>
+
+  <footer>
+    Забота о себе между встречами · опора, а не задание.<br>
+    Всё, что здесь написано — про мягкость к себе, а не про «сделать на пятёрку».
+  </footer>
+
+</div>
+</body>
+</html>
