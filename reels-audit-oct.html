@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Аудит рилсов · октябрь</title>
+<meta name="description" content="Разбор статистики Instagram @anton_shachnev.psiholog на 3 октября 2026 и рекомендации на октябрь">
+<style>
+:root{
+  --bg:#f5f2ec; --card:#fffdf9; --ink:#1f232a; --mut:#5f6672; --line:#e4ddd0;
+  --acc:#b5562b; --acc2:#8a5a2b; --good:#2f7d5b; --bad:#b3412e; --blue:#2f5f9a; --gold:#a8790f;
+  --chip:#efe8db; --hero1:#2a1d16; --hero2:#5a3020;
+  --shadow:0 1px 3px rgba(40,30,10,.07),0 10px 28px rgba(40,30,10,.06);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121417; --card:#1b1e24; --ink:#ebe7df; --mut:#a3aab5; --line:#2b3039;
+    --acc:#ef8a5a; --acc2:#d6a566; --good:#6cc79a; --bad:#ef8a7a; --blue:#8fb4ea; --gold:#e6c060;
+    --chip:#242930; --shadow:0 1px 3px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121417; --card:#1b1e24; --ink:#ebe7df; --mut:#a3aab5; --line:#2b3039;
+  --acc:#ef8a5a; --acc2:#d6a566; --good:#6cc79a; --bad:#ef8a7a; --blue:#8fb4ea; --gold:#e6c060;
+  --chip:#242930; --shadow:0 1px 3px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;line-height:1.6;font-size:17px;-webkit-text-size-adjust:100%}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px 80px}
+.hero{background:linear-gradient(135deg,var(--hero1),var(--hero2));color:#f7efe6;padding:42px 20px 34px;margin-bottom:22px}
+.hero .in{max-width:900px;margin:0 auto}
+.kicker{font-size:13px;letter-spacing:.14em;text-transform:uppercase;opacity:.75;font-weight:700}
+.hero h1{font-size:clamp(28px,5vw,42px);line-height:1.1;margin:.25em 0 .3em;letter-spacing:-.01em}
+.hero p{opacity:.9;max-width:680px;margin:0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:22px 0 0}
+.kpi{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:12px 14px}
+.kpi b{display:block;font-size:26px;line-height:1.1}
+.kpi span{font-size:13px;opacity:.8}
+nav.toc{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
+nav.toc a{font-size:14px;font-weight:700;color:var(--ink);text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+section{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 20px 14px;margin:18px 0;box-shadow:var(--shadow);scroll-margin-top:12px}
+.sn{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--acc)}
+h2{font-size:24px;line-height:1.2;margin:.15em 0 .5em}
+h3{font-size:18px;margin:1.1em 0 .3em}
+.lead{color:var(--mut)}
+.callout{border-radius:14px;padding:13px 16px;margin:12px 0;border:1px solid var(--line);background:var(--chip)}
+.callout.good{border-left:4px solid var(--good)}
+.callout.bad{border-left:4px solid var(--bad)}
+.callout.acc{border-left:4px solid var(--acc)}
+.callout b.t{display:block;margin-bottom:2px}
+.tw{overflow-x:auto;margin:8px 0}
+table{width:100%;border-collapse:collapse;font-size:14.5px;min-width:640px}
+th,td{padding:8px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut)}
+td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.hit td{background:color-mix(in srgb,var(--gold) 12%,transparent);font-weight:700}
+.pill{display:inline-block;font-size:12px;font-weight:800;border-radius:999px;padding:1px 9px;border:1px solid var(--line)}
+.p-hot{color:var(--good);border-color:color-mix(in srgb,var(--good) 45%,var(--line))}
+.p-cold{color:var(--blue);border-color:color-mix(in srgb,var(--blue) 45%,var(--line))}
+.p-pair{color:var(--gold);border-color:color-mix(in srgb,var(--gold) 45%,var(--line))}
+.bars{display:grid;gap:7px;margin:10px 0}
+.br{display:grid;grid-template-columns:minmax(120px,210px) 1fr 70px;gap:10px;align-items:center;font-size:14px}
+.track{height:14px;background:var(--chip);border-radius:9px;overflow:hidden;border:1px solid var(--line)}
+.fill{height:100%;border-radius:9px;background:var(--acc)}
+.fill.g{background:var(--good)} .fill.b{background:var(--blue)} .fill.y{background:var(--gold)}
+.br .v{text-align:right;font-weight:800;font-variant-numeric:tabular-nums}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.card{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--bg)}
+.card h4{margin:0 0 4px;font-size:16px}
+ol.steps,ul.lst{padding-left:1.25em;margin:.3em 0}
+ol.steps li,ul.lst li{margin:.35em 0}
+.week{display:grid;grid-template-columns:90px 1fr;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line)}
+.week b{color:var(--acc)}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:1px 8px;border-radius:7px;background:var(--chip);border:1px solid var(--line);margin:2px 4px 2px 0}
+.small{font-size:14px;color:var(--mut)}
+footer{text-align:center;color:var(--mut);font-size:14px;margin-top:28px}
+.themebtn{position:fixed;right:14px;bottom:14px;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:18px;cursor:pointer;box-shadow:var(--shadow)}
+@media (max-width:560px){.br{grid-template-columns:110px 1fr 54px}section{padding:18px 14px 10px}}
+</style>
+</head>
+<body>
+<div class="hero"><div class="in">
+  <div class="kicker">Аудит Instagram · @anton_shachnev.psiholog · данные на 3 октября 2026</div>
+  <h1>Почему последние рилсы не залетают и что делаем в октябре</h1>
+  <p>Живые цифры из статистики Instagram по 25 последним рилсам, подробная статистика по 10 из них. Без догадок: где данных не хватает, так и написано.</p>
+  <div class="kpis">
+    <div class="kpi"><b>1 343</b><span>подписчика (в августе было 917)</span></div>
+    <div class="kpi"><b>344 927</b><span>просмотров у «Уйти или остаться?»</span></div>
+    <div class="kpi"><b>≈1 300 → ≈400</b><span>типичный рилс: начало сентября → конец сентября</span></div>
+    <div class="kpi"><b>12 за 17 дней</b><span>рилсов с 16 сентября по 2 октября</span></div>
+  </div>
+</div></div>
+
+<div class="wrap">
+<nav class="toc">
+  <a href="#s1">Коротко</a><a href="#s2">Цифры</a><a href="#s3">Рекорд</a><a href="#s4">Причины</a><a href="#s5">По прошлым роликам</a><a href="#s6">План на октябрь</a><a href="#s7">Правила роликов</a><a href="#s8">Что измеряем</a><a href="#s9">Нужно от маркетолога</a>
+</nav>
+
+<section id="s1"><div class="sn">01 · Коротко</div><h2>Главное на одной странице</h2>
+<div class="callout good"><b class="t">Что хорошо</b>Аккаунт растёт: +426 подписчиков с августа. Рекорд «Уйти или остаться?» дорос до 345 тысяч просмотров и всё ещё набирает. Хук-узнавание работает: «Есть женщины, которые умеют всё» пересылали чаще всех свежих роликов.</div>
+<div class="callout bad"><b class="t">Что плохо</b>Охват свежих роликов упал примерно в 3 раза: с ~1 300 до ~400 просмотров у типичного рилса. Некоторые ролики алгоритм почти не показал новым людям: у «Ухода от материального мира» 80% зрителей наши же подписчики.</div>
+<div class="callout acc"><b class="t">Почему (наша гипотеза по данным)</b>Не потоковый формат. Три причины вместе:
+<ul class="lst">
+  <li>темы с середины сентября стали холоднее (злость, грусть, энергия, «зачем нужен психолог»);</li>
+  <li>первые кадры звучат как названия лекций, а не как узнавание;</li>
+  <li>частота почти каждый день, и каждый новый ролик получает меньше стартового показа.</li>
+</ul>
+Пересылки у всех роликов в 3–15 раз ниже, чем у рекорда, а именно они выносят ролик к новым людям.</div>
+<div class="callout"><b class="t">Что делаем</b>
+<ul class="lst">
+  <li>Возвращаем горячие темы про отношения и пару в кадре.</li>
+  <li>Хуки строим на узнавании.</li>
+  <li>Выпускаем 3 ролика в неделю: два на охват и один, который ведёт в терапию.</li>
+  <li>Снимаем вторую часть «Уйти или остаться?».</li>
+</ul>
+План по неделям в разделе 06.</div>
+</section>
+
+<section id="s2"><div class="sn">02 · Цифры</div><h2>10 рилсов под лупой</h2>
+<p class="lead">Данные из раздела «Статистика» каждого рилса.</p>
+<ul class="lead">
+  <li><b>Неподписчики</b>: какая доля зрителей нас ещё не знала. Показывает, вынес ли алгоритм ролик к новым людям.</li>
+  <li><b>Пересылки на 1000 просмотров</b>: главный сигнал для Instagram.</li>
+</ul>
+<div class="tw"><table>
+<tr><th>Рилс</th><th>Дата</th><th>Тема</th><th class="n">Просмотры</th><th class="n">Неподп.</th><th class="n">Пересылки</th><th class="n">Сохр.</th><th class="n">Подписки</th><th class="n">Пересылки на 1000</th></tr>
+<tr class="hit"><td>Уйти или остаться? (пара в горах)</td><td>8 авг</td><td><span class="pill p-pair">пара</span></td><td class="n">344 927</td><td class="n">99,5%</td><td class="n">10 641</td><td class="n">6 199</td><td class="n">564</td><td class="n">30,8</td></tr>
+<tr><td>Тянет не к лучшему, а к знакомому</td><td>6 сен</td><td><span class="pill p-hot">отношения</span></td><td class="n">4 640</td><td class="n">92,8%</td><td class="n">28</td><td class="n">20</td><td class="n">6</td><td class="n">6,0</td></tr>
+<tr><td>25 лет вместе</td><td>12 сен</td><td><span class="pill p-pair">пара</span></td><td class="n">3 874</td><td class="n">88,1%</td><td class="n">7</td><td class="n">12</td><td class="n">0</td><td class="n">1,8</td></tr>
+<tr><td>Раннее взросление</td><td>14 сен</td><td><span class="pill p-hot">детство</span></td><td class="n">3 474</td><td class="n">92,4%</td><td class="n">13</td><td class="n">15</td><td class="n">1</td><td class="n">3,7</td></tr>
+<tr><td>Злость на родителей</td><td>27 сен</td><td><span class="pill p-hot">детство</span></td><td class="n">1 488</td><td class="n">95,0%</td><td class="n">4</td><td class="n">11</td><td class="n">3</td><td class="n">2,7</td></tr>
+<tr><td>Исчез после близости</td><td>2 окт</td><td><span class="pill p-hot">отношения</span></td><td class="n">1 155</td><td class="n">89,0%</td><td class="n">3</td><td class="n">3</td><td class="n">3</td><td class="n">2,6</td></tr>
+<tr><td>Есть женщины, которые умеют всё</td><td>28 сен</td><td><span class="pill p-hot">узнавание</span></td><td class="n">923</td><td class="n">81,4%</td><td class="n">10</td><td class="n">4</td><td class="n">2</td><td class="n">10,8</td></tr>
+<tr><td>Как проживать грусть</td><td>20 сен</td><td><span class="pill p-cold">чувства</span></td><td class="n">738</td><td class="n">71,1%</td><td class="n">4</td><td class="n">1</td><td class="n">1</td><td class="n">5,4</td></tr>
+<tr><td>Зачем нужен психолог (живой поток в кафе)</td><td>18 сен</td><td><span class="pill p-cold">о терапии</span></td><td class="n">317</td><td class="n">56,9%</td><td class="n">2</td><td class="n">0</td><td class="n">0</td><td class="n">6,3</td></tr>
+<tr><td>Уход от материального мира</td><td>29 сен</td><td><span class="pill p-cold">философия</span></td><td class="n">167</td><td class="n">20,4%</td><td class="n">1</td><td class="n">0</td><td class="n">0</td><td class="n">6,0</td></tr>
+</table></div>
+<p class="small">«Исчез после близости» опубликован 2 октября, на момент среза ему меньше суток, цифры ещё растут. У маленьких роликов показатель «на 1000» шумный: 1–4 пересылки сильно его качают. Название ролика «Зачем нужен психолог» определено по кадрам.</p>
+
+<h3>Охват по периодам</h3>
+<div class="bars">
+  <div class="br"><span>3–14 сентября (7 рилсов)</span><div class="track"><div class="fill g" style="width:100%"></div></div><span class="v">≈1 300</span></div>
+  <div class="br"><span>16 сен – 2 окт (12 рилсов)</span><div class="track"><div class="fill" style="width:31%"></div></div><span class="v">≈400</span></div>
+</div>
+<p class="small">Указан медианный (типичный) ролик периода, чтобы один удачный или провальный не искажал картину.</p>
+
+<h3>Пересылки на 1000 просмотров: рекорд против остальных</h3>
+<div class="bars">
+  <div class="br"><span>Уйти или остаться?</span><div class="track"><div class="fill y" style="width:100%"></div></div><span class="v">30,8</span></div>
+  <div class="br"><span>Есть женщины, которые…</span><div class="track"><div class="fill g" style="width:35%"></div></div><span class="v">10,8</span></div>
+  <div class="br"><span>Тянет к знакомому</span><div class="track"><div class="fill g" style="width:19.5%"></div></div><span class="v">6,0</span></div>
+  <div class="br"><span>Раннее взросление</span><div class="track"><div class="fill b" style="width:12%"></div></div><span class="v">3,7</span></div>
+  <div class="br"><span>Злость на родителей</span><div class="track"><div class="fill b" style="width:8.8%"></div></div><span class="v">2,7</span></div>
+  <div class="br"><span>25 лет вместе</span><div class="track"><div class="fill b" style="width:5.8%"></div></div><span class="v">1,8</span></div>
+</div>
+</section>
+
+<section id="s3"><div class="sn">03 · Рекорд</div><h2>Что сделало «Уйти или остаться?»</h2>
+<div class="grid2">
+  <div class="card"><h4>Цифры</h4>
+    <ul class="lst">
+      <li>345 тысяч просмотров, из них 99,5% люди, которые нас не знали.</li>
+      <li>10 641 пересылка, 6 199 сохранений.</li>
+      <li>564 новых подписчика, больше, чем дали все остальные ролики вместе.</li>
+    </ul></div>
+  <div class="card"><h4>Почему сработало</h4>
+    <ol class="steps">
+      <li>Хук это бинарный вопрос, который зритель тайно задаёт себе сам.</li>
+      <li>Пара в кадре как живое доказательство (25 лет вместе).</li>
+      <li>Горячая тема: страх потерять отношения.</li>
+      <li>Ролик хочется переслать партнёру или подруге «с намёком».</li>
+    </ol></div>
+</div>
+<div class="callout acc"><b class="t">Вывод</b>Рекорд держится не на красивых горах. Его держит вопрос, который человек хочет обсудить с близким, поэтому и пересылает. Каждый новый ролик проверяем вопросом: «Кому зритель это перешлёт и с какой фразой?»</div>
+</section>
+
+<section id="s4"><div class="sn">04 · Причины</div><h2>Почему охват упал</h2>
+<p class="lead">Это гипотезы по данным, а не приговор. Проверить их можно только данными о досмотрах из приложения (см. раздел 09).</p>
+<div class="grid2">
+  <div class="card"><h4>1. Темы остыли</h4>
+    <ul class="lst">
+      <li><b>Начало сентября</b> было про отношения и детство: «тянет к знакомому», «25 лет вместе», «раннее взросление». Это 3,5–4,6 тысячи просмотров.</li>
+      <li><b>С середины сентября</b> пошли злость, грусть, источник энергии, «зачем нужен психолог», уход от мира. Это полезные темы, но их не пересылают: они не про «нас с тобой».</li>
+    </ul></div>
+  <div class="card"><h4>2. Хуки звучат как названия лекций</h4>«Как проживать грусть», «Где живёт подавленная злость», «Зачем нужен психолог» выглядят как тема урока. Хук «Есть женщины, которые умеют всё» сразу даёт узнавание, и его пересылали в 2–4 раза чаще соседей.</div>
+  <div class="card"><h4>3. Слишком часто</h4>12 роликов за 17 дней, иногда по два в день (25 сентября). Ролики конкурируют друг с другом за один и тот же стартовый показ. Слабые сигналы подряд учат алгоритм, что нас не досматривают и не пересылают. Оптимум: 3 в неделю.</div>
+  <div class="card"><h4>4. Формат похож сам на себя</h4>Почти все ролики снимались в одной локации (терраса кафе или кресло): соло, средний план, одинаковая обложка. Пары в кадре нет с 12 сентября.</div>
+</div>
+<div class="callout good"><b class="t">Потоковый формат не виноват</b>Живой разговор в кафе («Зачем нужен психолог») провалился из-за темы: её смотрят только те, кто уже думает о терапии. Тот же живой формат с горячим вопросом («Почему по пьяни хочется позвонить бывшим?») должен сработать. Маркетолог права, что нужна настоящесть, просто ей нужна горячая тема.</div>
+</section>
+
+<section id="s5"><div class="sn">05 · По прошлым роликам</div><h2>Что делать с тем, что уже вышло</h2>
+<ol class="steps">
+  <li><b>Ничего не удалять.</b> Удаление слабых роликов охват не поднимает, а историю аккаунта ломает.</li>
+  <li><b>Снять вторую часть «Уйти или остаться?».</b> 345 тысяч человек уже проголосовали за эту тему. Можно начать так: «Вы спрашивали, как понять, что пора уходить. Вот три признака.» Снимать с Машей, в том же настроении.</li>
+  <li><b>Развить «Есть женщины, которые умеют всё».</b> У этого ролика лучшие пересылки среди свежих, но охват низкий. Идеи для продолжения: «Есть мужчины, которые…», «Есть женщины, которые никогда не просят». Хук-формула «Есть …, которые …» доказанно работает.</li>
+  <li><b>Пересобрать «Тянет к знакомому».</b> Это лучший сентябрьский ролик (4 640 просмотров, 28 пересылок). В октябре он выходит в формате потока с вопросом за кадром («Ты влюбляешься в того, кто не подходит. Почему?») и с новым образом: «если вырос на острой еде, обычная кажется пресной».</li>
+  <li><b>Холодные темы не выбрасывать, а перенести.</b> Злость, грусть, проживание чувств хорошо подходят для Telegram: рубрика «практики самопомощи», голосовые, задания. В Instagram выпускать их, только если хук на узнавание. Например, не «Где живёт подавленная злость», а «Если ты никогда не злишься, посмотри на свою челюсть».</li>
+  <li><b>Обложки.</b> Вместо «КАК ПРОЖИВАТЬ ГРУСТЬ» ставить вопрос или узнавание: «Бабочки ≠ любовь», «Ты не ленивый», «Исчез после близости?» (последняя хорошая).</li>
+  <li><b>Попробовать «пробные ролики» (Trial Reels).</b> Эта функция Instagram показывает ролик сначала только неподписчикам. Удобно тестировать два хука одной темы и смотреть, какой выносит дальше.</li>
+</ol>
+</section>
+
+<section id="s6"><div class="sn">06 · План на октябрь</div><h2>Пять недель, три ролика в неделю</h2>
+<p class="lead">Каждую неделю выходят 2 охватных ролика и 1, который ведёт в терапию. Сериал «Стыд» выходит раз в 3–4 дня. Тексты, хуки и проверка (маркетолог, супервизор-психолог, научный фактчекинг) готовы в суфлёре Антона.</p>
+<div class="week"><b>Неделя 1</b><div>Бывшим по пьяни <span class="tag">поток</span> · Стыд 1 «5 масок» <span class="tag">стоя</span> · Грин флаги в мужчинах <span class="tag">поток</span></div></div>
+<div class="week"><b>Неделя 2</b><div>Стыд 2 «Стыдно быть заметным» · «Единственный член семьи, которого выбираешь» с Машей <span class="tag">пара</span> · Люди в терапии <span class="tag">поток</span></div></div>
+<div class="week"><b>Неделя 3</b><div>Стыд 3 «Тяжело попросить» · Панические атаки, что мне помогло <span class="tag">в терапию</span> · Эльбрус 1 «Где радость?» <span class="tag">сериал</span></div></div>
+<div class="week"><b>Неделя 4</b><div>Стыд 4 «Прокрастинация» · Эльбрус 2 «Цель не вершина, а спуск» · Влюбляешься не в того <span class="tag">поток</span></div></div>
+<div class="week"><b>Неделя 5</b><div>Карусель «Когда тебя любят (версия психолога)» · Эльбрус 3 «Радость пришла не на вершине» · Эмоциональная зрелость <span class="tag">поток</span></div></div>
+<div class="week"><b>В запасе</b><div>Уйти или остаться, часть 2 <span class="tag">пара</span> · Миф или правда (2 ролика) · Кто ты без должности <span class="tag">в терапию</span> · «Жену не заменить» с Машей (после того, как выйдет первый ролик с ней) · Как понять, что любят · Измена (решение Антона, тема чувствительная)</div></div>
+<h3>Три ролика с шансом на 100 тысяч и больше</h3>
+<div class="grid2">
+  <div class="card"><h4>«Единственный, кого выбираешь»</h4>
+    <ul class="lst">
+      <li>Референс набрал 233 тысячи лайков.</li>
+      <li>Пара в кадре.</li>
+      <li>Первая секунда: Антон и Маша идут, голос поверх.</li>
+      <li>Вставки со съёмки у фонтана.</li>
+    </ul></div>
+  <div class="card"><h4>«Бывшим по пьяни»</h4>
+    <ul class="lst">
+      <li>Мгновенное узнавание.</li>
+      <li>Первый кадр: экран телефона «Бывший · вызов…».</li>
+      <li>Вечерний свет, финальный вопрос «Был у тебя такой звонок?».</li>
+    </ul></div>
+  <div class="card"><h4>«Грин флаги»</h4>
+    <ul class="lst">
+      <li>Мужчина говорит женщинам о мужчинах, такое пересылают подругам.</li>
+      <li>Каждый флаг отдельной плашкой.</li>
+      <li>Обложка: «Бабочки ≠ любовь».</li>
+    </ul></div>
+</div>
+</section>
+
+<section id="s7"><div class="sn">07 · Правила роликов</div><h2>Чек-лист перед публикацией</h2>
+<div class="grid2">
+  <div class="card"><h4>Первые 1,5 секунды</h4>
+    <ul class="lst">
+      <li>Хук на узнавание или бинарный вопрос, без «привет».</li>
+      <li>Текст хука на экране с первого кадра: половина смотрит без звука.</li>
+      <li>Первый кадр в движении или с действием, а не статичная голова.</li>
+    </ul></div>
+  <div class="card"><h4>Тело ролика</h4>
+    <ul class="lst">
+      <li>Одно предложение, один смысл, без повторов.</li>
+      <li>Сразу после хука живой пример из жизни.</li>
+      <li>Один проверенный факт, не больше.</li>
+      <li>Длина 30–60 секунд, субтитры обязательно.</li>
+    </ul></div>
+  <div class="card"><h4>Финал</h4>
+    <ul class="lst">
+      <li>Одна формула «на пересылку». Последний кадр держим 2 секунды, чтобы успели сделать скрин.</li>
+      <li>Вопрос зрителю про его жизнь, чтобы появились комментарии.</li>
+    </ul></div>
+  <div class="card"><h4>Призыв в конце</h4>
+    <ul class="lst">
+      <li><b>Охватные ролики:</b> только вопрос и «отправь тому, кто…».</li>
+      <li><b>Ролики в терапию:</b> кодовое слово в директ. СТЫД (пост в Telegram), ПАРА (задание для двоих), БЕСЕДА (бесплатно 20–30 минут).</li>
+    </ul></div>
+</div>
+<div class="callout bad"><b class="t">Безопасность</b>В темах про насилие, измену и тяжёлые отношения обязательно звучат короткие оговорки, они размечены в суфлёре. Под «Миф или правда» в описании указываем телефон доверия центра «Анна»: 8-800-7000-600, бесплатно и круглосуточно.</div>
+</section>
+
+<section id="s8"><div class="sn">08 · Что измеряем</div><h2>Метрики на 4 недели</h2>
+<div class="grid2">
+  <div class="card"><h4>Охват</h4>
+    <ul class="lst">
+      <li>Пересылки на 1000 просмотров. Ориентир: подниматься к 10 и выше. У рекорда 31.</li>
+      <li>Доля неподписчиков: выше 85% значит, что ролик вынесло к новым людям.</li>
+    </ul></div>
+  <div class="card"><h4>Удержание (только из приложения)</h4>
+    <ul class="lst">
+      <li>Средняя длительность просмотра.</li>
+      <li>Доля досмотревших.</li>
+      <li>Доля пролиставших в первые секунды.</li>
+    </ul></div>
+  <div class="card"><h4>Деньги и клиенты</h4>
+    <ul class="lst">
+      <li>Сколько пришло кодовых слов в директ.</li>
+      <li>Сколько переходов в Telegram.</li>
+      <li>Сколько записей на бесплатную беседу.</li>
+    </ul>
+    Считать отдельно по охватным роликам и по роликам, которые ведут в терапию.</div>
+</div>
+<div class="callout acc"><b class="t">Почему так</b>Рилс на 455 тысяч когда-то дал одного клиента. Охват и записи это две разные воронки. Клиент на длительную терапию приходит через тёплую цепочку: рилс → Telegram → разборы → бесплатная беседа → терапия.</div>
+</section>
+
+<section id="s9"><div class="sn">09 · Нужно от маркетолога</div><h2>Чтобы следующий разбор был точнее</h2>
+<ol class="steps">
+  <li><b>Скрины из приложения по 10 последним рилсам:</b> график удержания, средняя длительность просмотра, процент пролистываний. В веб-версии их нет, а именно они покажут, на какой секунде теряем зрителя.</li>
+  <li><b>Скрин общей панели за 30 и 90 дней:</b> охват, доля неподписчиков, когда аудитория онлайн.</li>
+  <li><b>Договориться о частоте:</b> 3 ролика в неделю вместо ежедневных.</li>
+  <li><b>Обсудить на встрече:</b> пробные ролики (Trial Reels) для теста хуков, вторая часть «Уйти или остаться?», съёмка с Машей.</li>
+</ol>
+</section>
+
+<footer>Подготовлено 3 октября 2026 для команды Антона Шачнёва. Данные из статистики Instagram (веб) по состоянию на 3.10.2026.</footer>
+</div>
+<button class="themebtn" onclick="(function(r){var c=r.getAttribute('data-theme');var d=c?c==='dark':matchMedia('(prefers-color-scheme: dark)').matches;r.setAttribute('data-theme',d?'light':'dark')})(document.documentElement)" aria-label="Тема">🌗</button>
+</body>
+</html>
