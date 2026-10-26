@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Старт с Claude</title>
+<meta name="description" content="Короткая памятка: как завести Claude, не попасть под блокировку и спокойно работать долго.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Lora:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f4ee;--card:#fff;--ink:#1f1b16;--muted:#6b6258;--line:#e2dacd;--acc:#c4622d;--soft:#f6e3d6;--bad:#b0362c;--badsoft:#f9e1de;--ok:#2f7a4f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16130f;--card:#1f1b16;--ink:#efe8de;--muted:#a89d90;--line:#3a3229;--acc:#e58a55;--soft:#3a2518;--bad:#ef8077;--badsoft:#3d1f1c;--ok:#6cc290}}
+:root[data-theme="dark"]{--bg:#16130f;--card:#1f1b16;--ink:#efe8de;--muted:#a89d90;--line:#3a3229;--acc:#e58a55;--soft:#3a2518;--bad:#ef8077;--badsoft:#3d1f1c;--ok:#6cc290}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,sans-serif}
+.wrap{max-width:720px;margin:0 auto;padding:32px 16px 48px}
+h1{font-family:Lora,Georgia,serif;font-size:clamp(28px,6vw,38px);line-height:1.2;margin:0 0 8px}
+.lead{color:var(--muted);margin:0 0 24px}
+h2{font-size:19px;margin:28px 0 10px;display:flex;gap:10px;align-items:center}
+h2 span{flex:none;width:28px;height:28px;border-radius:50%;background:var(--acc);color:#fff;font-size:14px;display:flex;align-items:center;justify-content:center}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px}
+ul,ol{margin:0;padding-left:20px}
+li{margin:6px 0}
+.bad{background:var(--badsoft);border-radius:14px;padding:14px 18px;margin-top:10px}
+.bad b{color:var(--bad)}
+.tip{background:var(--soft);border-radius:14px;padding:14px 18px;margin-top:10px}
+code{background:var(--soft);padding:1px 6px;border-radius:5px;font-size:.92em}
+footer{margin-top:32px;color:var(--muted);font-size:13.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Старт с Claude: коротко и безопасно</h1>
+<p class="lead">Памятка на одну страницу: как завести аккаунт, не словить блокировку и спокойно работать долго.</p>
+
+<h2><span>1</span>Почта</h2>
+<div class="card"><ul>
+<li>Регистрируйтесь через <b>Google-почту (Gmail)</b>. Чем старее почта, тем лучше: новые аккаунты блокируют чаще.</li>
+<li>Своей старой нет? Поищите забытую, которую заводили лет 5 назад, или попросите близкого человека, которому доверяете.</li>
+<li>Входите в Claude <b>через ссылку на почту</b> или кнопку Google, без лишних паролей.</li>
+</ul></div>
+
+<h2><span>2</span>VPN</h2>
+<div class="card"><ul>
+<li>Из России Claude без VPN не открывается. Нужен <b>стабильный платный VPN</b>, бесплатные часто отваливаются и выдают «подозрительные» адреса.</li>
+<li>Выберите <b>одну страну</b> (например, США или Европа) и держитесь её всегда: на компьютере и на телефоне.</li>
+<li>Включайте VPN <b>до</b> того, как открыть Claude, а не посреди работы.</li>
+</ul></div>
+
+<h2><span>3</span>Номер телефона</h2>
+<div class="card"><ul>
+<li>Для входа через Google-почту номер обычно не нужен.</li>
+<li>Если Claude всё же просит подтвердить телефон, российский номер не подойдёт. Нужен <b>зарубежный номер</b>: сим-карта знакомого за границей или виртуальный номер от надёжного сервиса. Номер должен оставаться за вами: на одноразовых номерах аккаунты теряют.</li>
+</ul></div>
+
+<h2><span>4</span>Установка</h2>
+<div class="card"><ol>
+<li>Зайдите на <code>claude.ai</code>, войдите через Google.</li>
+<li>Скачайте <b>приложение Claude</b> для компьютера (Mac или Windows) с того же сайта.</li>
+<li>Внутри приложения есть вкладка <b>Code</b>: это Claude Code, режим, где он работает с файлами на компьютере. Его же можно поставить в программу VS Code.</li>
+<li>На телефон: в российском App Store приложения нет. Заведите отдельный <b>американский Apple ID</b> (на любую почту, без карты) и скачайте оттуда.</li>
+</ol></div>
+
+<h2><span>5</span>Начните бесплатно и «прогрейте» аккаунт</h2>
+<div class="card"><ul>
+<li>Первую неделю-две пользуйтесь <b>бесплатной версией</b>: обычные вопросы, тексты, несколько дней подряд понемногу. Так аккаунт выглядит живым.</li>
+<li>Не начинайте с огромных задач и десятков чатов в первый день.</li>
+<li>Когда освоились и упираетесь в лимиты, переходите на платный тариф (Pro, около $20 в месяц). Claude Code полноценно работает на платном.</li>
+<li>Оплата: российские карты не проходят. Используйте зарубежную карту или проверенный сервис оплаты зарубежных подписок.</li>
+</ul></div>
+
+<h2><span>6</span>Чтобы не забанили</h2>
+<div class="bad"><ul>
+<li><b>Не меняйте</b> страну VPN туда-сюда и не заходите без VPN.</li>
+<li><b>Не делитесь</b> аккаунтом и не покупайте «общие» и готовые аккаунты: их блокируют первыми.</li>
+<li><b>Не заводите</b> много аккаунтов с одного устройства.</li>
+<li><b>Не просите</b> запрещённого (взломы, обход защиты и т.п.).</li>
+</ul></div>
+<div class="tip"><b>Главная страховка:</b> храните всё ценное <b>в файлах у себя на компьютере</b>, а не только в чатах. Если аккаунт заблокируют, вы заведёте новый (или подключите другую нейросеть) к той же папке и продолжите с того же места.</div>
+
+<h2><span>7</span>Как работать с Claude Code</h2>
+<div class="card"><ol>
+<li>Создайте на компьютере <b>отдельную рабочую папку</b> и открывайте Claude именно в ней, а не во всём компьютере.</li>
+<li>Положите туда свои материалы: тексты, заметки, примеры. Чем больше даёте, тем лучше результат.</li>
+<li>Говорите задачу <b>голосом</b>, подробно, как живому помощнику. Для больших задач: «сначала расскажи по пунктам, как понял задачу».</li>
+<li>Правьте по кругу короткими замечаниями. С первого раза идеально не бывает, и это нормально.</li>
+<li>Удачный процесс просите <b>«запиши это как инструкцию»</b>, чтобы потом повторять одной фразой.</li>
+<li>В конце работы: «запиши, где мы остановились». Завтра продолжите без объяснений.</li>
+</ol></div>
+
+<h2><span>8</span>Техника безопасности в работе</h2>
+<div class="card"><ul>
+<li><b>Читайте, что он просит разрешить.</b> Не понимаете команду: спросите «объясни простыми словами, что это сделает».</li>
+<li>Не кладите в рабочую папку пароли, данные карт, паспорта.</li>
+<li>Чужие истории только <b>без имён и узнаваемых деталей</b>.</li>
+<li>Делайте копию важной папки перед большими переделками.</li>
+<li>Проверяйте факты, цифры и цитаты: ИИ может уверенно ошибаться.</li>
+<li>Следите за лимитом: сложные задачи и самые мощные модели тратят его быстрее.</li>
+</ul></div>
+
+<footer>Правила сервисов меняются. Если что-то не находится или не работает, спросите у самого Claude: «где это сейчас и как сделать?»</footer>
+</div>
+</body>
+</html>
