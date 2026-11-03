@@ -1,51 +1,57 @@
 <!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Дыхание, когда накрывает тревога</title><meta name="description" content="Хочется написать ему, проверить соцсети, вернуться? Сначала успокой тело, потом решай.">
-<meta property="og:title" content="Дыхание, когда накрывает тревога"><meta property="og:description" content="Хочется написать ему, проверить соцсети, вернуться? Сначала успокой тело, потом решай.">
-<style>
-:root{--bg:#f6f1ea;--card:#fffdf9;--ink:#24201c;--mut:#6f665c;--line:#e7ddd0;--acc:#b5582f;--acc2:#2f6b5a;--soft:#f1e7da;
---g:#2f8a5b;--gbg:#e6f4ec;--y:#b98510;--ybg:#fbf2dc;--r:#b8442f;--rbg:#fbe9e4;--sh:0 1px 2px rgba(60,40,20,.06),0 12px 32px rgba(60,40,20,.08)}
-@media (prefers-color-scheme:dark){:root{--bg:#15130f;--card:#1f1c18;--ink:#f0e9df;--mut:#b0a596;--line:#342e27;--acc:#e98a5c;--acc2:#7cc4ad;--soft:#2a251f;
---g:#6fd19c;--gbg:#17291f;--y:#f0c25a;--ybg:#2b2412;--r:#ff8f78;--rbg:#2e1914;--sh:0 1px 2px rgba(0,0,0,.4),0 12px 32px rgba(0,0,0,.35)}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-text-size-adjust:100%}
+<title>Дыхание при тревоге: снять волну за 2 минуты</title><meta name="description" content="Хочется написать ему, проверить соцсети, вернуться? Сначала успокой тело, потом решай.">
+<meta property="og:title" content="Дыхание при тревоге: снять волну за 2 минуты"><meta property="og:description" content="Хочется написать ему, проверить соцсети, вернуться? Сначала успокой тело, потом решай.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Unbounded:wght@600;800&display=swap" rel="stylesheet"><style>
+:root{--bg:#0b0a16;--card:rgba(255,255,255,.055);--card2:rgba(255,255,255,.09);--ink:#f4f2ff;--mut:#b4aed3;--line:rgba(255,255,255,.12);
+--v:#a78bfa;--p:#f472b6;--grad:linear-gradient(135deg,#8b5cf6,#ec4899);--soft:rgba(167,139,250,.14);
+--g:#5eead4;--gbg:rgba(45,212,191,.12);--y:#fcd34d;--ybg:rgba(252,211,77,.12);--r:#fb7185;--rbg:rgba(251,113,133,.14);--acc2:#8b5cf6;--sh:0 20px 50px rgba(0,0,0,.45)}
+*{box-sizing:border-box}html{background:var(--bg)}
+body{margin:0;min-height:100vh;color:var(--ink);font:16.5px/1.6 Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-text-size-adjust:100%;
+background:radial-gradient(90% 50% at 0% 0%,rgba(124,58,237,.45) 0%,transparent 60%),radial-gradient(70% 40% at 100% 20%,rgba(236,72,153,.22) 0%,transparent 60%),var(--bg);background-attachment:fixed}
 .w{max-width:640px;margin:0 auto;padding:22px 16px 60px}
-.hero{background:linear-gradient(135deg,var(--acc),#d98a5d);color:#fff;border-radius:24px;padding:26px 22px 22px;box-shadow:var(--sh);position:relative;overflow:hidden}
-.hero:after{content:"";position:absolute;right:-40px;top:-40px;width:170px;height:170px;border-radius:50%;background:rgba(255,255,255,.12)}
-.em{font-size:38px;line-height:1}.hero h1{font-family:Georgia,"Times New Roman",serif;font-weight:700;font-size:clamp(26px,7vw,34px);line-height:1.15;margin:10px 0 8px}
-.hero p{margin:0;opacity:.95}.tag{display:inline-block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;background:rgba(255,255,255,.2);border-radius:999px;padding:3px 10px;margin-bottom:10px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;margin:16px 0;box-shadow:var(--sh)}
-.it{display:flex;gap:12px;align-items:flex-start;padding:13px 12px;border:1.5px solid var(--line);border-radius:14px;margin:9px 0;cursor:pointer;transition:.18s;user-select:none;background:var(--card)}
-.it:active{transform:scale(.99)}.it .bx{flex:0 0 26px;height:26px;border-radius:8px;border:2px solid var(--line);display:grid;place-items:center;font-size:16px;color:#fff;transition:.18s}
-.it.on{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 10%,var(--card))}.it.on .bx{background:var(--acc);border-color:var(--acc)}
-.btn{display:block;width:100%;border:0;border-radius:14px;padding:15px;font-size:17px;font-weight:700;background:var(--acc);color:#fff;cursor:pointer;margin-top:12px}
-.btn.s{background:var(--soft);color:var(--ink)}.btn:disabled{opacity:.45}
-.res{border-radius:20px;padding:20px;margin:16px 0;animation:up .4s ease}
-.res h2{font-family:Georgia,serif;margin:.1em 0 .35em;font-size:26px}.res.green{background:var(--gbg);border:1.5px solid var(--g)}.res.green h2{color:var(--g)}
-.res.yellow{background:var(--ybg);border:1.5px solid var(--y)}.res.yellow h2{color:var(--y)}.res.red{background:var(--rbg);border:1.5px solid var(--r)}.res.red h2{color:var(--r)}
-.res.neutral{background:var(--soft);border:1.5px solid var(--line)}
-@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.meter{height:10px;border-radius:99px;background:var(--line);overflow:hidden;margin:10px 0 4px}.meter i{display:block;height:100%;background:var(--acc);border-radius:99px;transition:width .4s}
-.note{font-size:14.5px;color:var(--mut)}.safe{font-size:14.5px;background:var(--rbg);border-radius:14px;padding:12px 14px;margin:14px 0;color:var(--ink)}
-.bridge{text-align:center;background:var(--soft);border-radius:20px;padding:20px;margin:18px 0}.bridge a{display:inline-block;margin-top:10px;background:var(--acc2);color:#fff;text-decoration:none;font-weight:700;padding:13px 20px;border-radius:14px}
-.foot{text-align:center;font-size:13px;color:var(--mut);margin-top:24px}
-.q{font-family:Georgia,serif;font-size:22px;line-height:1.3;margin:6px 0 16px;min-height:3.2em}.yn{display:flex;gap:10px}.yn .btn{margin:0}
-.prog{font-size:13px;color:var(--mut);font-weight:700;letter-spacing:.04em}
-.circle{width:220px;height:220px;margin:18px auto;border-radius:50%;background:radial-gradient(circle,var(--acc2) 0%,rgba(47,107,90,.35) 70%);display:grid;place-items:center;color:#fff;font-weight:800;font-size:22px;text-align:center;transform:scale(.55);transition:transform 4s ease-in-out}
-.seg{display:flex;gap:8px;margin:8px 0}.seg button{flex:1;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:10px;font-weight:700;cursor:pointer}.seg button.on{border-color:var(--acc2);background:var(--acc2);color:#fff}
-textarea,input[type=text]{width:100%;border:1.5px solid var(--line);border-radius:14px;padding:12px;font:inherit;background:var(--bg);color:var(--ink);min-height:96px;resize:vertical}
-input[type=text]{min-height:0}label.l{display:block;font-weight:700;margin:12px 0 6px}
-.step{display:none}.step.on{display:block;animation:up .35s ease}.dots{display:flex;gap:6px;justify-content:center;margin:8px 0}.dots i{width:8px;height:8px;border-radius:50%;background:var(--line)}.dots i.on{background:var(--acc)}
-.ph{display:block;width:100%;text-align:left;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:13px 14px;margin:8px 0;font-size:16.5px;cursor:pointer}
-.ph.ok{border-color:var(--g);background:var(--gbg)}h3{margin:.4em 0 .3em;font-size:16px;color:var(--mut);text-transform:uppercase;letter-spacing:.06em}
-.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.week button{aspect-ratio:1;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font-weight:800;cursor:pointer}.week button.on{background:var(--g);border-color:var(--g);color:#fff}
-.entry{border-left:3px solid var(--acc);padding:6px 0 6px 12px;margin:12px 0;font-size:15px}.entry b{color:var(--mut);font-size:13px}
-.stg{display:flex;gap:6px;margin:12px 0}.stg div{flex:1;border-radius:12px;padding:10px 6px;text-align:center;font-size:13px;font-weight:700;background:var(--soft);color:var(--mut)}.stg div.on{background:var(--acc);color:#fff}
-.lg{font-size:12px;font-weight:800;border-radius:99px;padding:2px 8px;margin-left:auto;flex:0 0 auto;align-self:center}
+.hero{padding:18px 4px 8px}.tag{display:inline-block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;color:var(--v);border:1px solid rgba(167,139,250,.35);border-radius:99px;padding:4px 11px;margin-bottom:14px}
+.em{font-size:40px;line-height:1;filter:drop-shadow(0 6px 18px rgba(167,139,250,.5))}
+.hero h1{font-family:Unbounded,Manrope,sans-serif;font-weight:800;font-size:clamp(25px,6.6vw,34px);line-height:1.15;margin:12px 0 10px;background:linear-gradient(90deg,#fff 30%,#d8c9ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{margin:0;color:var(--mut);font-size:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:16px;margin:18px 0;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--sh)}
+.it{display:flex;gap:12px;align-items:flex-start;padding:14px;border:1px solid var(--line);border-radius:18px;margin:9px 0;cursor:pointer;transition:.2s;user-select:none;background:var(--card)}
+.it:active{transform:scale(.985)}.it .bx{flex:0 0 24px;height:24px;border-radius:8px;border:2px solid rgba(255,255,255,.3);display:grid;place-items:center;font-size:14px;color:transparent;transition:.2s}
+.it.on{border-color:rgba(167,139,250,.8);background:rgba(167,139,250,.16);box-shadow:0 0 0 1px rgba(167,139,250,.35),0 10px 30px rgba(139,92,246,.18)}.it.on .bx{background:var(--grad);border-color:transparent;color:#fff}
+.btn{display:block;width:100%;border:0;border-radius:18px;padding:16px;font:800 16.5px Manrope,sans-serif;background:var(--grad);color:#fff;cursor:pointer;margin-top:14px;box-shadow:0 12px 30px rgba(139,92,246,.35)}
+.btn.s{background:var(--card2);color:var(--ink);box-shadow:none;border:1px solid var(--line)}.btn:disabled{opacity:.35}
+.res{border-radius:24px;padding:20px;margin:18px 0;animation:up .45s ease;border:1px solid var(--line)}
+.res h2{font-family:Unbounded,Manrope,sans-serif;margin:.1em 0 .45em;font-size:22px;line-height:1.25}
+.res.green{background:var(--gbg);border-color:rgba(94,234,212,.4)}.res.green h2{color:var(--g)}.res.yellow{background:var(--ybg);border-color:rgba(252,211,77,.4)}.res.yellow h2{color:var(--y)}
+.res.red{background:var(--rbg);border-color:rgba(251,113,133,.45)}.res.red h2{color:var(--r)}.res.neutral{background:linear-gradient(135deg,rgba(139,92,246,.2),rgba(236,72,153,.12))}
+.deep{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:18px 18px 8px;margin:16px 0;animation:up .5s ease}
+.deep h3{font:800 13px Manrope,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--v);margin:6px 0 6px}.deep p{margin:0 0 14px;color:#e6e1ff}
+.deep ol{margin:0 0 14px;padding-left:1.2em}.deep li{margin:.45em 0;color:#e6e1ff}.deep li::marker{color:var(--p);font-weight:800}
+@keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.meter{height:10px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden;margin:12px 0 6px}.meter i{display:block;height:100%;background:var(--grad);border-radius:99px;transition:width .5s}
+.note{font-size:14px;color:var(--mut)}.safe{font-size:14px;background:var(--rbg);border:1px solid rgba(251,113,133,.35);border-radius:18px;padding:13px 15px;margin:14px 0;color:var(--ink)}
+.bridge{text-align:center;background:linear-gradient(135deg,rgba(139,92,246,.22),rgba(236,72,153,.14));border:1px solid var(--line);border-radius:24px;padding:22px 18px;margin:18px 0}
+.bridge b{font-family:Unbounded,Manrope,sans-serif;font-size:17px}.bridge a{display:inline-block;margin-top:12px;background:var(--grad);color:#fff;text-decoration:none;font-weight:800;padding:14px 22px;border-radius:16px;box-shadow:0 12px 30px rgba(139,92,246,.35)}
+.foot{text-align:center;font-size:12.5px;color:var(--mut);margin-top:26px}
+.q{font-family:Unbounded,Manrope,sans-serif;font-weight:600;font-size:20px;line-height:1.35;margin:8px 0 18px;min-height:3.4em}.yn{display:flex;gap:10px}.yn .btn{margin:0}
+.prog{font-size:12px;color:var(--v);font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.circle{width:230px;height:230px;margin:22px auto;border-radius:50%;background:radial-gradient(circle,#c4b5fd 0%,#8b5cf6 45%,rgba(236,72,153,.35) 75%);box-shadow:0 0 60px rgba(139,92,246,.6);display:grid;place-items:center;color:#fff;font-weight:800;font-size:19px;text-align:center;padding:20px;transform:scale(.55);transition:transform 4s ease-in-out}
+.seg{display:flex;gap:8px;margin:8px 0}.seg button{flex:1;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:11px;font:700 14px Manrope,sans-serif;cursor:pointer}.seg button.on{background:var(--grad);border-color:transparent;color:#fff}
+textarea,input[type=text]{width:100%;border:1px solid var(--line);border-radius:16px;padding:13px;font:inherit;background:rgba(0,0,0,.25);color:var(--ink);min-height:100px;resize:vertical}
+textarea:focus{outline:none;border-color:var(--v);box-shadow:0 0 0 3px rgba(167,139,250,.2)}label.l{display:block;font-weight:800;margin:14px 0 7px}
+.step{display:none}.step.on{display:block;animation:up .35s ease}.step h2{font-family:Unbounded,Manrope,sans-serif!important;font-size:21px}
+.dots{display:flex;gap:6px;justify-content:center;margin:6px 0 10px}.dots i{width:26px;height:5px;border-radius:9px;background:rgba(255,255,255,.15)}.dots i.on{background:var(--grad)}
+.ph{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:16px;padding:14px 15px;margin:8px 0;font:600 15.5px Manrope,sans-serif;cursor:pointer}
+.ph.ok{border-color:var(--g);background:var(--gbg)}h3{margin:.4em 0 .3em;font-size:13px;color:var(--v);text-transform:uppercase;letter-spacing:.1em;font-weight:800}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.week button{aspect-ratio:1;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:800;cursor:pointer}.week button.on{background:var(--grad);border-color:transparent;color:#fff}
+.entry{border-left:3px solid var(--v);padding:6px 0 6px 12px;margin:12px 0;font-size:15px}.entry b{color:var(--mut);font-size:13px}
+.stg{display:flex;gap:6px;margin:12px 0}.stg div{flex:1;border-radius:14px;padding:10px 6px;text-align:center;font-size:12.5px;font-weight:800;background:var(--card);color:var(--mut);border:1px solid var(--line)}.stg div.on{background:var(--grad);color:#fff;border-color:transparent}
+.lg{font-size:11px;font-weight:800;border-radius:99px;padding:2px 8px;margin-left:auto;flex:0 0 auto;align-self:center;color:var(--mut)}
 </style></head><body><div class="w">
-<div class="hero"><span class="tag">Антон Шачнёв · психотерапевт</span><div class="em">🌬</div><h1>Дыхание, когда накрывает тревога</h1><p>Хочется написать ему, проверить соцсети, вернуться? Сначала успокой тело, потом решай.</p></div>
+<div class="hero"><span class="tag">Антон Шачнев · психотерапевт</span><div class="em">🌬</div><h1>Дыхание при тревоге: снять волну за 2 минуты</h1><p>Хочется написать ему, проверить соцсети, вернуться? Сначала успокой тело, потом решай.</p></div>
 <div id="app"></div><div id="out"></div>
 <div class="bridge"><b>Хочешь разобрать это вместе?</b><br><span class="note">Запишись на индивидуальную консультацию.</span><br><a id="cons" href="https://t.me/Anton191283">Записаться на консультацию</a><p class="note" style="margin:10px 0 0" id="consn">Откроется мой личный Telegram. Текст заявки уже скопирован, просто вставь и отправь.</p></div><div class="bridge"><b>Рубрика «Разборы»</b><br><span class="note">Я регулярно веду в своём Telegram-канале рубрику «Разборы». Оставь заявку и участвуй абсолютно бесплатно.</span><br><a href="https://shachnevbadyschool-source.github.io/testy/razbor.html">Оставить заявку на разбор</a></div>
 <div class="foot">Ответы никуда не отправляются и видны только тебе.<br>Это не диагноз и не замена консультации специалиста.</div>
-</div><script>window.CFG={"slug": "otn-dyhanie", "reel": "Нарциссы · 3 «Почему ты не можешь уйти от нарцисса»", "emoji": "🌬", "title": "Дыхание, когда накрывает тревога", "sub": "Хочется написать ему, проверить соцсети, вернуться? Сначала успокой тело, потом решай.", "type": "breath", "SAFE": "Если опасно прямо сейчас, звони 112. Всероссийский телефон доверия для женщин, пострадавших от насилия: 8-800-7000-600 (бесплатно). Если партнёр проверяет твой телефон, звони с чужого и почисти историю браузера."};</script><script>
+</div><script>window.CFG={"slug": "otn-dyhanie", "reel": "Нарциссы · 3 «Почему ты не можешь уйти от нарцисса»", "emoji": "🌬", "title": "Дыхание при тревоге: снять волну за 2 минуты", "sub": "Хочется написать ему, проверить соцсети, вернуться? Сначала успокой тело, потом решай.", "type": "breath", "deep": {"why": "Когда накрывает тревога, тело включает режим опасности: сердце колотится, мысли скачут, хочется срочно что-то сделать. В таком состоянии мы принимаем решения, о которых потом жалеем. Медленное дыхание с длинным выдохом помогает нервной системе успокоиться, и тогда к тебе возвращается возможность выбирать.", "steps": ["Дыши, пока круг ведёт тебя, не торопись.", "После дыхания спроси себя: что мне сейчас на самом деле нужно?", "Правило 20 минут: если всё ещё хочется написать, подожди. Если желание осталось, напиши в заметки, а не ему."], "pro": "Если тревога накрывает каждый день, мешает спать и работать, это повод прийти к специалисту."}, "SAFE": "Если опасно прямо сейчас, звони 112. Всероссийский телефон доверия для женщин, пострадавших от насилия: 8-800-7000-600 (бесплатно). Если партнёр проверяет твой телефон, звони с чужого и почисти историю браузера."};</script><script>
 const C=window.CFG;const $=s=>document.querySelector(s);const app=$('#app');
 const LS={get(k,d){try{return JSON.parse(localStorage.getItem(C.slug+k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(C.slug+k,JSON.stringify(v))}catch(e){}}};
 function esc(t){return t.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
@@ -53,7 +59,8 @@ function res(cls,h,t){return `<div class="res ${cls}"><h2>${h}</h2><p>${t}</p></
 function checklist(items,onchange){const box=document.createElement('div');items.forEach((it,i)=>{const d=document.createElement('div');d.className='it';d.innerHTML=`<span class="bx">✓</span><span>${esc(it)}</span>`;d.onclick=()=>{d.classList.toggle('on');onchange&&onchange()};box.appendChild(d)});return box}
 function sel(box){return [...box.querySelectorAll('.it')].map(d=>d.classList.contains('on'))}
 function band(n){return C.bands.find(b=>n>=b[0]&&n<=b[1])}
-function out(html){const o=$('#out');o.innerHTML=html;o.scrollIntoView({behavior:'smooth',block:'start'})}
+function deep(){if(!C.deep)return'';const d=C.deep;return `<div class="deep"><h3>Откуда это берётся</h3><p>${d.why}</p><h3>Что делать дальше</h3><ol>${d.steps.map(x=>'<li>'+x+'</li>').join('')}</ol><h3>Когда стоит прийти к специалисту</h3><p>${d.pro}</p></div>`}
+function out(html){const o=$('#out');o.innerHTML=html+deep();o.scrollIntoView({behavior:'smooth',block:'start'})}
 const R={
 check(){const c=document.createElement('div');c.className='card';const box=checklist(C.items);c.appendChild(box);const b=document.createElement('button');b.className='btn';b.textContent='Посмотреть результат';
 b.onclick=()=>{const n=sel(box).filter(Boolean).length;const x=band(n);out(`<div class="meter"><i style="width:${n/C.items.length*100}%"></i></div><div class="prog">Отмечено ${n} из ${C.items.length}</div>`+res(x[2],x[3],x[4]))};c.appendChild(b);app.appendChild(c)},
@@ -111,6 +118,7 @@ $('#pv').onclick=()=>{k=Math.max(0,k-1);go()};$('#nx').onclick=()=>{k=Math.min(S
 const lt=$('#lt');lt.value=LS.get('l','');lt.oninput=()=>LS.set('l',lt.value);$('#ldel').onclick=()=>{if(confirm('Удалить письмо?')){lt.value='';LS.set('l','')}}}
 };
 R[C.type]();
+if(['letter','breath','journal','diary','phrases'].includes(C.type)&&C.deep){const z=document.createElement('div');z.innerHTML=deep().replace('Откуда это берётся','Зачем эта практика');app.appendChild(z.firstChild)}
 {const m='Здравствуйте, Антон! Хочу записаться на индивидуальную консультацию. Пришёл(ла) с упражнения «'+C.title+'».';const a=document.getElementById('cons');a.href='https://t.me/Anton191283?text='+encodeURIComponent(m);a.onclick=()=>{try{navigator.clipboard.writeText(m)}catch(e){}}}
 if(C.note){const n=document.createElement('p');n.className='note';n.textContent=C.note;app.appendChild(n)}
 </script></body></html>
