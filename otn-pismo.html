@@ -43,7 +43,7 @@ input[type=text]{min-height:0}label.l{display:block;font-weight:700;margin:12px 
 </style></head><body><div class="w">
 <div class="hero"><span class="tag">Антон Шачнёв · психотерапевт</span><div class="em">✉️</div><h1>Письмо себе маленькой</h1><p>Практика на 15 минут. Письмо тому ребёнку, который когда-то ждал любви.</p></div>
 <div id="app"></div><div id="out"></div>
-<div class="bridge"><b>Хочешь разобрать это вместе?</b><br><span class="note">Запишись на индивидуальную консультацию.</span><br><a href="https://shachnevbadyschool-source.github.io/testy/diagnostika.html">Записаться на консультацию</a></div><div class="bridge"><b>Рубрика «Разборы»</b><br><span class="note">Я регулярно веду в своём Telegram-канале рубрику «Разборы». Оставь заявку и участвуй абсолютно бесплатно.</span><br><a href="https://shachnevbadyschool-source.github.io/testy/razbor.html">Оставить заявку на разбор</a></div>
+<div class="bridge"><b>Хочешь разобрать это вместе?</b><br><span class="note">Запишись на индивидуальную консультацию.</span><br><a id="cons" href="https://t.me/Anton191283">Записаться на консультацию</a><p class="note" style="margin:10px 0 0" id="consn">Откроется мой личный Telegram. Текст заявки уже скопирован, просто вставь и отправь.</p></div><div class="bridge"><b>Рубрика «Разборы»</b><br><span class="note">Я регулярно веду в своём Telegram-канале рубрику «Разборы». Оставь заявку и участвуй абсолютно бесплатно.</span><br><a href="https://shachnevbadyschool-source.github.io/testy/razbor.html">Оставить заявку на разбор</a></div>
 <div class="foot">Ответы никуда не отправляются и видны только тебе.<br>Это не диагноз и не замена консультации специалиста.</div>
 </div><script>window.CFG={"slug": "otn-pismo", "reel": "Нарциссы · 3 «Почему ты не можешь уйти от нарцисса»", "emoji": "✉️", "title": "Письмо себе маленькой", "sub": "Практика на 15 минут. Письмо тому ребёнку, который когда-то ждал любви.", "type": "letter", "safety": false, "SAFE": "Если опасно прямо сейчас, звони 112. Всероссийский телефон доверия для женщин, пострадавших от насилия: 8-800-7000-600 (бесплатно). Если партнёр проверяет твой телефон, звони с чужого и почисти историю браузера."};</script><script>
 const C=window.CFG;const $=s=>document.querySelector(s);const app=$('#app');
@@ -111,5 +111,6 @@ $('#pv').onclick=()=>{k=Math.max(0,k-1);go()};$('#nx').onclick=()=>{k=Math.min(S
 const lt=$('#lt');lt.value=LS.get('l','');lt.oninput=()=>LS.set('l',lt.value);$('#ldel').onclick=()=>{if(confirm('Удалить письмо?')){lt.value='';LS.set('l','')}}}
 };
 R[C.type]();
+{const m='Здравствуйте, Антон! Хочу записаться на индивидуальную консультацию. Пришёл(ла) с упражнения «'+C.title+'».';const a=document.getElementById('cons');a.href='https://t.me/Anton191283?text='+encodeURIComponent(m);a.onclick=()=>{try{navigator.clipboard.writeText(m)}catch(e){}}}
 if(C.note){const n=document.createElement('p');n.className='note';n.textContent=C.note;app.appendChild(n)}
 </script></body></html>
